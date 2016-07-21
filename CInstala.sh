@@ -170,12 +170,12 @@ EOF
 
 						gnome-terminal -e "firefox https://github.com/settings/keys"
 
-						wget https://download.jetbrains.com/python/pycharm-professional-2016.1.4.tar.gz -O /tmp/pycharm.tgz
+						wget https://download.jetbrains.com/python/pycharm-professional-2016.2.tar.gz -O /tmp/pycharm.tgz
 						tar -xzvf /tmp/pycharm.tgz -C $HOME/.local/opt
 						rm -fRv /tmp/pycharm.tgz
 						export PYCHARM_JDK=$JAVA_HOME
 						printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> ~/.bashrc
-						gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.1.4/bin/pycharm.sh"
+						gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.2/bin/pycharm.sh"
 						clear && clear
 						printf "PyCharm Professional installed successfully!\n\n"
 
@@ -297,12 +297,12 @@ EOF
 						clear && clear
 						printf "CLion installed successfully!\n\n"
 
-						wget https://download.jetbrains.com/python/pycharm-professional-2016.1.4.tar.gz -O /tmp/pycharm.tgz
+						wget https://download.jetbrains.com/python/pycharm-professional-2016.2.tar.gz -O /tmp/pycharm.tgz
 						tar -xzvf /tmp/pycharm.tgz -C $HOME/.local/opt
 						rm -fRv /tmp/pycharm.tgz
 						export PYCHARM_JDK=$JAVA_HOME
 						printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> ~/.bashrc
-						gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.1.4/bin/pycharm.sh"
+						gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.2/bin/pycharm.sh"
 						clear && clear
 						printf "PyCharm Professional installed successfully!\n\n"
 
