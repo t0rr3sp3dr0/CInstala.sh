@@ -13,7 +13,7 @@ CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
 
 EOF
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install JDK" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install VIm" "Install Sublime Text" "Bundles" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install VIm" "Install Sublime Text" "Bundles" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -94,7 +94,7 @@ do
 			printf "PyCharm Professional installed successfully!\n\n"
 			;;
 		"Install VIm")
-			curl https://raw.githubusercontent.com/vim-scripts/vim7-install.sh/master/vim7-install.sh | sh
+			bash <(curl https://raw.githubusercontent.com/vim-scripts/vim7-install.sh/master/vim7-install.sh)
 			clear && clear
 			printf "VIm installed successfully!\n\n"
 			;;
@@ -103,8 +103,9 @@ do
 			dpkg -x /tmp/subl.deb /tmp/subl
 			cp -fRv /tmp/subl/opt/* $HOME/.local/opt
 			cp -fRv /tmp/subl/usr/* $HOME/.local
+			sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
+			sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 			rm -fRv /tmp/subl*
-			sed "s/\/opt/~\/.local\/opt/g" $HOME/.local/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 			clear && clear
 			printf "Sublime Text installed successfully!\n\n"
 			;;
@@ -123,7 +124,7 @@ do
 						setxkbmap us,us altgr-intl,
 						export PATH=$PATH:$HOME/.local/bin
 						printf "\nexport PATH=\$PATH:\$HOME/.local/bin\n" >> ~/.bashrc
-						printf "\n\nEnvironment setted up with success!\n\n"
+						printf "\nEnvironment setted up with success!\n"
 
 						ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f ~/.ssh/id_rsa
 						wget http://archive.ubuntu.com/ubuntu/pool/universe/x/xclip/xclip_0.12+svn84-4_amd64.deb -O /tmp/xclip.deb
@@ -131,12 +132,12 @@ do
 						cp -fRv /tmp/xclip/usr/* ~/.local
 						rm -fRv /tmp/xclip*
 						cat $HOME/.ssh/id_rsa.pub | xclip -selection c
-						printf "\n\nPublic SSH Key copied to clipboard!\n\n"
+						printf "\nPublic SSH Key copied to clipboard!\n"
 
 						gnome-terminal -e "firefox https://github.com/settings/keys"
-						printf "\n\n"
+						printf "\n"
 						read -p "Upload SSH keys to GitHub then press [Enter] key to continue..."
-						printf "\n\n"
+						printf "\n"
 
 						wget http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/jdk.tgz
 						tar -xzvf /tmp/jdk.tgz -C $HOME/.local/opt
@@ -145,13 +146,13 @@ do
 						export JAVA_HOME=$JDK_HOME
 						export PATH=$PATH:$JAVA_HOME/bin
 						printf "\nexport JDK_HOME=\$HOME/.local/opt/jdk1.8.0_102\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> ~/.bashrc
-						printf "\n\nJava SE Development Kit installed successfully!\n\n"
+						printf "\nJava SE Development Kit installed successfully!\n"
 
 						wget http://download.oracle.com/otn-pub/java/javafx_scenebuilder/2.0-b20/javafx_scenebuilder-2_0-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/scenebuilder.tgz
 						tar -xzvf /tmp/scenebuilder.tgz -C $HOME/.local/opt
 						rm -fRv /tmp/scenebuilder.tgz
 						clear && clear
-						printf "\n\nJavaFX Scene Builder installed successfully!\n\n"
+						printf "\nJavaFX Scene Builder installed successfully!\n"
 
 						wget https://download-cf.jetbrains.com/idea/ideaIU-2016.2.tar.gz -O /tmp/idea.tgz
 						tar -xzvf /tmp/idea.tgz -C $HOME/.local/opt
@@ -160,10 +161,10 @@ do
 						export IDEA_JDK_64=$IDEA_JDK
 						printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> ~/.bashrc
 						gnome-terminal -e "sh $HOME/.local/opt/idea-IU-162.1121.32/bin/idea.sh"
-						printf "\n\nIntelliJ IDEA Ultimate installed successfully!\n\n"
+						printf "\nIntelliJ IDEA Ultimate installed successfully!\n"
 
 						git clone git@github.com:t0rr3sp3dr0/buildWare-JavaFX.git $HOME/git/buildWare-JavaFX
-						printf "\n\nDone!\n\n"
+						printf "\nDone!\n"
 
 						break
 						;;
@@ -177,7 +178,7 @@ do
 						setxkbmap us,us altgr-intl,
 						export PATH=$PATH:$HOME/.local/bin
 						printf "\nexport PATH=\$PATH:\$HOME/.local/bin\n" >> ~/.bashrc
-						printf "\n\nEnvironment setted up with success!\n\n"
+						printf "\nEnvironment setted up with success!\n"
 
 						ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f ~/.ssh/id_rsa
 						wget http://archive.ubuntu.com/ubuntu/pool/universe/x/xclip/xclip_0.12+svn84-4_amd64.deb -O /tmp/xclip.deb
@@ -185,12 +186,12 @@ do
 						cp -fRv /tmp/xclip/usr/* ~/.local
 						rm -fRv /tmp/xclip*
 						cat $HOME/.ssh/id_rsa.pub | xclip -selection c
-						printf "\n\nPublic SSH Key copied to clipboard!\n\n"
+						printf "\nPublic SSH Key copied to clipboard!\n"
 
 						gnome-terminal -e "firefox https://github.com/settings/keys"
-						printf "\n\n"
+						printf "\n"
 						read -p "Upload SSH keys to GitHub then press [Enter] key to continue..."
-						printf "\n\n"
+						printf "\n"
 
 						wget http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/jdk.tgz
 						tar -xzvf /tmp/jdk.tgz -C $HOME/.local/opt
@@ -199,13 +200,13 @@ do
 						export JAVA_HOME=$JDK_HOME
 						export PATH=$PATH:$JAVA_HOME/bin
 						printf "\nexport JDK_HOME=\$HOME/.local/opt/jdk1.8.0_102\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> ~/.bashrc
-						printf "\n\nJava SE Development Kit installed successfully!\n\n"
+						printf "\nJava SE Development Kit installed successfully!\n"
 
 						wget http://download.oracle.com/otn-pub/java/javafx_scenebuilder/2.0-b20/javafx_scenebuilder-2_0-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/scenebuilder.tgz
 						tar -xzvf /tmp/scenebuilder.tgz -C $HOME/.local/opt
 						rm -fRv /tmp/scenebuilder.tgz
 						clear && clear
-						printf "\n\nJavaFX Scene Builder installed successfully!\n\n"
+						printf "\nJavaFX Scene Builder installed successfully!\n"
 
 						wget https://download-cf.jetbrains.com/idea/ideaIU-2016.2.tar.gz -O /tmp/idea.tgz
 						tar -xzvf /tmp/idea.tgz -C $HOME/.local/opt
@@ -214,10 +215,10 @@ do
 						export IDEA_JDK_64=$IDEA_JDK
 						printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> ~/.bashrc
 						gnome-terminal -e "sh $HOME/.local/opt/idea-IU-162.1121.32/bin/idea.sh"
-						printf "\n\nIntelliJ IDEA Ultimate installed successfully!\n\n"
+						printf "\nIntelliJ IDEA Ultimate installed successfully!\n"
 
 						git clone git@github.com:lvrma/Direct-Singularity.git $HOME/git/Direct-Singularity
-						printf "\n\nDone!\n\n"
+						printf "\nDone!\n"
 
 						break
 						;;
@@ -225,7 +226,7 @@ do
 						break
 						;;
 					*)
-						printf "\n\Invalid Option!\n\n"
+						printf "\nInvalid Option!\n\n"
 						;;
 				esac
 			done
@@ -235,7 +236,7 @@ do
 			break
 			;;
 		*)
-			printf "\n\Invalid Option!\n\n"
+			printf "\nInvalid Option!\n\n"
 			;;
 	esac
 done
