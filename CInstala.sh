@@ -13,7 +13,7 @@ CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
 
 EOF
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install VIm" "Install Sublime Text" "Bundles" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Bundles" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -92,6 +92,16 @@ do
 			gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.1.4/bin/pycharm.sh"
 			clear && clear
 			printf "PyCharm Professional installed successfully!\n\n"
+			;;
+		"Install Android Studio")
+			wget https://dl.google.com/dl/android/studio/ide-zips/2.1.2.0/android-studio-ide-143.2915827-linux.zip -O /tmp/studio.zip
+			unzip /tmp/studio.zip -d $HOME/.local/opt
+			rm -fRv /tmp/studio.zip
+			export STUDIO_JDK=$JAVA_HOME
+			printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> ~/.bashrc
+			gnome-terminal -e "sh $HOME/.local/opt/android-studio/bin/studio.sh"
+			clear && clear
+			printf "Android Studio installed successfully!\n\n"
 			;;
 		"Install VIm")
 			bash <(curl https://raw.githubusercontent.com/vim-scripts/vim7-install.sh/master/vim7-install.sh)
@@ -258,6 +268,7 @@ CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
 EOF
 			;;
 		"Quit")
+			clear && clear
 			break
 			;;
 		*)
