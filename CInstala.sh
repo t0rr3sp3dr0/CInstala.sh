@@ -255,12 +255,6 @@ CC         II   n  n    ss   t    aaaa  l  aaaa
 CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
 
 
-1) Setup Environment		      7) Install CLion
-2) Generate SSH Key		      8) Install PyCharm Professional
-3) Upload SSH Key to GitHub	      9) Install VIm
-4) Install Java SE Development Kit   10) Install Sublime Text
-5) Install JavaFX Scene Builder	     11) Bundles
-6) Install IntelliJ IDEA Ultimate    12) Quit
 EOF
 			;;
 		"Quit")
