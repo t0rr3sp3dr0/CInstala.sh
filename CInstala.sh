@@ -110,7 +110,20 @@ do
 			printf "Sublime Text installed successfully!\n\n"
 			;;
 		"Bundles")
-			options=("BuildWare" "Direct" "Quit")
+			clear && clear
+			cat << EOF
+CCCCCCCC  IIII
+CC         II
+CC         II
+CC         II
+CC         II   nnnn  ssss   t    aaaa  l  aaaa
+CC         II   n  n  ss    ttt      a  l     a
+CC         II   n  n    ss   t    aaaa  l  aaaa
+CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
+
+
+EOF
+			options=("BuildWare" "Direct" "Back")
 			select opt in "${options[@]}"
 			do
 				case $opt in
@@ -222,7 +235,7 @@ do
 
 						break
 						;;
-					"Quit")
+					"Back")
 						break
 						;;
 					*)
@@ -230,7 +243,25 @@ do
 						;;
 				esac
 			done
-			break
+			clear && clear
+			cat << EOF
+CCCCCCCC  IIII
+CC         II
+CC         II
+CC         II
+CC         II   nnnn  ssss   t    aaaa  l  aaaa
+CC         II   n  n  ss    ttt      a  l     a
+CC         II   n  n    ss   t    aaaa  l  aaaa
+CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
+
+
+1) Setup Environment		      7) Install CLion
+2) Generate SSH Key		      8) Install PyCharm Professional
+3) Upload SSH Key to GitHub	      9) Install VIm
+4) Install Java SE Development Kit   10) Install Sublime Text
+5) Install JavaFX Scene Builder	     11) Bundles
+6) Install IntelliJ IDEA Ultimate    12) Quit
+EOF
 			;;
 		"Quit")
 			break
