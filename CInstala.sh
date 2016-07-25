@@ -122,7 +122,7 @@ do
 			printf "Sublime Text installed successfully!\n\n"
 			;;
 		"Install OpenShift Client Tools")
-			gem install --user-install rhc
+			gem install rhc
 			gnome-terminal -e "rhc setup"
 			clear && clear
 			printf "Install OpenShift Client Tools installed successfully!\n\n"
@@ -188,7 +188,7 @@ EOF
 						clear && clear
 						printf "Android Studio installed successfully!\n\n"
 
-						gem install --user-install rhc
+						gem install rhc
 						gnome-terminal -e "rhc setup"
 						clear && clear
 						printf "Install OpenShift Client Tools installed successfully!\n\n"
