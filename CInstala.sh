@@ -19,12 +19,14 @@ function LtL {
 python << EOF
 from collections import OrderedDict
 array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
-print(str(list(OrderedDict.fromkeys(array[:-4] + ["$1"] + array[-4:]))))
+print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
 )"
 }
 function SE {
-	curl https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -o $HOME/.vimrc
+	wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
+	gsettings set org.gnome.desktop.background picture-uri file://$HOME/.background
+	wget https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -O $HOME/.vimrc
 	cat << EOF > $HOME/.config/upstart/desktopOpen.conf
 description "Desktop Open Task"
 start on desktop-start
@@ -101,6 +103,22 @@ function IJSB {
 	wget http://download.oracle.com/otn-pub/java/javafx_scenebuilder/2.0-b20/javafx_scenebuilder-2_0-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/scenebuilder.tgz
 	tar -xzvf /tmp/scenebuilder.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/scenebuilder.tgz
+	cd $HOME/.local/opt/JavaFXSceneBuilder*
+	DIR=$(pwd)
+	APP=$(ls JavaFXSceneBuilder* | awk '{printf("%s ", $1);}' | awk '{printf $1 ;}')
+	cd $HOME
+	wget https://cin.ufpe.br/~phts/CInstala/scenebuilder.png -O $DIR/app/scenebuilder.png
+	cat << EOF > $HOME/.local/share/applications/scenebuilder.desktop
+[Desktop Entry]
+Type=Application
+Name=Scene Builder
+Icon=$DIR/app/scenebuilder.png
+Exec=$DIR/$APP %f
+Categories=Development;
+Terminal=false
+EOF
+	chmod +x $HOME/.local/share/applications/scenebuilder.desktop
+	LtL application://scenebuilder.desktop
 	CCC "JavaFX Scene Builder installed successfully!\n\n"
 }
 function IIIU {
@@ -111,7 +129,20 @@ function IIIU {
 	export IDEA_JDK=$JAVA_HOME
 	export IDEA_JDK_64=$IDEA_JDK
 	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
-	gnome-terminal -e "bash -i $HOME/.local/opt/idea-*/bin/idea.sh"
+	cd $HOME/.local/opt/idea-*
+	DIR=$(pwd)
+	cd $HOME
+	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
+[Desktop Entry]
+Type=Application
+Name=IntelliJ IDEA
+Icon=$DIR/bin/idea.png
+Exec=bash -i "$DIR/bin/idea.sh" %f
+Categories=Development;IDE;
+Terminal=false
+EOF
+	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
+	LtL application://jetbrains-idea.desktop
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
