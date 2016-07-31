@@ -110,6 +110,7 @@ function IJSB {
 	wget https://cin.ufpe.br/~phts/CInstala/scenebuilder.png -O $DIR/app/scenebuilder.png
 	cat << EOF > $HOME/.local/share/applications/scenebuilder.desktop
 [Desktop Entry]
+Version=1.0
 Type=Application
 Name=Scene Builder
 Icon=$DIR/app/scenebuilder.png
@@ -134,12 +135,15 @@ function IIIU {
 	cd $HOME
 	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
 [Desktop Entry]
+Version=1.0
 Type=Application
 Name=IntelliJ IDEA
 Icon=$DIR/bin/idea.png
 Exec=bash -i "$DIR/bin/idea.sh" %f
+Comment=The Drive to Develop
 Categories=Development;IDE;
 Terminal=false
+StartupWMClass=jetbrains-idea
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
 	LtL application://jetbrains-idea.desktop
@@ -152,7 +156,23 @@ function IC {
 	rm -fRv /tmp/clion.tgz
 	export CLION_JDK=$JAVA_HOME
 	printf "\nexport CLION_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "bash -i $HOME/.local/opt/clion-*/bin/clion.sh"
+	cd $HOME/.local/opt/clion-*
+	DIR=$(pwd)
+	cd $HOME
+	cat << EOF > $HOME/.local/share/applications/jetbrains-clion.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CLion
+Icon=$DIR/bin/clion.png
+Exec=bash -i "$DIR/bin/clion.sh" %f
+Comment=The Drive to Develop
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-clion
+EOF
+	chmod +x $HOME/.local/share/applications/jetbrains-clion.desktop
+	LtL application://jetbrains-clion.desktop
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
@@ -162,7 +182,23 @@ function IPP {
 	rm -fRv /tmp/pycharm.tgz
 	export PYCHARM_JDK=$JAVA_HOME
 	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "bash -i $HOME/.local/opt/pycharm-*/bin/pycharm.sh"
+	cd $HOME/.local/opt/pycharm-*
+	DIR=$(pwd)
+	cd $HOME
+	cat << EOF > $HOME/.local/share/applications/jetbrains-pycharm.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm
+Icon=$DIR/bin/pycharm.png
+Exec=bash -i "$DIR/bin/pycharm.sh" %f
+Comment=The Drive to Develop
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-pycharm
+EOF
+	chmod +x $HOME/.local/share/applications/jetbrains-pycharm.desktop
+	LtL application://jetbrains-pycharm.desktop
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
@@ -172,7 +208,20 @@ function IAS {
 	rm -fRv /tmp/studio.zip
 	export STUDIO_JDK=$JAVA_HOME
 	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "bash -i $HOME/.local/opt/android-studio/bin/studio.sh"
+	cat << EOF > $HOME/.local/share/applications/jetbrains-studio.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Icon=$HOME/.local/opt/android-studio/bin/studio.png
+Exec=bash -i "$HOME/.local/opt/android-studio/bin/studio.sh" %f
+Comment=Develop with pleasure!
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-studio
+EOF
+	chmod +x $HOME/.local/share/applications/jetbrains-studio.desktop
+	LtL application://jetbrains-studio.desktop
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
