@@ -39,8 +39,16 @@ description "Desktop Close Task"
 start on session-end
 task
 script
+	rm -fR $HOME/.*_history
+	rm -fR $HOME/.mozilla/firefox/*
 	rm -fR $HOME/.ssh/*
+	rm -fR $HOME/Documents/*
+	rm -fR $HOME/Downloads/*
 	rm -fR $HOME/git/*
+	rm -fR $HOME/AndroidStudioProjects/*
+	rm -fR $HOME/ClionProjects/*
+	rm -fR $HOME/IdeaProjects/*
+	rm -fR $HOME/PycharmProjects/*
 end script
 EOF
 	find $HOME -type d -print0 | xargs -0 chmod 700
@@ -52,7 +60,7 @@ EOF
 	export PATH=$PATH:$HOME/.local/bin
 	export GEM_HOME=$HOME/.gem
 
-	printf "\nsetxkbmap us,us altgr-intl,\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" > $HOME/.bashrc
+	printf "\nsetxkbmap us,us altgr-intl,\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
 	clear && clear
 	printf "Environment setted up with success!\n\n"
 }
@@ -77,7 +85,7 @@ function IJSDK {
 	export JDK_HOME=$HOME/.local/lib/jvm/jdk1.8.0_102
 	export JAVA_HOME=$JDK_HOME
 	export PATH=$PATH:$JAVA_HOME/bin
-	printf "\nexport JDK_HOME=\$HOME/.local/lib/jvm/jdk1.8.0_102\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" > $HOME/.bashrc
+	printf "\nexport JDK_HOME=\$HOME/.local/lib/jvm/jdk1.8.0_102\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
 	clear && clear
 	printf "Java SE Development Kit installed successfully!\n\n"
 }
@@ -94,7 +102,7 @@ function IIIU {
 	rm -fRv /tmp/idea.tgz
 	export IDEA_JDK=$JAVA_HOME
 	export IDEA_JDK_64=$IDEA_JDK
-	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" > $HOME/.bashrc
+	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
 	gnome-terminal -e "sh $HOME/.local/opt/idea-IU-162.1121.32/bin/idea.sh"
 	clear && clear
 	printf "IntelliJ IDEA Ultimate installed successfully!\n\n"
@@ -104,7 +112,7 @@ function IC {
 	tar -xzvf /tmp/clion.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/clion.tgz
 	export CLION_JDK=$JAVA_HOME
-	printf "\nexport CLION_JDK=\$JAVA_HOME\n" > $HOME/.bashrc
+	printf "\nexport CLION_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	gnome-terminal -e "sh $HOME/.local/opt/clion-2016.2/bin/clion.sh"
 	clear && clear
 	printf "CLion installed successfully!\n\n"
@@ -114,7 +122,7 @@ function IPP {
 	tar -xzvf /tmp/pycharm.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/pycharm.tgz
 	export PYCHARM_JDK=$JAVA_HOME
-	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" > $HOME/.bashrc
+	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.2/bin/pycharm.sh"
 	clear && clear
 	printf "PyCharm Professional installed successfully!\n\n"
@@ -124,7 +132,7 @@ function IAS {
 	unzip /tmp/studio.zip -d $HOME/.local/opt
 	rm -fRv /tmp/studio.zip
 	export STUDIO_JDK=$JAVA_HOME
-	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" > $HOME/.bashrc
+	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	gnome-terminal -e "sh $HOME/.local/opt/android-studio/bin/studio.sh"
 	clear && clear
 	printf "Android Studio installed successfully!\n\n"
