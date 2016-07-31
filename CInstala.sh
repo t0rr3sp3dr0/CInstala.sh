@@ -78,12 +78,13 @@ function USKtG {
 }
 function IJSDK {
 	wget http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/jdk.tgz
+	rm -fRv $HOME/.local/lib/jvm/jdk*
 	tar -xzvf /tmp/jdk.tgz -C $HOME/.local/lib/jvm
 	rm -fRv /tmp/jdk.tgz
-	export JDK_HOME=$HOME/.local/lib/jvm/jdk1.8.0_102
+	export JDK_HOME=$HOME/.local/lib/jvm/jdk*
 	export JAVA_HOME=$JDK_HOME
 	export PATH=$PATH:$JAVA_HOME/bin
-	printf "\nexport JDK_HOME=\$HOME/.local/lib/jvm/jdk1.8.0_102\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
+	printf "\nexport JDK_HOME=\$HOME/.local/lib/jvm/jdk*\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
 	CCC "Java SE Development Kit installed successfully!\n\n"
 }
 function IJSB {
@@ -94,34 +95,38 @@ function IJSB {
 }
 function IIIU {
 	wget https://download-cf.jetbrains.com/idea/ideaIU-2016.2.tar.gz -O /tmp/idea.tgz
+	rm -fRv $HOME/.local/opt/idea-*
 	tar -xzvf /tmp/idea.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/idea.tgz
 	export IDEA_JDK=$JAVA_HOME
 	export IDEA_JDK_64=$IDEA_JDK
 	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/idea-IU-162.1121.32/bin/idea.sh"
+	gnome-terminal -e "sh $HOME/.local/opt/idea-*/bin/idea.sh"
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
 	wget https://download.jetbrains.com/cpp/CLion-2016.2.tar.gz -O /tmp/clion.tgz
+	rm -fRv $HOME/.local/opt/clion-*
 	tar -xzvf /tmp/clion.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/clion.tgz
 	export CLION_JDK=$JAVA_HOME
 	printf "\nexport CLION_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/clion-2016.2/bin/clion.sh"
+	gnome-terminal -e "sh $HOME/.local/opt/clion-*/bin/clion.sh"
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
 	wget https://download.jetbrains.com/python/pycharm-professional-2016.2.tar.gz -O /tmp/pycharm.tgz
+	rm -fRv $HOME/.local/opt/pycharm-*
 	tar -xzvf /tmp/pycharm.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/pycharm.tgz
 	export PYCHARM_JDK=$JAVA_HOME
 	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/pycharm-2016.2/bin/pycharm.sh"
+	gnome-terminal -e "sh $HOME/.local/opt/pycharm-*/bin/pycharm.sh"
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
 	wget https://dl.google.com/dl/android/studio/ide-zips/2.1.2.0/android-studio-ide-143.2915827-linux.zip -O /tmp/studio.zip
+	rm -fRv $HOME/.local/opt/android-studio
 	unzip /tmp/studio.zip -d $HOME/.local/opt
 	rm -fRv /tmp/studio.zip
 	export STUDIO_JDK=$JAVA_HOME
