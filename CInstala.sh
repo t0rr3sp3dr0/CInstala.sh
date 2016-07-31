@@ -46,6 +46,7 @@ script
 	rm -fR $HOME/.*_history
 	rm -fR $HOME/.mozilla/firefox/*
 	rm -fR $HOME/.ssh/*
+	rm -fR $HOME/Desktop/*
 	rm -fR $HOME/Documents/*
 	rm -fR $HOME/Downloads/*
 	rm -fR $HOME/git/*
@@ -132,7 +133,11 @@ function IIIU {
 	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
 	cd $HOME/.local/opt/idea-*
 	DIR=$(pwd)
+	VER=$(pwd | sed -e 's/\/.*\-//g')
 	cd $HOME
+	mkdir -p $HOME/.IntelliJIdea$VER/config/options
+	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
+	tar -xzvf /tmp/options.tgz -C $HOME/.IntelliJIdea$VER/config/options/
 	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
 [Desktop Entry]
 Version=1.0
@@ -147,6 +152,7 @@ StartupWMClass=jetbrains-idea
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
 	LtL application://jetbrains-idea.desktop
+	ln -fs $DIR/bin/idea.sh $HOME/.local/bin/
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
@@ -158,7 +164,11 @@ function IC {
 	printf "\nexport CLION_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	cd $HOME/.local/opt/clion-*
 	DIR=$(pwd)
+	VER=$(pwd | sed -e 's/\/.*\-//g')
 	cd $HOME
+	mkdir -p $HOME/.CLion$VER/config/options
+	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
+	tar -xzvf /tmp/options.tgz -C $HOME/.CLion$VER/config/options/
 	cat << EOF > $HOME/.local/share/applications/jetbrains-clion.desktop
 [Desktop Entry]
 Version=1.0
@@ -173,6 +183,7 @@ StartupWMClass=jetbrains-clion
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-clion.desktop
 	LtL application://jetbrains-clion.desktop
+	ln -fs $DIR/bin/clion.sh $HOME/.local/bin/
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
@@ -184,7 +195,11 @@ function IPP {
 	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	cd $HOME/.local/opt/pycharm-*
 	DIR=$(pwd)
+	VER=$(pwd | sed -e 's/\/.*\-//g')
 	cd $HOME
+	mkdir -p $HOME/.PyCharm$VER/config/options
+	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
+	tar -xzvf /tmp/options.tgz -C $HOME/.PyCharm$VER/config/options/
 	cat << EOF > $HOME/.local/share/applications/jetbrains-pycharm.desktop
 [Desktop Entry]
 Version=1.0
@@ -199,6 +214,7 @@ StartupWMClass=jetbrains-pycharm
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-pycharm.desktop
 	LtL application://jetbrains-pycharm.desktop
+	ln -fs $DIR/bin/pycharm.sh $HOME/.local/bin/
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
@@ -222,6 +238,7 @@ StartupWMClass=jetbrains-studio
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-studio.desktop
 	LtL application://jetbrains-studio.desktop
+	ln -fs $HOME/.local/opt/android-studio/bin/studio.sh $HOME/.local/bin/
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
@@ -236,11 +253,12 @@ function IST {
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
+	LtL application://sublime_text.desktop
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
 	gem install rhc
-	gnome-terminal -e "rhc setup"
+	gnome-terminal -e "bash -i rhc setup"
 	CCC "OpenShift Client Tools installed successfully!\n\n"
 }
 function EL {
