@@ -14,14 +14,16 @@ CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
 EOF
 printf "$1"
 }
+function LtL {
+	gsettings set com.canonical.Unity.Launcher favorites "$(
+python << EOF
+from collections import OrderedDict
+array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
+print(str(list(OrderedDict.fromkeys(array[:-4] + ["$1"] + array[-4:]))))
+EOF
+)"
+}
 function SE {
-	mkdir -p $HOME/.config/upstart
-	mkdir -p $HOME/.gem
-	mkdir -p $HOME/.local/bin
-	mkdir -p $HOME/.local/lib
-	mkdir -p $HOME/.local/opt
-	mkdir -p $HOME/.ssh
-	mkdir -p $HOME/git
 	curl https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -o $HOME/.vimrc
 	cat << EOF > $HOME/.config/upstart/desktopOpen.conf
 description "Desktop Open Task"
@@ -53,6 +55,14 @@ end script
 EOF
 	find $HOME -type d -print0 | xargs -0 chmod 700
 	find $HOME -type f -print0 | xargs -0 chmod 600
+	gsettings reset com.canonical.Unity.Launcher favorites
+	gsettings set com.canonical.Unity.Launcher favorites "$(
+python << EOF
+array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
+print(str(array[:3] + array[8:]))
+EOF
+)"
+	LtL application://gnome-terminal.desktop
 	gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ hsize 2
 	gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 2
 	gsettings set org.gnome.desktop.default-applications.terminal exec 'gnome-terminal'
@@ -101,7 +111,7 @@ function IIIU {
 	export IDEA_JDK=$JAVA_HOME
 	export IDEA_JDK_64=$IDEA_JDK
 	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/idea-*/bin/idea.sh"
+	gnome-terminal -e "bash -i $HOME/.local/opt/idea-*/bin/idea.sh"
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
@@ -111,7 +121,7 @@ function IC {
 	rm -fRv /tmp/clion.tgz
 	export CLION_JDK=$JAVA_HOME
 	printf "\nexport CLION_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/clion-*/bin/clion.sh"
+	gnome-terminal -e "bash -i $HOME/.local/opt/clion-*/bin/clion.sh"
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
@@ -121,7 +131,7 @@ function IPP {
 	rm -fRv /tmp/pycharm.tgz
 	export PYCHARM_JDK=$JAVA_HOME
 	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/pycharm-*/bin/pycharm.sh"
+	gnome-terminal -e "bash -i $HOME/.local/opt/pycharm-*/bin/pycharm.sh"
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
@@ -131,7 +141,7 @@ function IAS {
 	rm -fRv /tmp/studio.zip
 	export STUDIO_JDK=$JAVA_HOME
 	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	gnome-terminal -e "sh $HOME/.local/opt/android-studio/bin/studio.sh"
+	gnome-terminal -e "bash -i $HOME/.local/opt/android-studio/bin/studio.sh"
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
@@ -161,6 +171,13 @@ function EL {
 		CCC "Something went wrong! Please try again...\n\n"
 	fi
 }
+mkdir -p $HOME/.config/upstart
+mkdir -p $HOME/.gem
+mkdir -p $HOME/.local/bin
+mkdir -p $HOME/.local/lib
+mkdir -p $HOME/.local/opt
+mkdir -p $HOME/.ssh
+mkdir -p $HOME/git
 CCC  # "Wellcome, $(finger -s `whoami` | awk '{printf("%s\n", $2);}' | sort -u | grep -iv Name)!\n\n"
 PS3='Please select an option: '
 options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Bundles" "Quit")
