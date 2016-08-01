@@ -259,8 +259,8 @@ function IST {
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
 	gnome-terminal -e "bash -i subl"
-	sleep 4
-	LtL application://sublime_text.desktop
+	sleep 2
+	LtL sublime_text.desktop
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
