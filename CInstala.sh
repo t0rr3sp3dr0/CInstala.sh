@@ -120,7 +120,7 @@ Categories=Development;
 Terminal=false
 EOF
 	chmod +x $HOME/.local/share/applications/scenebuilder.desktop
-	LtL application://scenebuilder.desktop
+	LtL scenebuilder.desktop
 	CCC "JavaFX Scene Builder installed successfully!\n\n"
 }
 function IIIU {
@@ -151,7 +151,7 @@ Terminal=false
 StartupWMClass=jetbrains-idea
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
-	LtL application://jetbrains-idea.desktop
+	LtL jetbrains-idea.desktop
 	ln -fs $DIR/bin/idea.sh $HOME/.local/bin/
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
@@ -174,7 +174,7 @@ function IC {
 Version=1.0
 Type=Application
 Name=CLion
-Icon=$DIR/bin/clion.png
+Icon=$DIR/bin/clion.svg
 Exec=bash -i "$DIR/bin/clion.sh" %f
 Comment=The Drive to Develop
 Categories=Development;IDE;
@@ -182,7 +182,7 @@ Terminal=false
 StartupWMClass=jetbrains-clion
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-clion.desktop
-	LtL application://jetbrains-clion.desktop
+	LtL jetbrains-clion.desktop
 	ln -fs $DIR/bin/clion.sh $HOME/.local/bin/
 	CCC "CLion installed successfully!\n\n"
 }
@@ -213,7 +213,7 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-pycharm.desktop
-	LtL application://jetbrains-pycharm.desktop
+	LtL jetbrains-pycharm.desktop
 	ln -fs $DIR/bin/pycharm.sh $HOME/.local/bin/
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
@@ -237,7 +237,7 @@ Terminal=false
 StartupWMClass=jetbrains-studio
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-studio.desktop
-	LtL application://jetbrains-studio.desktop
+	LtL jetbrains-studio.desktop
 	ln -fs $HOME/.local/opt/android-studio/bin/studio.sh $HOME/.local/bin/
 	CCC "Android Studio installed successfully!\n\n"
 }
@@ -253,7 +253,7 @@ function IST {
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
-	LtL application://sublime_text.desktop
+	LtL sublime_text.desktop
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
