@@ -17,13 +17,15 @@ EOF
 printf "$1"
 }
 function LtL {
-	gsettings set com.canonical.Unity.Launcher favorites "$(
+	favorites=$(
 python << EOF
 from collections import OrderedDict
 array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
 print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
-)"
+)
+	gsettings reset com.canonical.Unity.Launcher
+	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
 }
 function SE {
 	wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
@@ -36,8 +38,6 @@ task
 script
 	ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f $HOME/.ssh/id_rsa
 	cat $HOME/.ssh/id_rsa.pub | xclip -selection c
-	gnome-terminal -e "firefox https://github.com/settings/keys"
-	gnome-terminal -e "bash <(curl -L https://cin.ufpe.br/~phts)"
 end script
 EOF
 	cat << EOF > $HOME/.config/upstart/desktopClose.conf
@@ -45,17 +45,7 @@ description "Desktop Close Task"
 start on session-end
 task
 script
-	rm -fR $HOME/.*_history
-	rm -fR $HOME/.mozilla/firefox/*
-	rm -fR $HOME/.ssh/*
-	rm -fR $HOME/Desktop/*
-	rm -fR $HOME/Documents/*
-	rm -fR $HOME/Downloads/*
-	rm -fR $HOME/git/*
-	rm -fR $HOME/AndroidStudioProjects/*
-	rm -fR $HOME/ClionProjects/*
-	rm -fR $HOME/IdeaProjects/*
-	rm -fR $HOME/PycharmProjects/*
+	rm -fR $HOME/.*_history & rm -fR $HOME/.mozilla/firefox/* & rm -fR $HOME/.ssh/* & rm -fR $HOME/Desktop/* & rm -fR $HOME/Documents/* & rm -fR $HOME/Downloads/* & rm -fR $HOME/git/* & rm -fR $HOME/AndroidStudioProjects/* & rm -fR $HOME/ClionProjects/* & rm -fR $HOME/IdeaProjects/* & rm -fR $HOME/PycharmProjects/*
 end script
 EOF
 	find $HOME -type d -print0 | xargs -0 chmod 700
