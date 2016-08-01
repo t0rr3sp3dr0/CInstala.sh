@@ -72,10 +72,7 @@ EOF
 	gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 2
 	gsettings set org.gnome.desktop.default-applications.terminal exec 'gnome-terminal'
 	setxkbmap us,us altgr-intl,
-	export PATH=$PATH:$HOME/.local/bin
-	export GEM_HOME=$HOME/.gem
-
-	printf "\nsetxkbmap us,us altgr-intl,\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
+	printf "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.bashrc
 	CCC "Environment setted up with success!\n\n"
 }
 function GSK {
@@ -93,13 +90,13 @@ function USKtG {
 }
 function IJSDK {
 	wget http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/jdk.tgz
-	rm -fRv $HOME/.local/lib/jvm/jdk*
-	tar -xzvf /tmp/jdk.tgz -C $HOME/.local/lib/jvm
+	rm -fRv $HOME/.local/jvm/jdk*
+	tar -xzvf /tmp/jdk.tgz -C $HOME/.local/jvm
 	rm -fRv /tmp/jdk.tgz
-	export JDK_HOME=$HOME/.local/lib/jvm/jdk*
+	export JDK_HOME=$HOME/.local/jvm/jdk*
 	export JAVA_HOME=$JDK_HOME
 	export PATH=$PATH:$JAVA_HOME/bin
-	printf "\nexport JDK_HOME=\$HOME/.local/lib/jvm/jdk*\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
+	printf "\nexport JDK_HOME=\$HOME/.local/jvm/jdk*\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
 	CCC "Java SE Development Kit installed successfully!\n\n"
 }
 function IJSB {
@@ -110,6 +107,7 @@ function IJSB {
 	DIR=$(pwd)
 	APP=$(ls JavaFXSceneBuilder* | awk '{printf("%s ", $1);}' | awk '{printf $1 ;}')
 	cd $HOME
+	gnome-terminal -e "$DIR/$APP"
 	wget https://cin.ufpe.br/~phts/CInstala/scenebuilder.png -O $DIR/app/scenebuilder.png
 	cat << EOF > $HOME/.local/share/applications/scenebuilder.desktop
 [Desktop Entry]
@@ -122,6 +120,7 @@ Categories=Development;
 Terminal=false
 EOF
 	chmod +x $HOME/.local/share/applications/scenebuilder.desktop
+	sleep 8
 	LtL scenebuilder.desktop
 	CCC "JavaFX Scene Builder installed successfully!\n\n"
 }
@@ -140,6 +139,7 @@ function IIIU {
 	mkdir -p $HOME/.IntelliJIdea$VER/config/options
 	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
 	tar -xzvf /tmp/options.tgz -C $HOME/.IntelliJIdea$VER/config/options/
+	gnome-terminal -e "bash -i $DIR/bin/idea.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
 [Desktop Entry]
 Version=1.0
@@ -153,8 +153,8 @@ Terminal=false
 StartupWMClass=jetbrains-idea
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
+	sleep 8
 	LtL jetbrains-idea.desktop
-	ln -fs $DIR/bin/idea.sh $HOME/.local/bin/
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
@@ -162,8 +162,8 @@ function IC {
 	rm -fRv $HOME/.local/opt/clion-*
 	tar -xzvf /tmp/clion.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/clion.tgz
-	export CLION_JDK=$JAVA_HOME
-	printf "\nexport CLION_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
+	export CL_JDK=$JAVA_HOME
+	printf "\nexport CL_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	cd $HOME/.local/opt/clion-*
 	DIR=$(pwd)
 	VER=$(pwd | sed -e 's/\/.*\-//g')
@@ -171,6 +171,7 @@ function IC {
 	mkdir -p $HOME/.CLion$VER/config/options
 	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
 	tar -xzvf /tmp/options.tgz -C $HOME/.CLion$VER/config/options/
+	gnome-terminal -e "bash -i $DIR/bin/clion.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-clion.desktop
 [Desktop Entry]
 Version=1.0
@@ -184,8 +185,8 @@ Terminal=false
 StartupWMClass=jetbrains-clion
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-clion.desktop
+	sleep 8
 	LtL jetbrains-clion.desktop
-	ln -fs $DIR/bin/clion.sh $HOME/.local/bin/
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
@@ -202,6 +203,7 @@ function IPP {
 	mkdir -p $HOME/.PyCharm$VER/config/options
 	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
 	tar -xzvf /tmp/options.tgz -C $HOME/.PyCharm$VER/config/options/
+	gnome-terminal -e "bash -i $DIR/bin/pycharm.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-pycharm.desktop
 [Desktop Entry]
 Version=1.0
@@ -215,8 +217,8 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-pycharm.desktop
+	sleep 8
 	LtL jetbrains-pycharm.desktop
-	ln -fs $DIR/bin/pycharm.sh $HOME/.local/bin/
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
@@ -226,6 +228,7 @@ function IAS {
 	rm -fRv /tmp/studio.zip
 	export STUDIO_JDK=$JAVA_HOME
 	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
+	gnome-terminal -e "bash -i $HOME/.local/opt/android-studio/bin/studio.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-studio.desktop
 [Desktop Entry]
 Version=1.0
@@ -239,8 +242,8 @@ Terminal=false
 StartupWMClass=jetbrains-studio
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-studio.desktop
+	sleep 8
 	LtL jetbrains-studio.desktop
-	ln -fs $HOME/.local/opt/android-studio/bin/studio.sh $HOME/.local/bin/
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
@@ -255,7 +258,9 @@ function IST {
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
-	LtL sublime_text.desktop
+	gnome-terminal -e "bash -i subl"
+	sleep 4
+	LtL application://sublime_text.desktop
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
@@ -274,10 +279,14 @@ function EL {
 mkdir -p $HOME/.config/upstart
 mkdir -p $HOME/.gem
 mkdir -p $HOME/.local/bin
-mkdir -p $HOME/.local/lib
+mkdir -p $HOME/.local/jvm
 mkdir -p $HOME/.local/opt
+mkdir -p $HOME/.local/share/applications
 mkdir -p $HOME/.ssh
 mkdir -p $HOME/git
+export PATH=$PATH:$HOME/.local/bin
+export GEM_HOME=$HOME/.gem
+printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
 CCC  # "Wellcome, $(finger -s `whoami` | awk '{printf("%s\n", $2);}' | sort -u | grep -iv Name)!\n\n"
 PS3='Please select an option: '
 options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Bundles" "Quit")
