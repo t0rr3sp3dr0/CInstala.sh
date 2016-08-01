@@ -31,21 +31,23 @@ function SE {
 	wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
 	gsettings set org.gnome.desktop.background picture-uri file://$HOME/.background
 	wget https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -O $HOME/.vimrc
-	cat << EOF > $HOME/.config/upstart/desktopOpen.conf
-description "Desktop Open Task"
-start on desktop-start
-task
-script
-	ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f $HOME/.ssh/id_rsa
-	cat $HOME/.ssh/id_rsa.pub | xclip -selection c
-end script
-EOF
 	cat << EOF > $HOME/.config/upstart/desktopClose.conf
 description "Desktop Close Task"
 start on session-end
 task
 script
-	rm -fR $HOME/.*_history & rm -fR $HOME/.mozilla/firefox/* & rm -fR $HOME/.ssh/* & rm -fR $HOME/Desktop/* & rm -fR $HOME/Documents/* & rm -fR $HOME/Downloads/* & rm -fR $HOME/git/* & rm -fR $HOME/AndroidStudioProjects/* & rm -fR $HOME/ClionProjects/* & rm -fR $HOME/IdeaProjects/* & rm -fR $HOME/PycharmProjects/*
+	rm -fR $HOME/.*_history < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/.mozilla/firefox/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/.ssh/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/Desktop/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/Documents/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/Downloads/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/git/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/AndroidStudioProjects/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/ClionProjects/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/IdeaProjects/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1&
+	gsettings reset org.gnome.desktop.background picture-uri < /dev/null > /dev/null 2>&1&
 end script
 EOF
 	find $HOME -type d -print0 | xargs -0 chmod 700
