@@ -120,8 +120,7 @@ Categories=Development;
 Terminal=false
 EOF
 	chmod +x $HOME/.local/share/applications/scenebuilder.desktop
-	sleep 8
-	LtL scenebuilder.desktop
+	sleep 8 && LtL scenebuilder.desktop < /dev/null > /dev/null 2>&1&
 	CCC "JavaFX Scene Builder installed successfully!\n\n"
 }
 function IIIU {
@@ -153,8 +152,7 @@ Terminal=false
 StartupWMClass=jetbrains-idea
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
-	sleep 8
-	LtL jetbrains-idea.desktop
+	sleep 8 && LtL jetbrains-idea.desktop < /dev/null > /dev/null 2>&1&
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
@@ -185,8 +183,7 @@ Terminal=false
 StartupWMClass=jetbrains-clion
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-clion.desktop
-	sleep 8
-	LtL jetbrains-clion.desktop
+	sleep 8 && LtL jetbrains-clion.desktop < /dev/null > /dev/null 2>&1&
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
@@ -217,8 +214,7 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-pycharm.desktop
-	sleep 8
-	LtL jetbrains-pycharm.desktop
+	sleep 8 && LtL jetbrains-pycharm.desktop < /dev/null > /dev/null 2>&1&
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
@@ -242,8 +238,7 @@ Terminal=false
 StartupWMClass=jetbrains-studio
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-studio.desktop
-	sleep 8
-	LtL jetbrains-studio.desktop
+	sleep 8 && LtL jetbrains-studio.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
@@ -259,8 +254,7 @@ function IST {
 	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
 	gnome-terminal -e "bash -i subl"
-	sleep 2
-	LtL sublime_text.desktop
+	sleep 8 && & LtL sublime_text.desktop < /dev/null > /dev/null 2>&1& < /dev/null > /dev/null 2>&1&
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
