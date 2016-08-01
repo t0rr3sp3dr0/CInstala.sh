@@ -6,10 +6,12 @@ CCCCCCCC  IIII
 CC         II
 CC         II
 CC         II
-CC         II   nnnn  ssss   t    aaaa  l  aaaa
-CC         II   n  n  ss    ttt      a  l     a
-CC         II   n  n    ss   t    aaaa  l  aaaa
-CCCCCCCC  IIII  n  n  ssss   ttt  aaaa  l  aaaa
+CC         II   nnnn  ssss   t    aaaa  ll   aaaa
+CC         II   n  n  ss    ttt      a   l      a
+CC         II   n  n    ss   t    aaaa   l   aaaa
+CCCCCCCC  IIII  n  n  ssss   ttt  aaaa   ll  aaaa
+
+                                          by @t0rr3sp3dr0
 
 EOF
 printf "$1"
