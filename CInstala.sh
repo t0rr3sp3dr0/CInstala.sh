@@ -24,7 +24,7 @@ array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
 print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
 )
-	gsettings reset com.canonical.Unity.Launcher
+	gsettings reset com.canonical.Unity.Launcher favorites
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
 }
 function SE {
