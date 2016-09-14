@@ -28,8 +28,8 @@ EOF
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
 }
 function SE {
-	wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
-	gsettings set org.gnome.desktop.background picture-uri file://$HOME/.background
+	# wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
+	# gsettings set org.gnome.desktop.background picture-uri file://$HOME/.background
 	wget https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -O $HOME/.vimrc
 	cat << EOF > $HOME/.config/upstart/desktopClose.conf
 description "Desktop Close Task"
