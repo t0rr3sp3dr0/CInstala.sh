@@ -26,6 +26,7 @@ EOF
 )
 	gsettings reset com.canonical.Unity.Launcher favorites
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
+	compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown
 }
 function SE {
 	# wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
@@ -112,7 +113,7 @@ Categories=Development;
 Terminal=false
 EOF
 	chmod +x $HOME/.local/share/applications/scenebuilder.desktop
-	sleep 8 && LtL scenebuilder.desktop < /dev/null > /dev/null 2>&1&
+	LtL scenebuilder.desktop < /dev/null > /dev/null 2>&1&
 	CCC "JavaFX Scene Builder installed successfully!\n\n"
 }
 function IIIU {
@@ -144,7 +145,7 @@ Terminal=false
 StartupWMClass=jetbrains-idea
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-idea.desktop
-	sleep 8 && LtL jetbrains-idea.desktop < /dev/null > /dev/null 2>&1&
+	LtL jetbrains-idea.desktop < /dev/null > /dev/null 2>&1&
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
@@ -175,7 +176,7 @@ Terminal=false
 StartupWMClass=jetbrains-clion
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-clion.desktop
-	sleep 8 && LtL jetbrains-clion.desktop < /dev/null > /dev/null 2>&1&
+	LtL jetbrains-clion.desktop < /dev/null > /dev/null 2>&1&
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
@@ -206,7 +207,7 @@ Terminal=false
 StartupWMClass=jetbrains-pycharm
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-pycharm.desktop
-	sleep 8 && LtL jetbrains-pycharm.desktop < /dev/null > /dev/null 2>&1&
+	LtL jetbrains-pycharm.desktop < /dev/null > /dev/null 2>&1&
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
@@ -230,7 +231,7 @@ Terminal=false
 StartupWMClass=jetbrains-studio
 EOF
 	chmod +x $HOME/.local/share/applications/jetbrains-studio.desktop
-	sleep 8 && LtL jetbrains-studio.desktop < /dev/null > /dev/null 2>&1&
+	LtL jetbrains-studio.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
@@ -238,21 +239,32 @@ function IV {
 	CCC "VIm installed successfully!\n\n"
 }
 function IST {
-	wget https://download.sublimetext.com/sublime-text_build-3114_amd64.deb -O /tmp/subl.deb
+	wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb -O /tmp/subl.deb
 	dpkg -x /tmp/subl.deb /tmp/subl
 	cp -fRv /tmp/subl/opt/* $HOME/.local/opt
 	cp -fRv /tmp/subl/usr/* $HOME/.local
-	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
-	sed "s/\/opt/$(echo \"$HOME\" | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
+	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
+	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
 	gnome-terminal -e "bash -i subl"
-	sleep 8 && LtL sublime_text.desktop < /dev/null > /dev/null 2>&1&
+	LtL sublime_text.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
 	gem install rhc
 	gnome-terminal -e "bash -i rhc setup"
 	CCC "OpenShift Client Tools installed successfully!\n\n"
+}
+function IA {
+	wget https://atom-installer.github.com/v1.10.2/atom-amd64.deb -O /tmp/atom.deb
+	dpkg -x /tmp/atom.deb /tmp/atom
+	cp -fRv /tmp/atom/usr/* $HOME/.local
+	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/bin/atom > $HOME/.local/bin/atom
+	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/share/applications/atom.desktop > $HOME/.local/share/applications/atom.desktop
+	rm -fRv /tmp/atom*
+	gnome-terminal -e "bash -i atom"
+	LtL atom.desktop < /dev/null > /dev/null 2>&1&
+	CCC "Atom installed successfully!\n\n"
 }
 function EL {
 	if [ $? -eq 0 ]
@@ -275,7 +287,7 @@ export GEM_HOME=$HOME/.gem
 printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
 CCC  # "Wellcome, $(finger -s `whoami` | awk '{printf("%s\n", $2);}' | sort -u | grep -iv Name)!\n\n"
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Bundles" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Bundles" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -314,6 +326,9 @@ do
 			;;
 		"Install OpenShift Client Tools")
 			IOCT
+			;;
+		"Install Atom")
+			IA
 			;;
 		"Bundles")
 			CCC
