@@ -266,6 +266,27 @@ function IA {
 	LtL atom.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Atom installed successfully!\n\n"
 }
+function IQIWE {
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus.run
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/device.qdz
+	chmod +x /tmp/quartus.run
+	/tmp/quartus.run
+	rm -fRv /tmp/quartus.run /tmp/device.qdz
+	cat << EOF > $HOME/.local/share/applications/quartus.desktop
+[Desktop Entry]
+Type=Application
+Version=0.9.4
+Name=Quartus II 13.1 (64-bit) Web Edition
+Comment=Quartus II 13.1 (64-bit)
+Icon=$HOME/altera/13.1/quartus/adm/quartusii.png
+Exec=$HOME/altera/13.1/quartus/bin/quartus --64bit
+Terminal=false
+Path=/home/CIN/phts/altera/13.1
+EOF
+	chmod +x $HOME/.local/share/applications/quartus.desktop
+	LtL quartus.desktop < /dev/null > /dev/null 2>&1&
+	CCC "Quartus II Web Edition installed successfully!\n\n"
+}
 function EL {
 	if [ $? -eq 0 ]
 	then
@@ -287,7 +308,7 @@ export GEM_HOME=$HOME/.gem
 printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
 CCC  # "Wellcome, $(finger -s `whoami` | awk '{printf("%s\n", $2);}' | sort -u | grep -iv Name)!\n\n"
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Bundles" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Bundles" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -329,6 +350,9 @@ do
 			;;
 		"Install Atom")
 			IA
+			;;
+		"Install Quartus II Web Edition")
+			IQIWE
 			;;
 		"Bundles")
 			CCC
