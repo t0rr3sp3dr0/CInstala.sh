@@ -260,7 +260,7 @@ function IA {
 	dpkg -x /tmp/atom.deb /tmp/atom
 	cp -fRv /tmp/atom/usr/* $HOME/.local
 	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/bin/atom > $HOME/.local/bin/atom
-	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/share/applications/atom.desktop > $HOME/.local/share/applications/atom.desktop
+	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/share/applications/atom.desktop | sed "s/Icon=atom/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/atom.png/g" > $HOME/.local/share/applications/atom.desktop
 	rm -fRv /tmp/atom*
 	gnome-terminal -e "bash -i atom"
 	LtL atom.desktop < /dev/null > /dev/null 2>&1&
