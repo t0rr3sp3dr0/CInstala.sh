@@ -48,6 +48,7 @@ script
 	rm -fR $HOME/ClionProjects/* < /dev/null > /dev/null 2>&1&
 	rm -fR $HOME/IdeaProjects/* < /dev/null > /dev/null 2>&1&
 	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/downloads < /dev/null > /dev/null 2>&1&
 	gsettings reset org.gnome.desktop.background picture-uri < /dev/null > /dev/null 2>&1&
 end script
 EOF
@@ -282,10 +283,11 @@ function IA {
 function IQIWE {
 	CCC "Installing Quartus II Web Edition...\n\n"
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus.run
-	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/device.qdz
+	mkdir -p $HOME/downloads
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O $HOME/downloads/device.qdz
 	chmod +x /tmp/quartus.run
 	/tmp/quartus.run
-	rm -fRv /tmp/quartus.run /tmp/device.qdz
+	rm -fRv /tmp/quartus.run
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
 Type=Application
