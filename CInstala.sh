@@ -64,6 +64,8 @@ EOF
 	gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ hsize 2
 	gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 2
 	gsettings set org.gnome.desktop.default-applications.terminal exec 'gnome-terminal'
+	gsettings set org.gnome.desktop.screensaver lock-enabled false
+	gsettings set org.gnome.desktop.session idle-delay 0
 	setxkbmap us,us altgr-intl,
 	printf "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.bashrc
 	CCC "Environment setted up with success!\n\n"
