@@ -29,6 +29,7 @@ EOF
 	compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown
 }
 function SE {
+	CCC "Setting up Environment...\n\n"
 	# wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
 	# gsettings set org.gnome.desktop.background picture-uri file://$HOME/.background
 	wget https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -O $HOME/.vimrc
@@ -71,6 +72,7 @@ EOF
 	CCC "Environment setted up with success!\n\n"
 }
 function GSK {
+	CCC "Generating SSH Key...\n\n"
 	ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f $HOME/.ssh/id_rsa
 	wget http://archive.ubuntu.com/ubuntu/pool/universe/x/xclip/xclip_0.12+svn84-4_amd64.deb -O /tmp/xclip.deb
 	dpkg -x /tmp/xclip.deb /tmp/xclip
@@ -84,6 +86,7 @@ function USKtG {
 	echo
 }
 function IJSDK {
+	CCC "Installing Java SE Development Kit...\n\n"
 	wget http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/jdk.tgz
 	rm -fRv $HOME/.local/jvm/jdk*
 	tar -xzvf /tmp/jdk.tgz -C $HOME/.local/jvm
@@ -95,6 +98,7 @@ function IJSDK {
 	CCC "Java SE Development Kit installed successfully!\n\n"
 }
 function IJSB {
+	CCC "Installing JavaFX Scene Builder...\n\n"
 	wget http://download.oracle.com/otn-pub/java/javafx_scenebuilder/2.0-b20/javafx_scenebuilder-2_0-linux-x64.tar.gz --header "Cookie: oraclelicense=accept-securebackup-cookie;" -O /tmp/scenebuilder.tgz
 	tar -xzvf /tmp/scenebuilder.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/scenebuilder.tgz
@@ -119,6 +123,7 @@ EOF
 	CCC "JavaFX Scene Builder installed successfully!\n\n"
 }
 function IIIU {
+	CCC "Installing IntelliJ IDEA Ultimate...\n\n"
 	wget https://download-cf.jetbrains.com/idea/ideaIU-2016.2.tar.gz -O /tmp/idea.tgz
 	rm -fRv $HOME/.local/opt/idea-*
 	tar -xzvf /tmp/idea.tgz -C $HOME/.local/opt
@@ -151,6 +156,7 @@ EOF
 	CCC "IntelliJ IDEA Ultimate installed successfully!\n\n"
 }
 function IC {
+	CCC "Installing CLion...\n\n"
 	wget https://download.jetbrains.com/cpp/CLion-2016.2.tar.gz -O /tmp/clion.tgz
 	rm -fRv $HOME/.local/opt/clion-*
 	tar -xzvf /tmp/clion.tgz -C $HOME/.local/opt
@@ -182,6 +188,7 @@ EOF
 	CCC "CLion installed successfully!\n\n"
 }
 function IPP {
+	CCC "Installing PyCharm Professional...\n\n"
 	wget https://download.jetbrains.com/python/pycharm-professional-2016.2.tar.gz -O /tmp/pycharm.tgz
 	rm -fRv $HOME/.local/opt/pycharm-*
 	tar -xzvf /tmp/pycharm.tgz -C $HOME/.local/opt
@@ -213,6 +220,7 @@ EOF
 	CCC "PyCharm Professional installed successfully!\n\n"
 }
 function IAS {
+	CCC "Installing Android Studio...\n\n"
 	wget https://dl.google.com/dl/android/studio/ide-zips/2.1.2.0/android-studio-ide-143.2915827-linux.zip -O /tmp/studio.zip
 	rm -fRv $HOME/.local/opt/android-studio
 	unzip /tmp/studio.zip -d $HOME/.local/opt
@@ -237,10 +245,12 @@ EOF
 	CCC "Android Studio installed successfully!\n\n"
 }
 function IV {
+	CCC "Installing VIm...\n\n"
 	bash <(curl https://raw.githubusercontent.com/vim-scripts/vim7-install.sh/master/vim7-install.sh)
 	CCC "VIm installed successfully!\n\n"
 }
 function IST {
+	CCC "Installing Sublime Text...\n\n"
 	wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb -O /tmp/subl.deb
 	dpkg -x /tmp/subl.deb /tmp/subl
 	cp -fRv /tmp/subl/opt/* $HOME/.local/opt
@@ -253,11 +263,13 @@ function IST {
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
+	CCC "Installing OpenShift Client Tools...\n\n"
 	gem install rhc
 	gnome-terminal -e "bash -i rhc setup"
 	CCC "OpenShift Client Tools installed successfully!\n\n"
 }
 function IA {
+	CCC "Installing Atom...\n\n"
 	wget https://atom-installer.github.com/v1.10.2/atom-amd64.deb -O /tmp/atom.deb
 	dpkg -x /tmp/atom.deb /tmp/atom
 	cp -fRv /tmp/atom/usr/* $HOME/.local
@@ -269,6 +281,7 @@ function IA {
 	CCC "Atom installed successfully!\n\n"
 }
 function IQIWE {
+	CCC "Installing Quartus II Web Edition...\n\n"
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus.run
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/device.qdz
 	chmod +x /tmp/quartus.run
