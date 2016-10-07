@@ -284,10 +284,10 @@ function IQIWE {
 	CCC "Installing Quartus II Web Edition...\n\n"
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus.run
 	mkdir -p $HOME/downloads
-	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O $HOME/downloads/max_web-13.1.0.162.qdz
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/max_web-13.1.0.162.qdz
 	chmod +x /tmp/quartus.run
 	/tmp/quartus.run
-	rm -fRv /tmp/quartus.run
+	rm -fRv /tmp/quartus.run /tmp/max_web-13.1.0.162.qdz
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
 Type=Application
