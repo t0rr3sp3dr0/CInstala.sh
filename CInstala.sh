@@ -68,6 +68,7 @@ EOF
 	gsettings set org.gnome.desktop.session idle-delay 0
 	setxkbmap us,us altgr-intl,
 	printf "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
 	CCC "Environment setted up with success!\n\n"
 }
 function GSK {
@@ -94,6 +95,7 @@ function IJSDK {
 	export JAVA_HOME=$JDK_HOME
 	export PATH=$PATH:$JAVA_HOME/bin
 	printf "\nexport JDK_HOME=\$HOME/.local/jvm/jdk*\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
 	CCC "Java SE Development Kit installed successfully!\n\n"
 }
 function IJSB {
@@ -130,6 +132,7 @@ function IIIU {
 	export IDEA_JDK=$JAVA_HOME
 	export IDEA_JDK_64=$IDEA_JDK
 	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
 	cd $HOME/.local/opt/idea-*
 	DIR=$(pwd)
 	VER=$(pwd | sed -e 's/\/.*\-//g')
@@ -162,6 +165,7 @@ function IC {
 	rm -fRv /tmp/clion.tgz
 	export CL_JDK=$JAVA_HOME
 	printf "\nexport CL_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
 	cd $HOME/.local/opt/clion-*
 	DIR=$(pwd)
 	VER=$(pwd | sed -e 's/\/.*\-//g')
@@ -194,6 +198,7 @@ function IPP {
 	rm -fRv /tmp/pycharm.tgz
 	export PYCHARM_JDK=$JAVA_HOME
 	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
 	cd $HOME/.local/opt/pycharm-*
 	DIR=$(pwd)
 	VER=$(pwd | sed -e 's/\/.*\-//g')
@@ -226,6 +231,7 @@ function IAS {
 	rm -fRv /tmp/studio.zip
 	export STUDIO_JDK=$JAVA_HOME
 	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
 	gnome-terminal -e "bash -i $HOME/.local/opt/android-studio/bin/studio.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-studio.desktop
 [Desktop Entry]
@@ -301,6 +307,15 @@ EOF
 	LtL quartus.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Quartus II Web Edition installed successfully!\n\n"
 }
+function IGPP6 {
+	CCC "Installing G++ 6...\n\n"
+	wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-6/g++-6_6.2.0-5ubuntu12_amd64.deb -O /tmp/g++.deb
+	dpkg -x /tmp/g++.deb /tmp/g++
+	cp -fRv /tmp/g++/usr/* $HOME/.local
+	printf "\nalias g++=g++-6\n" >> $HOME/.bashrc
+	source $HOME/.bashrc
+	CCC "G++ 6 installed successfully!\n\n"
+}
 function EL {
 	if [ $? -eq 0 ]
 	then
@@ -320,9 +335,10 @@ mkdir -p $HOME/git
 export PATH=$PATH:$HOME/.local/bin
 export GEM_HOME=$HOME/.gem
 printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
+source $HOME/.bashrc
 CCC  # "Wellcome, $(finger -s `whoami` | awk '{printf("%s\n", $2);}' | sort -u | grep -iv Name)!\n\n"
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Bundles" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "Bundles" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -367,6 +383,9 @@ do
 			;;
 		"Install Quartus II Web Edition")
 			IQIWE
+			;;
+		"Install G++ 6")
+			IGPP6
 			;;
 		"Bundles")
 			CCC
