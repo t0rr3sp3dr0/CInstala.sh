@@ -125,7 +125,7 @@ EOF
 }
 function IIIU {
 	CCC "Installing IntelliJ IDEA Ultimate...\n\n"
-	wget https://download-cf.jetbrains.com/idea/ideaIU-2016.2.tar.gz -O /tmp/idea.tgz
+	wget https://download.jetbrains.com/idea/ideaIU-2016.2.4.tar.gz -O /tmp/idea.tgz
 	rm -fRv $HOME/.local/opt/idea-*
 	tar -xzvf /tmp/idea.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/idea.tgz
@@ -192,7 +192,7 @@ EOF
 }
 function IPP {
 	CCC "Installing PyCharm Professional...\n\n"
-	wget https://download.jetbrains.com/python/pycharm-professional-2016.2.tar.gz -O /tmp/pycharm.tgz
+	wget https://download.jetbrains.com/python/pycharm-professional-2016.2.3.tar.gz -O /tmp/pycharm.tgz
 	rm -fRv $HOME/.local/opt/pycharm-*
 	tar -xzvf /tmp/pycharm.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/pycharm.tgz
@@ -225,7 +225,7 @@ EOF
 }
 function IAS {
 	CCC "Installing Android Studio...\n\n"
-	wget https://dl.google.com/dl/android/studio/ide-zips/2.1.2.0/android-studio-ide-143.2915827-linux.zip -O /tmp/studio.zip
+	wget https://dl.google.com/dl/android/studio/ide-zips/2.2.0.12/android-studio-ide-145.3276617-linux.zip -O /tmp/studio.zip
 	rm -fRv $HOME/.local/opt/android-studio
 	unzip /tmp/studio.zip -d $HOME/.local/opt
 	rm -fRv /tmp/studio.zip
