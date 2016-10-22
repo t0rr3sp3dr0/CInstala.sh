@@ -1,6 +1,6 @@
 #!/bin/bash
 function CCC {
-	clear && clear
+	tput reset
 	cat << EOF
 
    ██████╗ ██╗ 
@@ -15,6 +15,13 @@ function CCC {
 
 EOF
 printf "$1"
+}
+function IO {
+	printf "Invalid Option!\r\033[A"
+	for i in `seq 1 $(tput cols)`; do
+		echo -n ' '
+	done
+	printf "\r"
 }
 function LtL {
 	favorites=$(
@@ -336,9 +343,9 @@ export PATH=$PATH:$HOME/.local/bin
 export GEM_HOME=$HOME/.gem
 printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
 source $HOME/.bashrc
-CCC  # "Wellcome, $(finger -s `whoami` | awk '{printf("%s\n", $2);}' | sort -u | grep -iv Name)!\n\n"
+CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "Bundles" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -387,160 +394,12 @@ do
 		"Install G++ 6")
 			IGPP6
 			;;
-		"Bundles")
-			CCC
-			options=("LookMobile" "Singularity" "Back")
-			select opt in "${options[@]}"
-			do
-				case $opt in
-					"LookMobile")
-						CCC
-						options=("Setup Environment" "Clone Repositories" "Back")
-						select opt in "${options[@]}"
-						do
-							case $opt in
-								"Setup Environment")
-									SE
-									GSK
-									USKtG
-									IJSDK
-									IJSB
-									IIIU
-									IC
-									IPP
-									EL "Done"
-									read
-
-									break
-									;;
-								"Clone Repositories")
-									CCC
-									options=("Náutico (Android)" "Náutico (BackEnd)" "LookEsporte" "Back")
-									select opt in "${options[@]}"
-									do
-										case $opt in
-											"LookEsporte")
-												git clone git@github.com:t0rr3sp3dr0/lookEsporte-Python.git $HOME/git/lookEsporte-Python
-												EL "Done"
-												read
-
-												break
-												;;
-											"Náutico (Android)")
-												git clone git@github.com:t0rr3sp3dr0/N-utico-Android.git $HOME/git/N-utico-Android
-												EL "Done"
-												read
-
-												break
-												;;
-											"Náutico (BackEnd)")
-												git clone git@github.com:t0rr3sp3dr0/N-utico-BackEnd.git $HOME/git/N-utico-BackEnd
-												EL "Done"
-												read
-
-												break
-												;;
-											"Back")
-												break
-												;;
-											*)
-												printf "\nInvalid Option!\n\n"
-												;;
-										esac
-									done
-
-									break
-									;;
-								"Back")
-									break
-									;;
-								*)
-									printf "\nInvalid Option!\n\n"
-									;;
-							esac
-						done
-
-						break
-						;;
-					"Singularity")
-						CCC
-						options=("Setup Environment" "Clone Repositories" "Back")
-						select opt in "${options[@]}"
-						do
-							case $opt in
-								"Setup Environment")
-									SE
-									GSK
-									USKtG
-									IJSDK
-									IJSB
-									IIIU
-									IC
-									IPP
-									EL "Done"
-									read
-
-									break
-									;;
-								"Clone Repositories")
-									CCC
-									options=("BuildWare" "Direct" "Back")
-									select opt in "${options[@]}"
-									do
-										case $opt in
-											"BuildWare")
-												git clone git@github.com:t0rr3sp3dr0/buildWare-JavaFX.git $HOME/git/buildWare-JavaFX
-												EL "Done"
-												read
-
-												break
-												;;
-											"Direct")
-												git clone git@github.com:lvrma/Direct-Singularity.git $HOME/git/Direct-Singularity
-												EL "Done"
-												read
-
-												break
-												;;
-											"Back")
-												break
-												;;
-											*)
-												printf "\nInvalid Option!\n\n"
-												;;
-										esac
-									done
-
-									break
-									;;
-								"Back")
-									break
-									;;
-								*)
-									printf "\nInvalid Option!\n\n"
-									;;
-							esac
-						done
-
-						break
-						;;
-					"Back")
-						break
-						;;
-					*)
-						printf "\nInvalid Option!\n\n"
-						;;
-				esac
-			done
-
-			CCC
-			;;
 		"Quit")
-			clear && clear
+			tput reset
 			break
 			;;
 		*)
-			printf "\nInvalid Option!\n\n"
+			IO
 			;;
 	esac
 done
