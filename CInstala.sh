@@ -33,6 +33,7 @@ function IO {
 	tput rc
 	tput cuu1
 	tput el
+	tput sgr 0
 }
 function LtL {
 	favorites=$(
