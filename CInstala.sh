@@ -14,7 +14,7 @@ function CCC {
                                                         by @t0rr3sp3dr0
 
 EOF
-printf "$1"
+	printf "$1"
 }
 function IO {
 	printf "Invalid Option!\r\033[A"
@@ -25,19 +25,17 @@ function IO {
 }
 function LtL {
 	favorites=$(
-python << EOF
+		python << EOF
 from collections import OrderedDict
 array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
 print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
-)
+	)
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
-	compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown
+	gsettings reset com.canonical.Unity.Launcher favorites
 }
 function SE {
 	CCC "Setting up Environment...\n\n"
-	# wget https://cin.ufpe.br/~phts/CInstala/background.jpg -O $HOME/.background
-	# gsettings set org.gnome.desktop.background picture-uri file://$HOME/.background
 	wget https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc -O $HOME/.vimrc
 	cat << EOF > $HOME/.config/upstart/desktopClose.conf
 description "Desktop Close Task"
@@ -55,7 +53,6 @@ script
 	rm -fR $HOME/ClionProjects/* < /dev/null > /dev/null 2>&1&
 	rm -fR $HOME/IdeaProjects/* < /dev/null > /dev/null 2>&1&
 	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1&
-	gsettings reset org.gnome.desktop.background picture-uri < /dev/null > /dev/null 2>&1&
 end script
 EOF
 	find $HOME -type d -print0 | xargs -0 chmod 700
