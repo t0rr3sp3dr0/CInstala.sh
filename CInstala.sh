@@ -18,11 +18,8 @@ EOF
 	printf "\e[0;49;32m$1\e[0m"
 }
 function IO {
-	printf "\e[5;49;31mInvalid Option!\e[0m\r\e[A"
-	for i in `seq 1 $(tput cols)`; do
-		echo -n ' '
-	done
-	printf "\r"
+	printf "\r\e[A\e[5;49;31mInvalid Option!\e[0m "
+	tput el
 }
 function LtL {
 	favorites=$(
