@@ -38,15 +38,14 @@ function IO {
 }
 function LtL {
 	favorites=$(
-		python << EOF
+python << EOF
 from collections import OrderedDict
 array = eval("$(gsettings get com.canonical.Unity.Launcher favorites)")
 print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
-	)
+)
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
-	gsettings reset com.canonical.Unity.Launcher favorites
-	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
+# 	compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown
 }
 function SE {
 	CCC "Setting up Environment...\n\n"
