@@ -17,7 +17,7 @@ EOF
 	printf "$1"
 }
 function IO {
-	printf "Invalid Option!\r\033[A"
+	printf "\e[1;31mInvalid Option!\e[0m\r\e[A"
 	for i in `seq 1 $(tput cols)`; do
 		echo -n ' '
 	done
