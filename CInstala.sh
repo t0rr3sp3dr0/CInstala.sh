@@ -1,5 +1,6 @@
 #!/bin/bash
 function CCC {
+	tput clear
 	tput reset
 	tput bold
 	cat << EOF
@@ -404,6 +405,7 @@ do
 			IGPP6
 			;;
 		"Quit")
+			tput clear
 			tput reset
 			break
 			;;
