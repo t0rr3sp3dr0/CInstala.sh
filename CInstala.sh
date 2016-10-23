@@ -20,7 +20,10 @@ EOF
 function IO {
 	tput bold
 	tput sc
-	tput cup $(tput lines) 0
+	for i in `seq 1 $(tput lines)`; do
+		tput el
+		printf '\033[B'
+	done
 	printf "\e[7;49;31m"
 	printf "Invalid Option"
 	for i in `seq 1 $(expr $(tput cols) - 14)`; do
