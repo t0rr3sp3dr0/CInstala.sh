@@ -19,7 +19,11 @@ EOF
 }
 function IO {
 	tput bold
-	printf "\r\e[A\e[5;49;31mInvalid Option!\e[0m "
+	tput sc
+	tput cup $(tput lines) 0
+	printf "\e[7;49;31m Invalid Option \e[0m"
+	tput rc
+	tput cuu1
 	tput el
 }
 function LtL {
