@@ -14,7 +14,7 @@ function CCC {
                                                         by @t0rr3sp3dr0
 
 EOF
-	printf "$1"
+	printf "\e[1;32m$1\e[0m"
 }
 function IO {
 	printf "\e[1;31mInvalid Option!\e[0m\r\e[A"
