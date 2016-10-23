@@ -46,6 +46,7 @@ EOF
 	)
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
 	gsettings reset com.canonical.Unity.Launcher favorites
+	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
 }
 function SE {
 	CCC "Setting up Environment...\n\n"
