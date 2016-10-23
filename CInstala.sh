@@ -1,6 +1,8 @@
 #!/bin/bash
 function CCC {
 	tput reset
+	tput bold
+	printf "\e[4mby
 	cat << EOF
 
    ██████╗ ██╗ 
@@ -14,10 +16,11 @@ function CCC {
                                                         by @t0rr3sp3dr0
 
 EOF
-	printf "\e[1;32m$1\e[0m"
+	printf "\e[92m$1\e[0m"
+	tput sgr 0
 }
 function IO {
-	printf "\e[1;31mInvalid Option!\e[0m\r\e[A"
+	printf "\e[5m\e[91mInvalid Option!\e[0m\r\e[A"
 	for i in `seq 1 $(tput cols)`; do
 		echo -n ' '
 	done
