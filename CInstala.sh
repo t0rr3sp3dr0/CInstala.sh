@@ -21,7 +21,12 @@ function IO {
 	tput bold
 	tput sc
 	tput cup $(tput lines) 0
-	printf "\e[7;49;31m Invalid Option \e[0m"
+	printf "\e[7;49;31m"
+	printf " Invalid Option "
+	for i in `seq 1 $(expr $(tput cols) - 16)`; do
+		printf ' '
+	done
+	printf "\e[0m"
 	tput rc
 	tput cuu1
 	tput el
