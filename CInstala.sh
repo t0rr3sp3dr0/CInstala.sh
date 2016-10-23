@@ -15,7 +15,7 @@ function CCC {
                                                         by @t0rr3sp3dr0
 
 EOF
-	printf "\e[5;49;32m$1\e[0m"
+	printf "\e[1;49;32m$1\e[0m"
 }
 function IO {
 	tput bold
