@@ -18,6 +18,7 @@ EOF
 	printf "\e[0;49;32m$1\e[0m"
 }
 function IO {
+	tput bold
 	printf "\r\e[A\e[5;49;31mInvalid Option!\e[0m "
 	tput el
 }
