@@ -45,7 +45,7 @@ print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
 )
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
-	gnome-terminal -e "nohup compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown -a"
+# 	compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown
 }
 function SE {
 	CCC "Setting up Environment...\n\n"
