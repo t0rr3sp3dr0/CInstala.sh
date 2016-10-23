@@ -2,7 +2,7 @@
 function CCC {
 	tput reset
 	tput bold
-	printf "\e[4mby
+	printf "\e[4mby"
 	cat << EOF
 
    ██████╗ ██╗ 
