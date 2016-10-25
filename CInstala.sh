@@ -45,7 +45,6 @@ print(str(list(OrderedDict.fromkeys(array[:-3] + ["$1"] + array[-3:]))))
 EOF
 )
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
-# 	compiz --display :0 --replace < /dev/null > /dev/null 2>&1& disown
 }
 function SE {
 	CCC "Setting up Environment...\n\n"
@@ -304,14 +303,23 @@ function IA {
 }
 function IQIWE {
 	CCC "Installing Quartus II Web Edition...\n\n"
-	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus.run
-	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/max_web-13.1.0.162.qdz
+	mkdir /tmp/quartus
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus/quartus.run
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/quartus/max_web-13.1.0.162.qdz
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/ModelSimSetup-13.1.0.162.run -O /tmp/quartus/modelsim.run
+	DIR=$(pwd)
+	cd /tmp/quartus
+	aptitude download libxft2:i386 lib32ncurses5
+	cd $DIR
+	dpkg -x /tmp/quartus/lib32ncurses5* /tmp/quartus
+	dpkg -x /tmp/quartus/libxft2* /tmp/quartus
+	cp -fRv /tmp/quartus/usr/* $HOME/.local
+	cp -fRv /tmp/quartus/usr/lib/i386-linux-gnu/* $HOME/.local/lib
 	chmod +x /tmp/quartus.run
 	/tmp/quartus.run
-	rm -fRv /tmp/quartus.run /tmp/max_web-13.1.0.162.qdz
-	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/ModelSimSetup-13.1.0.162.run -O /tmp/modelsim.run
 	chmod +x /tmp/modelsim.run
 	/tmp/modelsim.run
+	rm -fRv /tmp/quartus
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
 Type=Application
@@ -319,7 +327,7 @@ Version=0.9.4
 Name=Quartus II 13.1 (64-bit) Web Edition
 Comment=Quartus II 13.1 (64-bit)
 Icon=$HOME/altera/13.1/quartus/adm/quartusii.png
-Exec=$HOME/altera/13.1/quartus/bin/quartus --64bit
+Exec=bash -i "$HOME/altera/13.1/quartus/bin/quartus --64bit" %f
 Terminal=false
 Path=/home/CIN/phts/altera/13.1
 EOF
@@ -348,13 +356,17 @@ mkdir -p $HOME/.config/upstart
 mkdir -p $HOME/.gem
 mkdir -p $HOME/.local/bin
 mkdir -p $HOME/.local/jvm
+mkdir -p $HOME/.local/lib
+mkdir -p $HOME/.local/lib32
+mkdir -p $HOME/.local/lib64
 mkdir -p $HOME/.local/opt
 mkdir -p $HOME/.local/share/applications
 mkdir -p $HOME/.ssh
 mkdir -p $HOME/git
 export PATH=$PATH:$HOME/.local/bin
 export GEM_HOME=$HOME/.gem
-printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\n" >> $HOME/.bashrc
+export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
+printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\n" >> $HOME/.bashrc
 source $HOME/.bashrc
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
 PS3='Please select an option: '
