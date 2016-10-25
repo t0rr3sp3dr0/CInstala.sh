@@ -309,6 +309,9 @@ function IQIWE {
 	chmod +x /tmp/quartus.run
 	/tmp/quartus.run
 	rm -fRv /tmp/quartus.run /tmp/max_web-13.1.0.162.qdz
+	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/ModelSimSetup-13.1.0.162.run -O /tmp/modelsim.run
+	chmod +x /tmp/modelsim.run
+	/tmp/modelsim.run
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
 Type=Application
