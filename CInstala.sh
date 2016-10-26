@@ -315,10 +315,11 @@ function IQIWE {
 	dpkg -x /tmp/quartus/libxft2* /tmp/quartus
 	cp -fRv /tmp/quartus/usr/* $HOME/.local
 	cp -fRv /tmp/quartus/usr/lib/i386-linux-gnu/* $HOME/.local/lib
-	chmod +x /tmp/quartus.run
-	/tmp/quartus.run
-	chmod +x /tmp/modelsim.run
-	/tmp/modelsim.run
+	chmod +x /tmp/quartus/quartus.run
+	/tmp/quartus/quartus.run
+	chmod +x /tmp/quartus/modelsim.run
+	/tmp/quartus/modelsim.run
+	gnome-terminal -e "bash -i $HOME/altera/13.1/quartus/bin/quartus --64bit"
 	rm -fRv /tmp/quartus
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
