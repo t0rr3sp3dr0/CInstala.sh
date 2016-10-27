@@ -328,7 +328,7 @@ Version=0.9.4
 Name=Quartus II 13.1 (64-bit) Web Edition
 Comment=Quartus II 13.1 (64-bit)
 Icon=$HOME/altera/13.1/quartus/adm/quartusii.png
-Exec=bash -i "$HOME/altera/13.1/quartus/bin/quartus --64bit" %f
+Exec=bash -i "$HOME/altera/13.1/quartus/bin/quartus" --64bit %f
 Terminal=false
 Path=/home/CIN/phts/altera/13.1
 EOF
