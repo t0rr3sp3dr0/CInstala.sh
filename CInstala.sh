@@ -141,7 +141,7 @@ EOF
 }
 function IIIU {
 	CCC "Installing IntelliJ IDEA Ultimate...\n\n"
-	wget https://download.jetbrains.com/idea/ideaIU-2016.2.4.tar.gz -O /tmp/idea.tgz
+	wget https://download.jetbrains.com/idea/ideaIU-2016.2.5.tar.gz -O /tmp/idea.tgz
 	rm -fRv $HOME/.local/opt/idea-*
 	tar -xzvf /tmp/idea.tgz -C $HOME/.local/opt
 	rm -fRv /tmp/idea.tgz
