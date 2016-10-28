@@ -330,7 +330,7 @@ Comment=Quartus II 13.1 (64-bit)
 Icon=$HOME/altera/13.1/quartus/adm/quartusii.png
 Exec=bash -i "$HOME/altera/13.1/quartus/bin/quartus" --64bit %f
 Terminal=false
-Path=/home/CIN/phts/altera/13.1
+Path=$HOME/altera/13.1
 EOF
 	chmod +x $HOME/.local/share/applications/quartus.desktop
 	LtL quartus.desktop < /dev/null > /dev/null 2>&1&
