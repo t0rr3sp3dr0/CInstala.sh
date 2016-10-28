@@ -303,7 +303,7 @@ function IA {
 }
 function IQIWE {
 	CCC "Installing Quartus II Web Edition...\n\n"
-	mkdir /tmp/quartus
+	mkdir -p /tmp/quartus
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run -O /tmp/quartus/quartus.run
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz -O /tmp/quartus/max_web-13.1.0.162.qdz
 	wget http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/ModelSimSetup-13.1.0.162.run -O /tmp/quartus/modelsim.run
