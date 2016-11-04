@@ -110,7 +110,7 @@ function IJSDK {
 	export JDK_HOME=$HOME/.local/jvm/jdk*
 	export JAVA_HOME=$JDK_HOME
 	export PATH=$PATH:$JAVA_HOME/bin
-	printf "\nexport JDK_HOME=\$HOME/.local/jvm/jdk*\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
+	printf "\nexport JDK_HOME=$HOME/.local/jvm/jdk*\nexport JAVA_HOME=\$JDK_HOME\nexport PATH=\$PATH:\$JAVA_HOME/bin\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
 	CCC "Java SE Development Kit installed successfully!\n\n"
 }
@@ -345,6 +345,16 @@ function IGPP6 {
 	source $HOME/.bashrc
 	CCC "G++ 6 installed successfully!\n\n"
 }
+function IS {
+	CCC "Installing SDKMAN!...\n\n"
+	if [ -d "$SDKMAN_DIR" ]; then
+		sdk selfupdate force
+	else
+		curl -s get.sdkman.io | bash
+		source "$HOME/.sdkman/bin/sdkman-init.sh"
+	fi
+	CCC "SDKMAN! installed successfully!\n\n"
+}
 function EL {
 	if [ $? -eq 0 ]
 	then
@@ -352,6 +362,63 @@ function EL {
 	else
 		CCC "Something went wrong! Please try again...\n\n"
 	fi
+}
+function CS {
+	IS
+	IFS=$'\n'
+	PS3='Please select an option: '
+	list=$(curl -s "${SDKMAN_LEGACY_API}/candidates/list")
+	commands=(`echo "$list" | grep "sdk" | cut -d "\$" -f2 | sed 's/^.//'`)
+	options=(`echo "$list" | grep -A1 "\-\-" | grep -v "\-\-" | cut -d "(" -f1 | sed -e 's/^/Install /' | sed 's/.$//'`)
+	options+=('Back')
+	select opt in "${options[@]}"
+	do
+		case $opt in
+			"Back")
+				CCC
+				return
+				;;
+			*)
+				for ((i=0; i<${#options[@]}; i++)); do 
+					if [ "${options[$i]}" = "$opt" ]; then
+						CCC "Installing $(echo ${options[$i]} | cut -d " " -f2-)...\n\n"
+
+						unset IFS
+						PS3='Please select an option: '
+						versions=(`curl -s "${SDKMAN_LEGACY_API}/candidates/$(echo ${commands[$i]} | cut -d ' ' -f3)/list" | grep "\."`)
+						versions=(`for e in ${versions[@]}; do echo $e; done | sort`)
+						versions+=('Back')
+						select option in "${versions[@]}"
+						do
+							case $option in
+								"Back")
+									CCC
+									return
+									;;
+								*)
+									for ((j=0; j<${#versions[@]}; j++)); do 
+										if [ "${versions[$j]}" = "$option" ]; then
+											CCC "Installing $(echo ${options[$i]} | cut -d " " -f2-) v$(echo ${versions[$j]})...\n\n"
+											
+											bash -i <(echo ${commands[$i]}" "${versions[$j]})
+
+											CCC "$(echo ${options[$i]} | cut -d " " -f2-) v$(echo ${versions[$j]}) installed successfully!\n\n"
+											return
+										fi
+									done
+									IO
+									;;
+							esac
+						done
+
+						CCC "$(echo ${options[$i]} | cut -d " " -f2-) installed successfully!\n\n"
+						return
+					fi
+				done
+				IO
+				;;
+		esac
+	done
 }
 mkdir -p $HOME/.config/upstart
 mkdir -p $HOME/.gem
@@ -367,11 +434,11 @@ mkdir -p $HOME/git
 export PATH=$PATH:$HOME/.local/bin
 export GEM_HOME=$HOME/.gem
 export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
-printf "\nexport PATH=\$PATH:\$HOME/.local/bin\nexport GEM_HOME=\$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\n" >> $HOME/.bashrc
+printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\n" >> $HOME/.bashrc
 source $HOME/.bashrc
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
 PS3='Please select an option: '
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "SDKMAN!" "Quit")
 select opt in "${options[@]}"
 do
 	case $opt in
@@ -419,6 +486,9 @@ do
 			;;
 		"Install G++ 6")
 			IGPP6
+			;;
+		"SDKMAN!")
+			CS
 			;;
 		"Quit")
 			tput clear
