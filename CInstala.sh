@@ -241,7 +241,7 @@ EOF
 }
 function IAS {
 	CCC "Installing Android Studio...\n\n"
-	wget https://dl.google.com/dl/android/studio/ide-zips/2.2.0.12/android-studio-ide-145.3276617-linux.zip -O /tmp/studio.zip
+	wget https://dl.google.com/dl/android/studio/ide-zips/2.2.2.0/android-studio-ide-145.3360264-linux.zip -O /tmp/studio.zip
 	rm -fRv $HOME/.local/opt/android-studio
 	unzip /tmp/studio.zip -d $HOME/.local/opt
 	rm -fRv /tmp/studio.zip
@@ -384,7 +384,7 @@ function CS {
 						CCC "Installing $(echo ${options[$i]} | cut -d " " -f2-)...\n\n"
 
 						unset IFS
-						PS3='Please select an option: '
+						PS3='Please select a version: '
 						versions=(`curl -s "${SDKMAN_LEGACY_API}/candidates/$(echo ${commands[$i]} | cut -d ' ' -f3)/list" | grep "\."`)
 						versions=(`for e in ${versions[@]}; do echo $e; done | sort`)
 						versions+=('Back')
@@ -392,6 +392,7 @@ function CS {
 						do
 							case $option in
 								"Back")
+									PS3='Please select an option: '
 									CCC
 									return
 									;;
