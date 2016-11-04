@@ -439,11 +439,15 @@ printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexpor
 source $HOME/.bashrc
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
 PS3='Please select an option: '
+CSE=
 options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "SDKMAN!" "Quit")
+if [ "$(dnsdomainname)" == "windows.cin.ufpe.br" ]; then
+	CSE="Setup Environment"
+fi
 select opt in "${options[@]}"
 do
 	case $opt in
-		"Setup Environment")
+		$CSE)
 			SE
 			;;
 		"Generate SSH Key")
