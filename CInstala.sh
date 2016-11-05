@@ -348,7 +348,7 @@ function IGPP6 {
 function IS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
-		sdk selfupdate force
+		bash -i <(echo "sdk selfupdate force")
 	else
 		curl -s get.sdkman.io | bash
 		source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -381,7 +381,7 @@ function CS {
 			*)
 				for ((i=0; i<${#options[@]}; i++)); do 
 					if [ "${options[$i]}" = "$opt" ]; then
-						CCC "Installing $(echo ${options[$i]} | cut -d " " -f2-)...\n\n"
+						CCC "Which version of $(echo ${options[$i]} | cut -d " " -f2-) you would like to install?\n\n"
 
 						unset IFS
 						PS3='Please select a version: '
@@ -392,8 +392,8 @@ function CS {
 						do
 							case $option in
 								"Back")
-									PS3='Please select an option: '
 									CCC
+									PS3='Please select an option: '
 									return
 									;;
 								*)
@@ -404,6 +404,7 @@ function CS {
 											bash -i <(echo ${commands[$i]}" "${versions[$j]})
 
 											CCC "$(echo ${options[$i]} | cut -d " " -f2-) v$(echo ${versions[$j]}) installed successfully!\n\n"
+											PS3='Please select an option: '
 											return
 										fi
 									done
@@ -411,9 +412,6 @@ function CS {
 									;;
 							esac
 						done
-
-						CCC "$(echo ${options[$i]} | cut -d " " -f2-) installed successfully!\n\n"
-						return
 					fi
 				done
 				IO
