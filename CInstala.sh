@@ -358,7 +358,7 @@ function ITW {
 	cp -fRv /tmp/tw/deb/usr/* $HOME/.local
 	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-tarski.desktop > $HOME/.local/share/applications/OP-tarski.desktop
 	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-submit.desktop > $HOME/.local/share/applications/OP-submit.desktop
-	ln -s "$HOME/.local/share/Tarski/TW Exercise Files" "$HOME/Desktop/TW Exercise Files"
+	ln -s "$HOME/.local/share/Tarski/TW Exercise Files" $HOME/Desktop
 	rm -fRv /tmp/tw
 	gnome-terminal --geometry=0x0 -e "$HOME/.local/bin/tarski"
 	LtL OP-tarski.desktop < /dev/null > /dev/null 2>&1&
