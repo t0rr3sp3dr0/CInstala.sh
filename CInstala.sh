@@ -98,7 +98,7 @@ function GSK {
 	CCC "Public SSH Key copied to clipboard!\n\n"
 }
 function USKtG {
-	gnome-terminal -e "firefox https://github.com/settings/keys"
+	gnome-terminal --geometry=0x0 -e "firefox https://github.com/settings/keys"
 	echo
 }
 function IJSDK {
@@ -123,7 +123,7 @@ function IJSB {
 	DIR=$(pwd)
 	APP=$(ls JavaFXSceneBuilder* | awk '{printf("%s ", $1);}' | awk '{printf $1 ;}')
 	cd $HOME
-	gnome-terminal -e "$DIR/$APP"
+	gnome-terminal --geometry=0x0 -e "$DIR/$APP"
 	wget https://cin.ufpe.br/~phts/CInstala/scenebuilder.png -O $DIR/app/scenebuilder.png
 	cat << EOF > $HOME/.local/share/applications/scenebuilder.desktop
 [Desktop Entry]
@@ -156,7 +156,7 @@ function IIIU {
 	mkdir -p $HOME/.IntelliJIdea$VER/config/options
 	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
 	tar -xzvf /tmp/options.tgz -C $HOME/.IntelliJIdea$VER/config/options/
-	gnome-terminal -e "bash -i $DIR/bin/idea.sh"
+	gnome-terminal --geometry=0x0 -e "bash -i $DIR/bin/idea.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
 [Desktop Entry]
 Version=1.0
@@ -189,7 +189,7 @@ function IC {
 	mkdir -p $HOME/.CLion$VER/config/options
 	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
 	tar -xzvf /tmp/options.tgz -C $HOME/.CLion$VER/config/options/
-	gnome-terminal -e "bash -i $DIR/bin/clion.sh"
+	gnome-terminal --geometry=0x0 -e "bash -i $DIR/bin/clion.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-clion.desktop
 [Desktop Entry]
 Version=1.0
@@ -222,7 +222,7 @@ function IPP {
 	mkdir -p $HOME/.PyCharm$VER/config/options
 	wget https://cin.ufpe.br/~phts/CInstala/options.tar.gz -O /tmp/options.tgz
 	tar -xzvf /tmp/options.tgz -C $HOME/.PyCharm$VER/config/options/
-	gnome-terminal -e "bash -i $DIR/bin/pycharm.sh"
+	gnome-terminal --geometry=0x0 -e "bash -i $DIR/bin/pycharm.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-pycharm.desktop
 [Desktop Entry]
 Version=1.0
@@ -248,7 +248,7 @@ function IAS {
 	export STUDIO_JDK=$JAVA_HOME
 	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
-	gnome-terminal -e "bash -i $HOME/.local/opt/android-studio/bin/studio.sh"
+	gnome-terminal --geometry=0x0 -e "bash -i $HOME/.local/opt/android-studio/bin/studio.sh"
 	cat << EOF > $HOME/.local/share/applications/jetbrains-studio.desktop
 [Desktop Entry]
 Version=1.0
@@ -279,14 +279,14 @@ function IST {
 	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
 	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	rm -fRv /tmp/subl*
-	gnome-terminal -e "bash -i subl"
+	gnome-terminal --geometry=0x0 -e "bash -i subl"
 	LtL sublime_text.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Sublime Text installed successfully!\n\n"
 }
 function IOCT {
 	CCC "Installing OpenShift Client Tools...\n\n"
 	gem install rhc
-	gnome-terminal -e "bash -i rhc setup"
+	gnome-terminal --geometry=0x0 -e "bash -i rhc setup"
 	CCC "OpenShift Client Tools installed successfully!\n\n"
 }
 function IA {
@@ -297,7 +297,7 @@ function IA {
 	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/bin/atom > $HOME/.local/bin/atom
 	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/share/applications/atom.desktop | sed "s/Icon=atom/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/atom.png/g" > $HOME/.local/share/applications/atom.desktop
 	rm -fRv /tmp/atom*
-	gnome-terminal -e "bash -i atom"
+	gnome-terminal --geometry=0x0 -e "bash -i atom"
 	LtL atom.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Atom installed successfully!\n\n"
 }
@@ -319,7 +319,7 @@ function IQIWE {
 	/tmp/quartus/quartus.run
 	chmod +x /tmp/quartus/modelsim.run
 	/tmp/quartus/modelsim.run
-	gnome-terminal -e "bash -i $HOME/altera/13.1/quartus/bin/quartus --64bit"
+	gnome-terminal --geometry=0x0 -e "bash -i $HOME/altera/13.1/quartus/bin/quartus --64bit"
 	rm -fRv /tmp/quartus
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
@@ -360,9 +360,9 @@ function ITW {
 	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-submit.desktop > $HOME/.local/share/applications/OP-submit.desktop
 	ln -s "$HOME/.local/share/Tarski/TW Exercise Files" "$HOME/Desktop/TW Exercise Files"
 	rm -fRv /tmp/tw
-	gnome-terminal -e "bash -i $HOME/.local/bin/tarski"
+	gnome-terminal --geometry=0x0 -e "$HOME/.local/bin/tarski"
 	LtL OP-tarski.desktop < /dev/null > /dev/null 2>&1&
-	gnome-terminal -e "bash -i $HOME/.local/bin/submit"
+	gnome-terminal --geometry=0x0 -e "$HOME/.local/bin/submit"
 	LtL OP-submit.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Tarski's World installed successfully!\n\n"
 }
