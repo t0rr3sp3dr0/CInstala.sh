@@ -345,6 +345,27 @@ function IGPP6 {
 	source $HOME/.bashrc
 	CCC "G++ 6 installed successfully!\n\n"
 }
+function ITW {
+	CCC "Installing Tarski's World...\n\n"
+	mkdir -p /tmp/tw
+	wget https://cin.ufpe.br/~phts/CInstala/TW-16_01-linux-x86_64-deb-installer.tgz -O /tmp/tw/tw.tgz
+	tar -xzvf /tmp/tw/tw.tgz -C /tmp/tw
+	dpkg -x /tmp/tw/op-Tarski-common-15.01-0_all.deb /tmp/tw/deb
+	dpkg -x /tmp/tw/op-Tarski-doc-15.01-0_all.deb /tmp/tw/deb
+	dpkg -x /tmp/tw/op-jre-1.7.0-60_amd64.deb /tmp/tw/deb
+	dpkg -x /tmp/tw/op-submit-3.0-7_all.deb /tmp/tw/deb
+	dpkg -x /tmp/tw/op-tarski-7.2-3_all.deb /tmp/tw/deb
+	cp -fRv /tmp/tw/deb/usr/* $HOME/.local
+	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-tarski.desktop > $HOME/.local/share/applications/OP-tarski.desktop
+	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-submit.desktop > $HOME/.local/share/applications/OP-submit.desktop
+	ln -s "$HOME/.local/share/Tarski/TW Exercise Files" "$HOME/Desktop/TW Exercise Files"
+	rm -fRv /tmp/tw
+	gnome-terminal -e "bash -i $HOME/.local/bin/tarski"
+	LtL OP-tarski.desktop < /dev/null > /dev/null 2>&1&
+	gnome-terminal -e "bash -i $HOME/.local/bin/submit"
+	LtL OP-submit.desktop < /dev/null > /dev/null 2>&1&
+	CCC "Tarski's World installed successfully!\n\n"
+}
 function IS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -438,7 +459,7 @@ source $HOME/.bashrc
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
 PS3='Please select an option: '
 CSE=
-options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "SDKMAN!" "Quit")
+options=("Setup Environment" "Generate SSH Key" "Upload SSH Key to GitHub" "SDKMAN!" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install IntelliJ IDEA Ultimate" "Install CLion" "Install PyCharm Professional" "Install Android Studio" "Install VIm" "Install Sublime Text" "Install OpenShift Client Tools" "Install Atom" "Install Quartus II Web Edition" "Install G++ 6" "Install Tarski's World" "Quit")
 if [ "$(dnsdomainname)" == "windows.cin.ufpe.br" ]; then
 	CSE="Setup Environment"
 fi
@@ -453,6 +474,9 @@ do
 			;;
 		"Upload SSH Key to GitHub")
 			USKtG
+			;;
+		"SDKMAN!")
+			CS
 			;;
 		"Install Java SE Development Kit")
 			IJSDK
@@ -490,8 +514,8 @@ do
 		"Install G++ 6")
 			IGPP6
 			;;
-		"SDKMAN!")
-			CS
+		"Install Tarski's World")
+			ITW
 			;;
 		"Quit")
 			tput clear
