@@ -67,8 +67,7 @@ script
 	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1&
 end script
 EOF
-	find $HOME -type d -print0 | xargs -0 chmod 700
-	find $HOME -type f -print0 | xargs -0 chmod 600
+	chmod 700 $HOME
 	gsettings reset com.canonical.Unity.Launcher favorites
 	gsettings set com.canonical.Unity.Launcher favorites "$(
 python << EOF
