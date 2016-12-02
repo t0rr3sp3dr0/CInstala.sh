@@ -348,7 +348,6 @@ function IGPP6 {
 function ITW {
 	CCC "Installing Tarski's World...\n\n"
 	mkdir -p /tmp/tw
-# 	wget https://cin.ufpe.br/~phts/CInstala/TW-16_01-linux-x86_64-deb-installer.tgz -O /tmp/tw/tw.tgz
 	curl 'https://ggweb.gradegrinder.net/downloader/TW$002fDedekind$002fTW-16_01-linux-x86_64-deb-installer.sh' -k | tail --lines=+161 > /tmp/tw/tw.tgz
 	tar -xzvf /tmp/tw/tw.tgz -C /tmp/tw
 	dpkg -x /tmp/tw/op-Tarski-common-15.01-0_all.deb /tmp/tw/deb
