@@ -363,7 +363,6 @@ function ITW {
 	rm -fRv /tmp/tw
 	gnome-terminal --geometry=0x0 -e "$HOME/.local/bin/tarski"
 	LtL OP-tarski.desktop < /dev/null > /dev/null 2>&1&
-	gnome-terminal --geometry=0x0 -e "$HOME/.local/bin/submit"
 	LtL OP-submit.desktop < /dev/null > /dev/null 2>&1&
 	CCC "Tarski's World installed successfully!\n\n"
 }
