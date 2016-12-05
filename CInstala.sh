@@ -67,6 +67,14 @@ script
 	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1&
 end script
 EOF
+	cat << EOF > $HOME/.config/upstart/desktopOpen.conf
+description "Desktop Open Task"
+start on session-end
+task
+script
+	setxkbmap us,us altgr-intl,
+end script
+EOF
 	chmod 700 $HOME
 	gsettings reset com.canonical.Unity.Launcher favorites
 	gsettings set com.canonical.Unity.Launcher favorites "$(
