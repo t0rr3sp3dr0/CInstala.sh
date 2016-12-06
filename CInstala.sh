@@ -95,7 +95,7 @@ xrandr --addmode $inf $name_mode
 xrandr --output $inf --mode $name_mode
 EOF
 	fi
-	prinft "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.profile
+	printf "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.bashrc
 	source $HOME/.profile
 	CCC "Environment setted up with success!\n\n"
 }
