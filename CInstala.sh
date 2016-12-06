@@ -81,22 +81,21 @@ EOF
 	gsettings set org.gnome.desktop.default-applications.terminal exec 'gnome-terminal'
 	gsettings set org.gnome.desktop.screensaver lock-enabled false
 	gsettings set org.gnome.desktop.session idle-delay 0
-	cat << EOF >> $HOME/.profile
-if [ -z "$(xrandr | head -2 | tail -1 | grep -e '1600x900' -e '1920x1080' 2>/dev/null)" ]; then
-	if [ "$(hostname | cut -c 3)" == "1" ] || [ "$(hostname | cut -c 3)" == "2" ]; then
-		params=$(cvt 1600 900 60 | tail -1 | sed s/^[^' ']*//)
-	else
-		params=$(cvt 1920 1080 60 | tail -1 | sed s/^[^' ']*//)
-	fi
-	name_mode=$(echo $params | grep -P '"([^"]*)"' -o)
-	inf=$(xrandr | head -2 | tail -1 | grep -P '(^[^'\ ']*)' -o)
-
-	xrandr --newmode $params
-	xrandr --addmode $inf $name_mode
-	xrandr --output $inf --mode $name_mode
-fi
-setxkbmap us,us altgr-intl,
+	if [ -z "$(xrandr | head -2 | tail -1 | grep -e '1600x900' -e '1920x1080' 2>/dev/null)" ]; then
+		if [ "$(hostname | cut -c 3)" == "1" ] || [ "$(hostname | cut -c 3)" == "2" ]; then
+			params=$(cvt 1600 900 60 | tail -1 | sed s/^[^' ']*//)
+		else
+			params=$(cvt 1920 1080 60 | tail -1 | sed s/^[^' ']*//)
+		fi
+		name_mode=$(echo $params | grep -P '"([^"]*)"' -o)
+		inf=$(xrandr | head -2 | tail -1 | grep -P '(^[^'\ ']*)' -o)
+		cat << EOF >> $HOME/.profile
+xrandr --newmode $params
+xrandr --addmode $inf $name_mode
+xrandr --output $inf --mode $name_mode
 EOF
+	fi
+	prinft "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.profile
 	source $HOME/.profile
 	CCC "Environment setted up with success!\n\n"
 }
