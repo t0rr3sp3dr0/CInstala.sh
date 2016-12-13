@@ -187,7 +187,7 @@ function IJSB {
 	APP=$(ls JavaFXSceneBuilder* | awk '{printf("%s ", $1);}' | awk '{printf $1 ;}')
 	cd $HOME
 	$DIR/$APP < /dev/null > /dev/null 2>&1&
-	WGET "Icon" https://cin.ufpe.br/~phts/CInstala/scenebuilder.png $DIR/app/scenebuilder.png
+	WGET "icon" https://cin.ufpe.br/~phts/CInstala/scenebuilder.png $DIR/app/scenebuilder.png
 	cat << EOF > $HOME/.local/share/applications/scenebuilder.desktop
 [Desktop Entry]
 Version=1.0
