@@ -370,12 +370,12 @@ function IA {
 function IQIWE {
 	CCC "Installing Quartus II Web Edition...\n\n"
 	mkdir -p /tmp/quartus
-	WGET "Quartus II Web Edition (part 1/3)" http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run /tmp/quartus/quartus.run
-	WGET "Quartus II Web Edition (part 2/3)" http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz /tmp/quartus/max_web-13.1.0.162.qdz
-	WGET "Quartus II Web Edition (part 3/3)" http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/ModelSimSetup-13.1.0.162.run /tmp/quartus/modelsim.run
+	WGET "Quartus II Web Edition (part 1/4)" http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/QuartusSetupWeb-13.1.0.162.run /tmp/quartus/quartus.run
+	WGET "Quartus II Web Edition (part 2/4)" http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/max_web-13.1.0.162.qdz /tmp/quartus/max_web-13.1.0.162.qdz
+	WGET "Quartus II Web Edition (part 3/4)" http://download.altera.com/akdlm/software/acdsinst/13.1/162/ib_installers/ModelSimSetup-13.1.0.162.run /tmp/quartus/modelsim.run
 	DIR=$(pwd)
 	cd /tmp/quartus
-	APTGET libxft2:i386 lib32ncurses5
+	APTGET "Quartus II Web Edition (part 4/4)" libxft2:i386 lib32ncurses5
 	cd "$DIR"
 	DPKG "Quartus II Web Edition (part 1/2)" /tmp/quartus/lib32ncurses5* /tmp/quartus
 	DPKG "Quartus II Web Edition (part 2/2)" /tmp/quartus/libxft2* /tmp/quartus
