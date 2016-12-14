@@ -440,44 +440,45 @@ function ITW {
 	WMB "Tarski's World installed successfully!"
 }
 function IS {
-	CCC "Installing Skype...\n\n"
-	mkdir -p /tmp/skype
-	WGET "Skype (part 1/2)" https://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb /tmp/skype/skype.deb
-	DIR=$(pwd)
-	cd /tmp/skype
-	APTGET "Skype (part 2/2)" libxv1:i386 libxss1:i386 libqtdbus4:i386 libqtwebkit4:i386 libqt4-xml:i386 libqtgui4:i386 libqt4-network:i386 libqtcore4:i386 libqt4-opengl:i386 libaudio2:i386
-	cd "$DIR"
-	DPKG "Skype (part 1/11)" /tmp/skype/skype.deb /tmp/skype/deb
-	DPKG "Skype (part 2/11)" /tmp/skype/libaudio2_* /tmp/skype/deb
-	DPKG "Skype (part 3/11)" /tmp/skype/libqt4-network_* /tmp/skype/deb
-	DPKG "Skype (part 4/11)" /tmp/skype/libqt4-opengl_* /tmp/skype/deb
-	DPKG "Skype (part 5/11)" /tmp/skype/libqt4-xml_* /tmp/skype/deb
-	DPKG "Skype (part 6/11)" /tmp/skype/libqtcore4_* /tmp/skype/deb
-	DPKG "Skype (part 7/11)" /tmp/skype/libqtdbus4_* /tmp/skype/deb
-	DPKG "Skype (part 8/11)" /tmp/skype/libqtgui4_* /tmp/skype/deb
-	DPKG "Skype (part 9/11)" /tmp/skype/libqtwebkit4_* /tmp/skype/deb
-	DPKG "Skype (part 10/11)" /tmp/skype/libxss1_* /tmp/skype/deb
-	DPKG "Skype (part 11/11)" /tmp/skype/libxv1_* /tmp/skype/deb
-	CP "Skype (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
-	CP "Skype (part 2/2)" /tmp/skype/deb/etc/* $HOME/.local/etc
-	sed 's/Exec=skype %U/Exec=bash -ic "skype %U"/g' /tmp/skype/deb/usr/share/applications/skype.desktop | sed "s/Icon=skype.png/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/skype.png/g" > $HOME/.local/share/applications/skype.desktop
-	RM "temporary files" /tmp/skype
-	skype < /dev/null > /dev/null 2>&1 &
-	LtL skype.desktop
-	WMB "Skype installed successfully!"
-}
-function ISfLA {
-	CCC "Installing Skype for Linux Alpha...\n\n"
-	mkdir -p /tmp/skype
-	WGET "Skype for Linux Alpha" https://repo.skype.com/latest/skypeforlinux-64-alpha.deb /tmp/skype/skype.deb
-	DPKG "Skype for Linux Alpha" /tmp/skype/skype.deb /tmp/skype/deb
-	CP "Skype for Linux Alpha (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
-	CP "Skype for Linux Alpha (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
-	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/skype/deb/usr/share/applications/skypeforlinux.desktop > $HOME/.local/share/applications/skypeforlinux.desktop
-	RM "temporary files" /tmp/skype
-	skypeforlinux < /dev/null > /dev/null 2>&1 &
-	LtL skypeforlinux.desktop
-	WMB "Skype for Linux Alpha installed successfully!"
+	if (whiptail --yesno "$(L)" 0 0 --fb --title "Which version of Skype would you like to install?" --yes-button "Alpha" --no-button "Stable") then
+		CCC "Installing Skype for Linux Alpha...\n\n"
+		mkdir -p /tmp/skype
+		WGET "Skype for Linux Alpha" https://repo.skype.com/latest/skypeforlinux-64-alpha.deb /tmp/skype/skype.deb
+		DPKG "Skype for Linux Alpha" /tmp/skype/skype.deb /tmp/skype/deb
+		CP "Skype for Linux Alpha (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
+		CP "Skype for Linux Alpha (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
+		sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/skype/deb/usr/share/applications/skypeforlinux.desktop > $HOME/.local/share/applications/skypeforlinux.desktop
+		RM "temporary files" /tmp/skype
+		skypeforlinux < /dev/null > /dev/null 2>&1 &
+		LtL skypeforlinux.desktop
+		WMB "Skype for Linux Alpha installed successfully!"
+	else
+		CCC "Installing Skype...\n\n"
+		mkdir -p /tmp/skype
+		WGET "Skype (part 1/2)" https://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb /tmp/skype/skype.deb
+		DIR=$(pwd)
+		cd /tmp/skype
+		APTGET "Skype (part 2/2)" libxv1:i386 libxss1:i386 libqtdbus4:i386 libqtwebkit4:i386 libqt4-xml:i386 libqtgui4:i386 libqt4-network:i386 libqtcore4:i386 libqt4-opengl:i386 libaudio2:i386
+		cd "$DIR"
+		DPKG "Skype (part 1/11)" /tmp/skype/skype.deb /tmp/skype/deb
+		DPKG "Skype (part 2/11)" /tmp/skype/libaudio2_* /tmp/skype/deb
+		DPKG "Skype (part 3/11)" /tmp/skype/libqt4-network_* /tmp/skype/deb
+		DPKG "Skype (part 4/11)" /tmp/skype/libqt4-opengl_* /tmp/skype/deb
+		DPKG "Skype (part 5/11)" /tmp/skype/libqt4-xml_* /tmp/skype/deb
+		DPKG "Skype (part 6/11)" /tmp/skype/libqtcore4_* /tmp/skype/deb
+		DPKG "Skype (part 7/11)" /tmp/skype/libqtdbus4_* /tmp/skype/deb
+		DPKG "Skype (part 8/11)" /tmp/skype/libqtgui4_* /tmp/skype/deb
+		DPKG "Skype (part 9/11)" /tmp/skype/libqtwebkit4_* /tmp/skype/deb
+		DPKG "Skype (part 10/11)" /tmp/skype/libxss1_* /tmp/skype/deb
+		DPKG "Skype (part 11/11)" /tmp/skype/libxv1_* /tmp/skype/deb
+		CP "Skype (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
+		CP "Skype (part 2/2)" /tmp/skype/deb/etc/* $HOME/.local/etc
+		sed 's/Exec=skype %U/Exec=bash -ic "skype %U"/g' /tmp/skype/deb/usr/share/applications/skype.desktop | sed "s/Icon=skype.png/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/skype.png/g" > $HOME/.local/share/applications/skype.desktop
+		RM "temporary files" /tmp/skype
+		skype < /dev/null > /dev/null 2>&1 &
+		LtL skype.desktop
+		WMB "Skype installed successfully!"
+	fi
 }
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
@@ -609,7 +610,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Skype for Linux Alpha" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
 	if [ "$(dnsdomainname >/dev/null 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -656,9 +657,6 @@ do
 				;;
 			"Install Skype")
 				DF IS
-				;;
-			"Install Skype for Linux Alpha")
-				DF ISfLA
 				;;
 			"Install Quartus II Web Edition")
 				DF IQIWE
