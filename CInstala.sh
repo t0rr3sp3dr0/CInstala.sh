@@ -14,7 +14,12 @@ function L {
                                               Developed by Pedro Tôrres
 EOF
 }
+function DFI {
+	gtk-update-icon-cache -f $HOME/.local/share/icons/hicolor >/dev/null 2>&1
+	desktop-file-install --dir=$HOME/.local/share/applications "$HOME/.local/share/applications/$1"
+}
 function LtL {
+	DFI $1
 	favorites=$(
 python << EOF
 from collections import OrderedDict
@@ -24,13 +29,10 @@ EOF
 )
 	gsettings set com.canonical.Unity.Launcher favorites "$favorites"
 }
-function DFI {
-	desktop-file-install --dir=$HOME/.local/share/applications "$HOME/.local/share/applications/$1"
-}
 function DF {
 	tput cuu1
 	tput el
-	CMD="$(declare -f L);$(declare -f LtL);$(declare -f DFI);$(declare -f DF);$(declare -f Q);$(declare -f NULL);trap NULL INT;$(declare -f CCC);$(declare -f IO);$(declare -f EL);$(declare -f WMB);$(declare -f WGET);$(declare -f TAR);$(declare -f CP);$(declare -f RM);$(declare -f UNZIP);$(declare -f DPKG);$(declare -f APTGET);$(declare -f $1);$1"
+	CMD="$(declare -f L);$(declare -f DFI);$(declare -f LtL);$(declare -f DF);$(declare -f Q);$(declare -f NULL);trap NULL INT;$(declare -f CCC);$(declare -f IO);$(declare -f EL);$(declare -f WMB);$(declare -f WGET);$(declare -f TAR);$(declare -f CP);$(declare -f RM);$(declare -f UNZIP);$(declare -f DPKG);$(declare -f APTGET);$(declare -f $1);$1"
 	gnome-terminal -e "bash -ic '${CMD//\'/\'\"\'\"\'}'"
 }
 function Q {
@@ -211,7 +213,6 @@ Exec=$DIR/$APP %f
 Categories=Development;
 Terminal=false
 EOF
-	DFI scenebuilder.desktop
 	LtL scenebuilder.desktop
 	WMB "JavaFX Scene Builder installed successfully!"
 }
@@ -245,7 +246,6 @@ Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-idea
 EOF
-	DFI jetbrains-idea.desktop
 	LtL jetbrains-idea.desktop
 	WMB "IntelliJ IDEA Ultimate installed successfully!"
 }
@@ -278,7 +278,6 @@ Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-clion
 EOF
-	DFI jetbrains-clion.desktop
 	LtL jetbrains-clion.desktop
 	WMB "CLion installed successfully!"
 }
@@ -311,7 +310,6 @@ Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-pycharm
 EOF
-	DFI jetbrains-pycharm.desktop
 	LtL jetbrains-pycharm.desktop
 	WMB "PyCharm Professional installed successfully!"
 }
@@ -337,7 +335,6 @@ Categories=Development;IDE;
 Terminal=false
 StartupWMClass=jetbrains-studio
 EOF
-	DFI jetbrains-studio.desktop
 	LtL jetbrains-studio.desktop
 	WMB "Android Studio installed successfully!"
 }
@@ -357,7 +354,6 @@ function IST {
 	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	RM "temporary files" /tmp/subl*
 	subl < /dev/null > /dev/null 2>&1 &
-	DFI sublime_text.desktop
 	LtL sublime_text.desktop
 	WMB "Sublime Text installed successfully!"
 }
@@ -376,7 +372,6 @@ function IA {
 	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/share/applications/atom.desktop | sed "s/Icon=atom/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/atom.png/g" > $HOME/.local/share/applications/atom.desktop
 	RM "temporary files" /tmp/atom*
 	atom < /dev/null > /dev/null 2>&1 &
-	DFI atom.desktop
 	LtL atom.desktop
 	WMB "Atom installed successfully!"
 }
@@ -411,7 +406,6 @@ Exec=bash -i "$HOME/altera/13.1/quartus/bin/quartus" --64bit %f
 Terminal=false
 Path=$HOME/altera/13.1
 EOF
-	DFI quartus.desktop
 	LtL quartus.desktop
 	WMB "Quartus II Web Edition installed successfully!"
 }
@@ -441,8 +435,6 @@ function ITW {
 	ln -s "$HOME/.local/share/Tarski/TW Exercise Files" $HOME/Desktop
 	RM "temporary files" /tmp/tw
 	tarski < /dev/null > /dev/null 2>&1 &
-	DFI OP-tarski.desktop
-	DFI OP-submit.desktop
 	LtL OP-tarski.desktop
 	LtL OP-submit.desktop
 	WMB "Tarski's World installed successfully!"
@@ -469,11 +461,23 @@ function IS {
 	CP "Skype (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
 	CP "Skype (part 2/2)" /tmp/skype/deb/etc/* $HOME/.local/etc
 	sed 's/Exec=skype %U/Exec=bash -ic "skype %U"/g' /tmp/skype/deb/usr/share/applications/skype.desktop | sed "s/Icon=skype.png/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/skype.png/g" > $HOME/.local/share/applications/skype.desktop
-	#RM "temporary files" /tmp/skype
+	RM "temporary files" /tmp/skype
 	skype < /dev/null > /dev/null 2>&1 &
-	DFI skype.desktop
 	LtL skype.desktop
 	WMB "Skype installed successfully!"
+}
+function ISfLA {
+	CCC "Installing Skype for Linux Alpha...\n\n"
+	mkdir -p /tmp/skype
+	WGET "Skype for Linux Alpha" https://repo.skype.com/latest/skypeforlinux-64-alpha.deb /tmp/skype/skype.deb
+	DPKG "Skype for Linux Alpha" /tmp/skype/skype.deb /tmp/skype/deb
+	CP "Skype for Linux Alpha (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
+	CP "Skype for Linux Alpha (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
+	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/skype/deb/usr/share/applications/skypeforlinux.desktop > $HOME/.local/share/applications/skypeforlinux.desktop
+	RM "temporary files" /tmp/skype
+	skypeforlinux < /dev/null > /dev/null 2>&1 &
+	LtL skypeforlinux.desktop
+	WMB "Skype for Linux Alpha installed successfully!"
 }
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
@@ -605,7 +609,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Skype for Linux Alpha" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
 	if [ "$(dnsdomainname >/dev/null 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -623,7 +627,7 @@ do
 				CS
 				break
 				;;
-			"Install Java SE Development Kit 8")
+			"Install Java SE Development Kit")
 				DF IJSDK
 				;;
 			"Install JavaFX Scene Builder")
@@ -652,6 +656,9 @@ do
 				;;
 			"Install Skype")
 				DF IS
+				;;
+			"Install Skype for Linux Alpha")
+				DF ISfLA
 				;;
 			"Install Quartus II Web Edition")
 				DF IQIWE
