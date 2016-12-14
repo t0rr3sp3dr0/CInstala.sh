@@ -30,13 +30,16 @@ function DFI {
 function DF {
 	tput cuu1
 	tput el
-	CMD="$(declare -f L);$(declare -f LtL);$(declare -f DFI);$(declare -f DF);$(declare -f Q);trap Q INT;$(declare -f CCC);$(declare -f IO);$(declare -f WMB);$(declare -f WGET);$(declare -f TAR);$(declare -f CP);$(declare -f RM);$(declare -f UNZIP);$(declare -f DPKG);$(declare -f APTGET);$(declare -f $1);$1"
+	CMD="$(declare -f L);$(declare -f LtL);$(declare -f DFI);$(declare -f DF);$(declare -f Q);$(declare -f NULL);trap NULL INT;$(declare -f CCC);$(declare -f IO);$(declare -f EL);$(declare -f WMB);$(declare -f WGET);$(declare -f TAR);$(declare -f CP);$(declare -f RM);$(declare -f UNZIP);$(declare -f DPKG);$(declare -f APTGET);$(declare -f $1);$1"
 	gnome-terminal -e "bash -ic '${CMD//\'/\'\"\'\"\'}'"
 }
 function Q {
 	tput clear
 	tput reset
 	exit
+}
+function NULL {
+	:
 }
 # UTILITIES END
 
@@ -64,6 +67,14 @@ function IO {
 	tput cuu1
 	tput el
 	tput sgr 0
+}
+function EL {
+	if [ $? -eq 0 ]
+	then
+		CCC "$1! Press any key to continue...\n\n"
+	else
+		CCC "Something went wrong! Please try again...\n\n"
+	fi
 }
 # LEGACY TUI END
 
@@ -104,6 +115,7 @@ function APTGET {
 # WHIPTAIL TUI END
 
 function SE {
+	trap NULL INT
 	CCC "Setting up Environment...\n\n"
 	WGET ".vimrc" https://gist.githubusercontent.com/t0rr3sp3dr0/7f9c29cc8ddda2becbab7f7a2a3cf8c9/raw/.vimrc $HOME/.vimrc
 	cat << EOF > $HOME/.config/upstart/desktopClose.conf
@@ -111,17 +123,17 @@ description "Desktop Close Task"
 start on session-end
 task
 script
-	rm -fR $HOME/.*_history < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/.mozilla/firefox/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/.ssh/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/Desktop/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/Documents/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/Downloads/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/git/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/AndroidStudioProjects/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/ClionProjects/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/IdeaProjects/* < /dev/null > /dev/null 2>&1&
-	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1&
+	rm -fR $HOME/.*_history < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/.mozilla/firefox/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/.ssh/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/Desktop/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/Documents/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/Downloads/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/git/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/AndroidStudioProjects/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/ClionProjects/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/IdeaProjects/* < /dev/null > /dev/null 2>&1 &
+	rm -fR $HOME/PycharmProjects/* < /dev/null > /dev/null 2>&1 &
 end script
 EOF
 	chmod 700 $HOME
@@ -155,13 +167,14 @@ EOF
 	printf "\nsetxkbmap us,us altgr-intl,\n" >> $HOME/.bashrc
 	source $HOME/.profile
 	CCC "Environment setted up with success!\n\n"
+	trap Q INT
 }
 function GSK {
 	CCC "Generating SSH Key...\n\n"
 	ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f $HOME/.ssh/id_rsa
 	cat $HOME/.ssh/id_rsa.pub | xclip -selection c
 	if (whiptail --yesno "$(L)" 0 0 --fb --title "Public SSH Key copied to clipboard! Would you like to upload it to GitHub?") then
-	    firefox https://github.com/settings/keys < /dev/null > /dev/null 2>&1&
+		firefox https://github.com/settings/keys < /dev/null > /dev/null 2>&1 &
 	fi
 }
 function IJSDK {
@@ -186,7 +199,7 @@ function IJSB {
 	DIR=$(pwd)
 	APP=$(ls JavaFXSceneBuilder* | awk '{printf("%s ", $1);}' | awk '{printf $1 ;}')
 	cd $HOME
-	$DIR/$APP < /dev/null > /dev/null 2>&1&
+	$DIR/$APP < /dev/null > /dev/null 2>&1 &
 	WGET "icon" https://cin.ufpe.br/~phts/CInstala/scenebuilder.png $DIR/app/scenebuilder.png
 	cat << EOF > $HOME/.local/share/applications/scenebuilder.desktop
 [Desktop Entry]
@@ -219,7 +232,7 @@ function IIIU {
 	WGET "options" https://cin.ufpe.br/~phts/CInstala/options.tar.gz /tmp/options.tgz
 	TAR "options" /tmp/options.tgz $HOME/.IntelliJIdea$VER/config/options/
 	RM "temporary files" /tmp/idea.tgz /tmp/options.tgz
-	$DIR/bin/idea.sh < /dev/null > /dev/null 2>&1&
+	$DIR/bin/idea.sh < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
 [Desktop Entry]
 Version=1.0
@@ -252,7 +265,7 @@ function IC {
 	WGET "options" https://cin.ufpe.br/~phts/CInstala/options.tar.gz /tmp/options.tgz
 	TAR "options" /tmp/options.tgz $HOME/.CLion$VER/config/options/
 	RM "temporary files" /tmp/idea.tgz /tmp/options.tgz
-	$DIR/bin/clion.sh < /dev/null > /dev/null 2>&1&
+	$DIR/bin/clion.sh < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/jetbrains-clion.desktop
 [Desktop Entry]
 Version=1.0
@@ -285,7 +298,7 @@ function IPP {
 	WGET "options" https://cin.ufpe.br/~phts/CInstala/options.tar.gz /tmp/options.tgz
 	TAR "options" /tmp/options.tgz $HOME/.PyCharm$VER/config/options/
 	RM "temporary files" /tmp/pycharm.tgz /tmp/options.tgz
-	$DIR/bin/pycharm.sh < /dev/null > /dev/null 2>&1&
+	$DIR/bin/pycharm.sh < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/jetbrains-pycharm.desktop
 [Desktop Entry]
 Version=1.0
@@ -311,7 +324,7 @@ function IAS {
 	export STUDIO_JDK=$JAVA_HOME
 	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
-	$HOME/.local/opt/android-studio/bin/studio.sh < /dev/null > /dev/null 2>&1&
+	$HOME/.local/opt/android-studio/bin/studio.sh < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/jetbrains-studio.desktop
 [Desktop Entry]
 Version=1.0
@@ -343,7 +356,7 @@ function IST {
 	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/bin/subl > $HOME/.local/bin/subl
 	sed "s/\/opt/$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt/g" /tmp/subl/usr/share/applications/sublime_text.desktop > $HOME/.local/share/applications/sublime_text.desktop
 	RM "temporary files" /tmp/subl*
-	subl < /dev/null > /dev/null 2>&1&
+	subl < /dev/null > /dev/null 2>&1 &
 	DFI sublime_text.desktop
 	LtL sublime_text.desktop
 	WMB "Sublime Text installed successfully!"
@@ -362,7 +375,7 @@ function IA {
 	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/bin/atom > $HOME/.local/bin/atom
 	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/share/applications/atom.desktop | sed "s/Icon=atom/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/atom.png/g" > $HOME/.local/share/applications/atom.desktop
 	RM "temporary files" /tmp/atom*
-	atom < /dev/null > /dev/null 2>&1&
+	atom < /dev/null > /dev/null 2>&1 &
 	DFI atom.desktop
 	LtL atom.desktop
 	WMB "Atom installed successfully!"
@@ -385,7 +398,7 @@ function IQIWE {
 	/tmp/quartus/quartus.run
 	chmod +x /tmp/quartus/modelsim.run
 	/tmp/quartus/modelsim.run
-	$HOME/altera/13.1/quartus/bin/quartus --64bit < /dev/null > /dev/null 2>&1&
+	$HOME/altera/13.1/quartus/bin/quartus --64bit < /dev/null > /dev/null 2>&1 &
 	RM "temporary files" /tmp/quartus
 	cat << EOF > $HOME/.local/share/applications/quartus.desktop
 [Desktop Entry]
@@ -417,17 +430,17 @@ function ITW {
 	mkdir -p /tmp/tw
 	curl 'https://ggweb.gradegrinder.net/downloader/TW$002fDedekind$002fTW-16_01-linux-x86_64-deb-installer.sh' -k | tail --lines=+161 > /tmp/tw/tw.tgz
 	TAR "Tarski's World (part 1/6)" /tmp/tw/tw.tgz /tmp/tw
-	DPKG "Tarski's World (part 2/6)" /tmp/tw/op-Tarski-common-15.01-0_all.deb /tmp/tw/deb
-	DPKG "Tarski's World (part 3/6)" /tmp/tw/op-Tarski-doc-15.01-0_all.deb /tmp/tw/deb
-	DPKG "Tarski's World (part 4/6)" /tmp/tw/op-jre-1.7.0-60_amd64.deb /tmp/tw/deb
-	DPKG "Tarski's World (part 5/6)" /tmp/tw/op-submit-3.0-7_all.deb /tmp/tw/deb
-	DPKG "Tarski's World (part 6/6)" /tmp/tw/op-tarski-7.2-3_all.deb /tmp/tw/deb
+	DPKG "Tarski's World (part 2/6)" /tmp/tw/op-Tarski-common-* /tmp/tw/deb
+	DPKG "Tarski's World (part 3/6)" /tmp/tw/op-Tarski-doc-* /tmp/tw/deb
+	DPKG "Tarski's World (part 4/6)" /tmp/tw/op-jre-* /tmp/tw/deb
+	DPKG "Tarski's World (part 5/6)" /tmp/tw/op-submit-* /tmp/tw/deb
+	DPKG "Tarski's World (part 6/6)" /tmp/tw/op-tarski-* /tmp/tw/deb
 	CP "Tarski's World" /tmp/tw/deb/usr/* $HOME/.local
 	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-tarski.desktop > $HOME/.local/share/applications/OP-tarski.desktop
 	sed "s/Exec=/Exec=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/bin\//g" /tmp/tw/deb/usr/share/applications/OP-submit.desktop > $HOME/.local/share/applications/OP-submit.desktop
 	ln -s "$HOME/.local/share/Tarski/TW Exercise Files" $HOME/Desktop
 	RM "temporary files" /tmp/tw
-	$HOME/.local/bin/tarski < /dev/null > /dev/null 2>&1&
+	tarski < /dev/null > /dev/null 2>&1 &
 	DFI OP-tarski.desktop
 	DFI OP-submit.desktop
 	LtL OP-tarski.desktop
@@ -435,6 +448,34 @@ function ITW {
 	WMB "Tarski's World installed successfully!"
 }
 function IS {
+	CCC "Installing Skype...\n\n"
+	mkdir -p /tmp/skype
+	WGET "Skype (part 1/2)" https://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb /tmp/skype/skype.deb
+	DIR=$(pwd)
+	cd /tmp/skype
+	APTGET "Skype (part 2/2)" libxv1:i386 libxss1:i386 libqtdbus4:i386 libqtwebkit4:i386 libqt4-xml:i386 libqtgui4:i386 libqt4-network:i386 libqtcore4:i386 libqt4-opengl:i386 libaudio2:i386
+	cd "$DIR"
+	DPKG "Skype (part 1/11)" /tmp/skype/skype.deb /tmp/skype/deb
+	DPKG "Skype (part 2/11)" /tmp/skype/libaudio2_* /tmp/skype/deb
+	DPKG "Skype (part 3/11)" /tmp/skype/libqt4-network_* /tmp/skype/deb
+	DPKG "Skype (part 4/11)" /tmp/skype/libqt4-opengl_* /tmp/skype/deb
+	DPKG "Skype (part 5/11)" /tmp/skype/libqt4-xml_* /tmp/skype/deb
+	DPKG "Skype (part 6/11)" /tmp/skype/libqtcore4_* /tmp/skype/deb
+	DPKG "Skype (part 7/11)" /tmp/skype/libqtdbus4_* /tmp/skype/deb
+	DPKG "Skype (part 8/11)" /tmp/skype/libqtgui4_* /tmp/skype/deb
+	DPKG "Skype (part 9/11)" /tmp/skype/libqtwebkit4_* /tmp/skype/deb
+	DPKG "Skype (part 10/11)" /tmp/skype/libxss1_* /tmp/skype/deb
+	DPKG "Skype (part 11/11)" /tmp/skype/libxv1_* /tmp/skype/deb
+	CP "Skype (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
+	CP "Skype (part 2/2)" /tmp/skype/deb/etc/* $HOME/.local/etc
+	sed 's/Exec=skype %U/Exec=bash -ic "skype %U"/g' /tmp/skype/deb/usr/share/applications/skype.desktop | sed "s/Icon=skype.png/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/pixmaps\/skype.png/g" > $HOME/.local/share/applications/skype.desktop
+	#RM "temporary files" /tmp/skype
+	skype < /dev/null > /dev/null 2>&1 &
+	DFI skype.desktop
+	LtL skype.desktop
+	WMB "Skype installed successfully!"
+}
+function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
 		bash -i <(echo "sdk selfupdate force")
@@ -443,17 +484,6 @@ function IS {
 		source "$HOME/.sdkman/bin/sdkman-init.sh"
 	fi
 	CCC "SDKMAN! installed successfully!\n\n"
-}
-function EL {
-	if [ $? -eq 0 ]
-	then
-		CCC "$1! Press any key to continue...\n\n"
-	else
-		CCC "Something went wrong! Please try again...\n\n"
-	fi
-}
-function CS {
-	IS
 	IFS=$'\n'
 	PS3='Please select an option: '
 	list=$(curl -s "${SDKMAN_LEGACY_API}/candidates/list")
@@ -509,24 +539,46 @@ function CS {
 	done
 }
 function INIT {
-	trap Q INT
+	trap NULL INT
 	mkdir -p $HOME/.config/upstart
 	mkdir -p $HOME/.gem
 	mkdir -p $HOME/.local/bin
+	mkdir -p $HOME/.local/etc
 	mkdir -p $HOME/.local/jvm
 	mkdir -p $HOME/.local/lib
-	mkdir -p $HOME/.local/lib32
-	mkdir -p $HOME/.local/lib64
+	mkdir -p $HOME/.local/lib/i386-linux-gnu
+	mkdir -p $HOME/.local/lib/x86_64-linux-gnu
 	mkdir -p $HOME/.local/opt
 	mkdir -p $HOME/.local/share/applications
 	mkdir -p $HOME/.ssh
 	mkdir -p $HOME/git
+	ln -s $HOME/.local/lib/i386-linux-gnu $HOME/.local/lib32 >/dev/null 2>&1
+	if [ $? == 1 ]
+	then
+		cp -fR $HOME/.local/lib32/* $HOME/.local/lib/i386-linux-gnu >/dev/null 2>&1
+		if [ $? == 0 ]
+		then
+			rm -fR $HOME/.local/lib32
+			ln -s $HOME/.local/lib/i386-linux-gnu $HOME/.local/lib32
+		fi
+	fi
+	ln -s $HOME/.local/lib/x86_64-linux-gnu $HOME/.local/lib64 >/dev/null 2>&1
+	if [ $? == 1 ]
+	then
+		cp -fR $HOME/.local/lib64/* $HOME/.local/lib/x86_64-linux-gnu >/dev/null 2>&1
+		if [ $? == 0 ]
+		then
+			rm -fR $HOME/.local/lib64
+			ln -s $HOME/.local/lib/x86_64-linux-gnu $HOME/.local/lib64
+		fi
+	fi
 	export PATH=$PATH:$HOME/.local/bin
 	export GEM_HOME=$HOME/.gem
 	export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
 	printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
-	if [ -z "$(which xclip 2>/dev/null 2>/dev/null)" ]; then
+	if [ -z "$(which xclip 2>/dev/null)" ]
+	then
 		DIR=$(pwd)
 		cd /tmp
 		APTGET "xclip" xclip
@@ -535,7 +587,8 @@ function INIT {
 		CP "xclip" /tmp/xclip/usr/* $HOME/.local
 		RM "temporary files" /tmp/xclip*
 	fi
-	if [ -z "$(which pv 2>/dev/null 2>/dev/null)" ]; then
+	if [ -z "$(which pv 2>/dev/null)" ]
+	then
 		DIR=$(pwd)
 		cd /tmp
 		APTGET "pv" pv
@@ -544,6 +597,7 @@ function INIT {
 		CP "pv" /tmp/pv/usr/* $HOME/.local
 		RM "temporary files" /tmp/pv*
 	fi
+	trap Q INT
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
@@ -551,8 +605,8 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
-	if [ "$(dnsdomainname 2>/dev/null 2>/dev/null)" == "windows.cin.ufpe.br" ]; then
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
+	if [ "$(dnsdomainname >/dev/null 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
 	select opt in "${options[@]}"
@@ -595,6 +649,9 @@ do
 				;;
 			"Install VIm")
 				DF IV
+				;;
+			"Install Skype")
+				DF IS
 				;;
 			"Install Quartus II Web Edition")
 				DF IQIWE
