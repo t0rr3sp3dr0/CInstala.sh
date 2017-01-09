@@ -181,7 +181,7 @@ function GSK {
 }
 function IJSDK {
 	CCC "Installing Java SE Development Kit...\n\n"
-	WGET "Java SE Development Kit" http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.tar.gz /tmp/jdk.tgz "Cookie: oraclelicense=accept-securebackup-cookie;"
+	WGET "Java SE Development Kit" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz /tmp/jdk.tgz "Cookie: oraclelicense=accept-securebackup-cookie;"
 	RM "old versions of Java SE Development Kit" $HOME/.local/jvm/jdk*
 	TAR "Java SE Development Kit" /tmp/jdk.tgz $HOME/.local/jvm
 	RM "temporary files" /tmp/jdk.tgz
@@ -227,7 +227,7 @@ function ITBA {
 }
 function IAS {
 	CCC "Installing Android Studio...\n\n"
-	WGET "Android Studio" https://dl.google.com/dl/android/studio/ide-zips/2.2.2.0/android-studio-ide-145.3360264-linux.zip /tmp/studio.zip
+	WGET "Android Studio" https://dl.google.com/dl/android/studio/ide-zips/2.2.3.0/android-studio-ide-145.3537739-linux.zip /tmp/studio.zip
 	RM "old versions of Android Studio" $HOME/.local/opt/android-studio
 	UNZIP /tmp/studio.zip $HOME/.local/opt
 	RV "temporary files" /tmp/studio.zip
