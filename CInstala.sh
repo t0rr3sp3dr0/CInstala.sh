@@ -216,102 +216,14 @@ EOF
 	LtL scenebuilder.desktop
 	WMB "JavaFX Scene Builder installed successfully!"
 }
-function IIIU {
-	CCC "Installing IntelliJ IDEA Ultimate...\n\n"
-	WGET "IntelliJ IDEA Ultimate" https://download.jetbrains.com/idea/ideaIU-2016.2.5.tar.gz /tmp/idea.tgz
-	RM "old versions of IntelliJ IDEA Ultimate" $HOME/.local/opt/idea-*
-	TAR "IntelliJ IDEA Ultimate" /tmp/idea.tgz $HOME/.local/opt
-	export IDEA_JDK=$JAVA_HOME
-	export IDEA_JDK_64=$IDEA_JDK
-	printf "\nexport IDEA_JDK=\$JAVA_HOME\nexport IDEA_JDK_64=\$IDEA_JDK\n" >> $HOME/.bashrc
-	source $HOME/.bashrc
-	cd $HOME/.local/opt/idea-*
-	DIR=$(pwd)
-	VER=$(pwd | sed -e 's/\/.*\-//g')
-	cd $HOME
-	mkdir -p $HOME/.IntelliJIdea$VER/config/options
-	WGET "options" https://cin.ufpe.br/~phts/CInstala/options.tar.gz /tmp/options.tgz
-	TAR "options" /tmp/options.tgz $HOME/.IntelliJIdea$VER/config/options/
-	RM "temporary files" /tmp/idea.tgz /tmp/options.tgz
-	$DIR/bin/idea.sh < /dev/null > /dev/null 2>&1 &
-	cat << EOF > $HOME/.local/share/applications/jetbrains-idea.desktop
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=IntelliJ IDEA
-Icon=$DIR/bin/idea.png
-Exec=bash -i "$DIR/bin/idea.sh" %f
-Comment=The Drive to Develop
-Categories=Development;IDE;
-Terminal=false
-StartupWMClass=jetbrains-idea
-EOF
-	LtL jetbrains-idea.desktop
-	WMB "IntelliJ IDEA Ultimate installed successfully!"
-}
-function IC {
-	CCC "Installing CLion...\n\n"
-	WGET "CLion" https://download.jetbrains.com/cpp/CLion-2016.2.tar.gz /tmp/clion.tgz
-	RM "old versions of CLion" $HOME/.local/opt/clion-*
-	TAR "CLion" /tmp/clion.tgz $HOME/.local/opt
-	export CL_JDK=$JAVA_HOME
-	printf "\nexport CL_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	source $HOME/.bashrc
-	cd $HOME/.local/opt/clion-*
-	DIR=$(pwd)
-	VER=$(pwd | sed -e 's/\/.*\-//g')
-	cd $HOME
-	mkdir -p $HOME/.CLion$VER/config/options
-	WGET "options" https://cin.ufpe.br/~phts/CInstala/options.tar.gz /tmp/options.tgz
-	TAR "options" /tmp/options.tgz $HOME/.CLion$VER/config/options/
-	RM "temporary files" /tmp/idea.tgz /tmp/options.tgz
-	$DIR/bin/clion.sh < /dev/null > /dev/null 2>&1 &
-	cat << EOF > $HOME/.local/share/applications/jetbrains-clion.desktop
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=CLion
-Icon=$DIR/bin/clion.svg
-Exec=bash -i "$DIR/bin/clion.sh" %f
-Comment=The Drive to Develop
-Categories=Development;IDE;
-Terminal=false
-StartupWMClass=jetbrains-clion
-EOF
-	LtL jetbrains-clion.desktop
-	WMB "CLion installed successfully!"
-}
-function IPP {
-	CCC "Installing PyCharm Professional...\n\n"
-	WGET "PyCharm Professional" https://download.jetbrains.com/python/pycharm-professional-2016.2.3.tar.gz /tmp/pycharm.tgz
-	RM "old versions of PyCharm Professional" $HOME/.local/opt/pycharm-*
-	TAR "PyCharm Professional" /tmp/pycharm.tgz $HOME/.local/opt
-	export PYCHARM_JDK=$JAVA_HOME
-	printf "\nexport PYCHARM_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
-	source $HOME/.bashrc
-	cd $HOME/.local/opt/pycharm-*
-	DIR=$(pwd)
-	VER=$(pwd | sed -e 's/\/.*\-//g')
-	cd $HOME
-	mkdir -p $HOME/.PyCharm$VER/config/options
-	WGET "options" https://cin.ufpe.br/~phts/CInstala/options.tar.gz /tmp/options.tgz
-	TAR "options" /tmp/options.tgz $HOME/.PyCharm$VER/config/options/
-	RM "temporary files" /tmp/pycharm.tgz /tmp/options.tgz
-	$DIR/bin/pycharm.sh < /dev/null > /dev/null 2>&1 &
-	cat << EOF > $HOME/.local/share/applications/jetbrains-pycharm.desktop
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=PyCharm
-Icon=$DIR/bin/pycharm.png
-Exec=bash -i "$DIR/bin/pycharm.sh" %f
-Comment=The Drive to Develop
-Categories=Development;IDE;
-Terminal=false
-StartupWMClass=jetbrains-pycharm
-EOF
-	LtL jetbrains-pycharm.desktop
-	WMB "PyCharm Professional installed successfully!"
+function ITBA {
+	CCC "Installing JetBrains Toolbox...\n\n"
+	WGET "JetBrains Toolbox" "https://data.services.jetbrains.com/products/download?code=TBA&platform=linux" /tmp/tba.tgz
+	TAR "JetBrains Toolbox" /tmp/tba.tgz /tmp
+	CP "Sublime Text" /tmp/jetbrains-toolbox-*/jetbrains-toolbox $HOME/.local/bin
+	RV "temporary files" /tmp/tba.tgz /tmp/jetbrains-toolbox-*
+	jetbrains-toolbox < /dev/null > /dev/null 2>&1 &
+	WMB "JetBrains Toolbox installed successfully!"
 }
 function IAS {
 	CCC "Installing Android Studio...\n\n"
@@ -610,7 +522,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install CLion" "Install IntelliJ IDEA Ultimate" "Install PyCharm Professional" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
 	if [ "$(dnsdomainname >/dev/null 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -637,14 +549,8 @@ do
 			"Install Android Studio")
 				DF IAS
 				;;
-			"Install CLion")
-				DF IC
-				;;
-			"Install IntelliJ IDEA Ultimate")
-				DF IIIU
-				;;
-			"Install PyCharm Professional")
-				DF IPP
+			"Install JetBrains Toolbox")
+				DF ITBA
 				;;
 			"Install Atom")
 				DF IA
