@@ -227,7 +227,7 @@ function ITBA {
 }
 function IAS {
 	CCC "Installing Android Studio...\n\n"
-	WGET "Android Studio" $(curl -Ls $(curl -Ls http://tools.android.com/download/studio/stable | grep http://tools.android.com/download/studio/builds/ | rev | sed 's/.*>"\(.*\)"=ferh a<.*/\1/' | rev) | grep https://dl.google.com/dl/android/studio/ide-zips | sed 's/.*<a href="\(.*\)">https.*/\1/') /tmp/studio.zip
+	WGET "Android Studio" https://dl.google.com/dl/android/studio/ide-zips$(curl -Ls $(curl -Ls http://tools.android.com/download/studio/stable | grep http://tools.android.com/download/studio/builds/ | rev | sed 's/.*>"\(.*\)"=ferh a<.*/\1/' | rev) | grep https://dl.google.com/dl/android/studio/ide-zips/ | sed 's/.*ide-zips\(.*\)-.*a>.*/\1/')-linux.zip /tmp/studio.zip
 	RM "old versions of Android Studio" $HOME/.local/opt/android-studio
 	UNZIP /tmp/studio.zip $HOME/.local/opt
 	RV "temporary files" /tmp/studio.zip
