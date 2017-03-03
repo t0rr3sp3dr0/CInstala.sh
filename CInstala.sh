@@ -352,18 +352,18 @@ function ITW {
 	WMB "Tarski's World installed successfully!"
 }
 function IS {
-	if (whiptail --yesno "$(L)" 0 0 --fb --title "Which version of Skype would you like to install?" --yes-button "Alpha" --no-button "Stable") then
-		CCC "Installing Skype for Linux Alpha...\n\n"
+	if (whiptail --yesno "$(L)" 0 0 --fb --title "Which version of Skype would you like to install?" --yes-button "Beta" --no-button "Stable") then
+		CCC "Installing Skype for Linux Beta...\n\n"
 		mkdir -p /tmp/skype
-		WGET "Skype for Linux Alpha" https://repo.skype.com/latest/skypeforlinux-64-alpha.deb /tmp/skype/skype.deb
-		DPKG "Skype for Linux Alpha" /tmp/skype/skype.deb /tmp/skype/deb
-		CP "Skype for Linux Alpha (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
-		CP "Skype for Linux Alpha (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
+		WGET "Skype for Linux Beta" https://repo.skype.com/latest/skypeforlinux-64.deb /tmp/skype/skype.deb
+		DPKG "Skype for Linux Beta" /tmp/skype/skype.deb /tmp/skype/deb
+		CP "Skype for Linux Beta (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
+		CP "Skype for Linux Beta (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
 		sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/skype/deb/usr/share/applications/skypeforlinux.desktop > $HOME/.local/share/applications/skypeforlinux.desktop
 		RM "temporary files" /tmp/skype
 		skypeforlinux < /dev/null > /dev/null 2>&1 &
 		LtL skypeforlinux.desktop
-		WMB "Skype for Linux Alpha installed successfully!"
+		WMB "Skype for Linux Beta installed successfully!"
 	else
 		CCC "Installing Skype...\n\n"
 		mkdir -p /tmp/skype
