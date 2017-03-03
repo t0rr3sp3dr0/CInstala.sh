@@ -220,7 +220,7 @@ function ITBA {
 	CCC "Installing JetBrains Toolbox...\n\n"
 	WGET "JetBrains Toolbox" "https://data.services.jetbrains.com/products/download?code=TBA&platform=linux" /tmp/tba.tgz
 	TAR "JetBrains Toolbox" /tmp/tba.tgz /tmp
-	CP "Sublime Text" /tmp/jetbrains-toolbox-*/jetbrains-toolbox $HOME/.local/bin
+	CP "JetBrains Toolbox" /tmp/jetbrains-toolbox-*/jetbrains-toolbox $HOME/.local/bin
 	RV "temporary files" /tmp/tba.tgz /tmp/jetbrains-toolbox-*
 	jetbrains-toolbox < /dev/null > /dev/null 2>&1 &
 	WMB "JetBrains Toolbox installed successfully!"
