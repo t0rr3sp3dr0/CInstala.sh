@@ -229,10 +229,8 @@ function IAS {
 	CCC "Installing Android Studio...\n\n"
 	WGET "Android Studio" https://dl.google.com/dl/android/studio/ide-zips$(curl -Ls $(curl -Ls http://tools.android.com/download/studio/stable | grep http://tools.android.com/download/studio/builds/ | rev | sed 's/.*>"\(.*\)"=ferh a<.*/\1/' | rev) | grep https://dl.google.com/dl/android/studio/ide-zips/ | sed 's/.*ide-zips\(.*\)-.*a>.*/\1/')-linux.zip /tmp/studio.zip
 	RM "old versions of Android Studio" $HOME/.local/opt/android-studio
-	UNZIP /tmp/studio.zip $HOME/.local/opt
+	UNZIP "Android Studio" /tmp/studio.zip $HOME/.local/opt
 	RM "temporary files" /tmp/studio.zip
-	export STUDIO_JDK=$JAVA_HOME
-	printf "\nexport STUDIO_JDK=\$JAVA_HOME\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
 	$HOME/.local/opt/android-studio/bin/studio.sh < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/jetbrains-studio.desktop
