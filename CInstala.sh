@@ -390,6 +390,22 @@ function IS {
 		WMB "Skype installed successfully!"
 	fi
 }
+function IM {
+	CCC "Installing Mars...\n\n"
+	WGET "Mars" http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_5_Aug2014/Mars4_5.jar $HOME/.local/bin/mars.jar
+	java -jar "$HOME/.local/bin/mars.jar" < /dev/null > /dev/null 2>&1 &
+	cat << EOF > $HOME/.local/share/applications/mars.desktop
+[Desktop Entry]
+Type=Application
+Version=4.5
+Name=Mars
+Comment=Mips Assembler and Runtime Simulator
+Exec=java -jar "$HOME/.local/bin/mars.jar"
+Terminal=false
+EOF
+	LtL mars.desktop
+	WMB "Mars installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -520,7 +536,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit 8" "Install JavaFX Scene Builder" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Quartus II Web Edition" "Install Mars" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -567,6 +583,9 @@ do
 				;;
 			"Install Tarski's World")
 				DF ITW
+				;;
+			"Install Mars")
+				DF IM
 				;;
 			"Install G++ 6")
 				IGPP6
