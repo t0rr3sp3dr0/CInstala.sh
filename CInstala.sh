@@ -395,7 +395,7 @@ function IM {
 	mkdir -p $HOME/.local/opt/mars
 	WGET "Mars" http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_5_Aug2014/Mars4_5.jar $HOME/.local/opt/mars/Mars4_5.jar
 	unzip -p $HOME/.local/opt/mars/Mars4_5.jar images/MarsThumbnail.gif > $HOME/.local/opt/mars/MarsThumbnail.gif
-	java -jar "$HOME/.local/bin/mars.jar" < /dev/null > /dev/null 2>&1 &
+	java -jar "$HOME/.local/opt/mars/Mars4_5.jar" < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/mars.desktop
 [Desktop Entry]
 Type=Application
