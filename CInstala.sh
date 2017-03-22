@@ -392,7 +392,9 @@ function IS {
 }
 function IM {
 	CCC "Installing Mars...\n\n"
-	WGET "Mars" http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_5_Aug2014/Mars4_5.jar $HOME/.local/bin/mars.jar
+	mkdir -p $HOME/.local/opt/mars
+	WGET "Mars" http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_5_Aug2014/Mars4_5.jar $HOME/.local/opt/mars/Mars4_5.jar
+	unzip -p $HOME/.local/opt/mars/Mars4_5.jar images/MarsThumbnail.gif > $HOME/.local/opt/mars/MarsThumbnail.gif
 	java -jar "$HOME/.local/bin/mars.jar" < /dev/null > /dev/null 2>&1 &
 	cat << EOF > $HOME/.local/share/applications/mars.desktop
 [Desktop Entry]
@@ -400,7 +402,8 @@ Type=Application
 Version=4.5
 Name=Mars
 Comment=Mips Assembler and Runtime Simulator
-Exec=java -jar "$HOME/.local/bin/mars.jar"
+Icon=$HOME/.local/opt/mars/MarsThumbnail.gif
+Exec=java -jar "$HOME/.local/opt/mars/Mars4_5.jar"
 Terminal=false
 EOF
 	LtL mars.desktop
