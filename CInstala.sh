@@ -173,7 +173,28 @@ EOF
 }
 function GSK {
 	CCC "Generating SSH Key...\n\n"
+	if [ -z "$(which puttygen 2>/dev/null)" ]
+	then
+		DIR=$(pwd)
+		cd /tmp
+		APTGET "PuTTY Tools" putty-tools
+		cd "$DIR"
+		DPKG "PuTTY Tools" /tmp/putty-tools* /tmp/putty-tools
+		CP "PuTTY Tools" /tmp/putty-tools/usr/* $HOME/.local
+		RM "temporary files" /tmp/putty-tools*
+	fi
+	if [ -z "$(which xclip 2>/dev/null)" ]
+	then
+		DIR=$(pwd)
+		cd /tmp
+		APTGET "xclip" xclip
+		cd "$DIR"
+		DPKG "xclip" /tmp/xclip* /tmp/xclip
+		CP "xclip" /tmp/xclip/usr/* $HOME/.local
+		RM "temporary files" /tmp/xclip*
+	fi
 	ssh-keygen -t rsa -b 4096 -C $LOGNAME"@cin.ufpe.br" -N "" -f $HOME/.ssh/id_rsa
+	puttygen $HOME/.ssh/id_rsa -o $HOME/.ssh/id_rsa.ppk
 	cat $HOME/.ssh/id_rsa.pub | xclip -selection c
 	if (whiptail --yesno "$(L)" 0 0 --fb --title "Public SSH Key copied to clipboard! Would you like to upload it to GitHub?") then
 		firefox https://github.com/settings/keys < /dev/null > /dev/null 2>&1 &
@@ -532,16 +553,6 @@ function INIT {
 	export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
 	printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
-	if [ -z "$(which xclip 2>/dev/null)" ]
-	then
-		DIR=$(pwd)
-		cd /tmp
-		APTGET "xclip" xclip
-		cd "$DIR"
-		DPKG "xclip" /tmp/xclip* /tmp/xclip
-		CP "xclip" /tmp/xclip/usr/* $HOME/.local
-		RM "temporary files" /tmp/xclip*
-	fi
 	if [ -z "$(which pv 2>/dev/null)" ]
 	then
 		DIR=$(pwd)
