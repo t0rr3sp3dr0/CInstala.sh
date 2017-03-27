@@ -349,7 +349,7 @@ function ITW {
 	LtL OP-submit.desktop
 	WMB "Tarski's World installed successfully!"
 }
-function IS {
+function ISK {
 	if (whiptail --yesno "$(L)" 0 0 --fb --title "Which version of Skype would you like to install?" --yes-button "Beta" --no-button "Stable") then
 		CCC "Installing Skype for Linux Beta...\n\n"
 		mkdir -p /tmp/skype
@@ -408,6 +408,36 @@ Terminal=false
 EOF
 	LtL mars.desktop
 	WMB "Mars installed successfully!"
+}
+function ISP {
+	CCC "Installing Spotify...\n\n"
+	mkdir -p /tmp/spotify
+	WGET "Spotify (part 1/2)" http://repository.spotify.com/pool/non-free/s/spotify/spotify-client-0.9.17_0.9.17.8.gd06432d.31-1_amd64.deb /tmp/spotify/spotify.deb
+	DIR=$(pwd)
+	cd /tmp/spotify
+	APTGET "Spotify (part 2/2)" libgcrypt11
+	cd "$DIR"
+	DPKG "Spotify (part 1/2)" /tmp/spotify/spotify.deb /tmp/spotify/deb
+	DPKG "Spotify (part 2/2)" /tmp/spotify/libgcrypt11_* /tmp/spotify/deb
+	CP "Spotify (part 1/3)" /tmp/skype/deb/usr/* $HOME/.local
+	CP "Spotify (part 2/3)" /tmp/skype/deb/opt/* $HOME/.local/opt
+	CP "Spotify (part 3/3)" /tmp/skype/deb/lib/* $HOME/.local/lib
+	unlink $HOME/.local/bin/spotify
+	ln -s $HOME/.local/opt/spotify/spotify-client/spotify $HOME/.local/bin/spotify
+	RM "temporary files" /tmp/spotify
+	spotify < /dev/null > /dev/null 2>&1 &
+# 	cat << EOF > $HOME/.local/share/applications/spotify.desktop
+# [Desktop Entry]
+# Type=Application
+# Version=4.5
+# Name=Spotify
+# Comment=Mips Assembler and Runtime Simulator
+# Icon=$HOME/.local/opt/mars/MarsThumbnail.gif
+# Exec=java -jar "$HOME/.local/opt/mars/Mars4_5.jar"
+# Terminal=false
+# EOF
+# 	LtL spotify.desktop
+	WMB "Spotify installed successfully!"
 }
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
@@ -579,7 +609,7 @@ do
 				DF IV
 				;;
 			"Install Skype")
-				DF IS
+				DF ISK
 				;;
 			"Install Mars")
 				DF IM
@@ -597,6 +627,9 @@ do
 			"Install OpenShift Client Tools")
 				IOCT
 				break
+				;;
+			"Install Spotify")
+				DF ISP
 				;;
 			"Quit")
 				Q
