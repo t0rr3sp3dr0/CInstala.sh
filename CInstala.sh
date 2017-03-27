@@ -419,24 +419,15 @@ function ISP {
 	cd "$DIR"
 	DPKG "Spotify (part 1/2)" /tmp/spotify/spotify.deb /tmp/spotify/deb
 	DPKG "Spotify (part 2/2)" /tmp/spotify/libgcrypt11_* /tmp/spotify/deb
-	CP "Spotify (part 1/3)" /tmp/skype/deb/usr/* $HOME/.local
-	CP "Spotify (part 2/3)" /tmp/skype/deb/opt/* $HOME/.local/opt
-	CP "Spotify (part 3/3)" /tmp/skype/deb/lib/* $HOME/.local/lib
+	CP "Spotify (part 1/3)" /tmp/spotify/deb/usr/* $HOME/.local
+	CP "Spotify (part 2/3)" /tmp/spotify/deb/opt/* $HOME/.local/opt
+	CP "Spotify (part 3/3)" /tmp/spotify/deb/lib/* $HOME/.local/lib
+	sed "s/Icon=spotify-client/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt\/spotify\/spotify-client\/Icons\/spotify-linux-512.png/g" /tmp/spotify/deb/opt/spotify/spotify-client/spotify.desktop > $HOME/.local/share/applications/spotify.desktop
 	unlink $HOME/.local/bin/spotify
 	ln -s $HOME/.local/opt/spotify/spotify-client/spotify $HOME/.local/bin/spotify
 	RM "temporary files" /tmp/spotify
 	spotify < /dev/null > /dev/null 2>&1 &
-# 	cat << EOF > $HOME/.local/share/applications/spotify.desktop
-# [Desktop Entry]
-# Type=Application
-# Version=4.5
-# Name=Spotify
-# Comment=Mips Assembler and Runtime Simulator
-# Icon=$HOME/.local/opt/mars/MarsThumbnail.gif
-# Exec=java -jar "$HOME/.local/opt/mars/Mars4_5.jar"
-# Terminal=false
-# EOF
-# 	LtL spotify.desktop
+	LtL spotify.desktop
 	WMB "Spotify installed successfully!"
 }
 function CS {
@@ -569,7 +560,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
