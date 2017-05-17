@@ -288,12 +288,6 @@ function IST {
 	LtL sublime_text.desktop
 	WMB "Sublime Text installed successfully!"
 }
-function IOCT {
-	CCC "Installing OpenShift Client Tools...\n\n"
-	gem install rhc
-	gnome-terminal -e "bash -i rhc setup"
-	CCC "OpenShift Client Tools installed successfully!\n\n"
-}
 function IA {
 	CCC "Installing Atom...\n\n"
 	WGET "Atom" https://atom-installer.github.com/v1.10.2/atom-amd64.deb /tmp/atom.deb
@@ -451,6 +445,15 @@ function ISP {
 	LtL spotify.desktop
 	WMB "Spotify installed successfully!"
 }
+function ITGPL {
+	CCC "Installing The Go Programming Language...\n\n"
+	WGET "The Go Programming Language" https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz /tmp/go.tgz
+	TAR "The Go Programming Language" /tmp/go.tgz $HOME/.local
+	RM "temporary files" /tmp/go.tgz
+	printf '\nexport GOROOT=$HOME/.local/go\nexport PATH=$PATH:$GOROOT/bin\n' >> $HOME/.bashrc
+	source $HOME/.bashrc
+	WMB "The Go Programming Language installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -571,7 +574,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Skype" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install OpenShift Client Tools" "Install Spotify" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -589,12 +592,6 @@ do
 				CS
 				break
 				;;
-			"Install Java SE Development Kit")
-				DF IJSDK
-				;;
-			"Install JavaFX Scene Builder")
-				DF IJSB
-				;;
 			"Install Android Studio")
 				DF IAS
 				;;
@@ -610,9 +607,6 @@ do
 			"Install VIm")
 				DF IV
 				;;
-			"Install Skype")
-				DF ISK
-				;;
 			"Install Mars")
 				DF IM
 				;;
@@ -626,9 +620,18 @@ do
 				IGPP6
 				break
 				;;
-			"Install OpenShift Client Tools")
-				IOCT
+			"Install Go")
+				ITGPL
 				break
+				;;
+			"Install Java SE Development Kit")
+				DF IJSDK
+				;;
+			"Install JavaFX Scene Builder")
+				DF IJSB
+				;;
+			"Install Skype")
+				DF ISK
 				;;
 			"Install Spotify")
 				DF ISP
