@@ -202,7 +202,7 @@ function GSK {
 }
 function IJSDK {
 	CCC "Installing Java SE Development Kit...\n\n"
-	WGET "Java SE Development Kit" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.tar.gz /tmp/jdk.tgz "Cookie: oraclelicense=accept-securebackup-cookie;"
+	WGET "Java SE Development Kit" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz /tmp/jdk.tgz "Cookie: oraclelicense=accept-securebackup-cookie;"
 	RM "old versions of Java SE Development Kit" $HOME/.local/jvm/jdk*
 	TAR "Java SE Development Kit" /tmp/jdk.tgz $HOME/.local/jvm
 	RM "temporary files" /tmp/jdk.tgz
