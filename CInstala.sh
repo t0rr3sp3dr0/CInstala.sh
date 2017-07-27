@@ -454,6 +454,21 @@ function ITGPL {
 	source $HOME/.bashrc
 	WMB "The Go Programming Language installed successfully!"
 }
+function ISB {
+	CCC "Installing DB Browser for SQLite...\n\n"
+	mkdir -p /tmp/sqlitebrowser
+	DIR=$(pwd)
+	cd /tmp/sqlitebrowser
+	APTGET "DB Browser for SQLite" sqlitebrowser libqcustomplot1.3 libqt5scintilla2.12
+	cd "$DIR"
+	DPKG "DB Browser for SQLite (part 1/4)" /tmp/sqlitebrowser/sqlitebrowser_* /tmp/sqlitebrowser/deb
+	DPKG "DB Browser for SQLite (part 2/4)" /tmp/sqlitebrowser/libqcustomplot1.3_* /tmp/sqlitebrowser/deb
+	DPKG "DB Browser for SQLite (part 3/4)" /tmp/sqlitebrowser/libqt5scintilla2-12v5_* /tmp/sqlitebrowser/deb
+	DPKG "DB Browser for SQLite (part 4/4)" /tmp/sqlitebrowser/libqt5scintilla2-12v5-dbg_* /tmp/sqlitebrowser/deb
+	CP "DB Browser for SQLite" /tmp/sqlitebrowser/deb/usr/* $HOME/.local
+	RM "temporary files" /tmp/sqlitebrowser
+	WMB "DB Browser for SQLite installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -574,7 +589,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Install DB Browser for SQLite" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -635,6 +650,9 @@ do
 				;;
 			"Install Spotify")
 				DF ISP
+				;;
+			"Install DB Browser for SQLite")
+				DF ISB
 				;;
 			"Quit")
 				Q
