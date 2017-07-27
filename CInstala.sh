@@ -467,6 +467,7 @@ function ISB {
 	DPKG "DB Browser for SQLite (part 4/4)" /tmp/sqlitebrowser/libqt5scintilla2-12v5-dbg_* /tmp/sqlitebrowser/deb
 	CP "DB Browser for SQLite" /tmp/sqlitebrowser/deb/usr/* $HOME/.local
 	RM "temporary files" /tmp/sqlitebrowser
+	sqlitebrowser < /dev/null > /dev/null 2>&1 &
 	WMB "DB Browser for SQLite installed successfully!"
 }
 function CS {
