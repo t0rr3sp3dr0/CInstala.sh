@@ -580,7 +580,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Install DB Browser for SQLite" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install G++ 6" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -632,14 +632,14 @@ do
 			"Install JavaFX Scene Builder")
 				DF IJSB
 				;;
+			"Install DB Browser for SQLite")
+				DF ISB
+				;;
 			"Install Skype")
 				DF ISK
 				;;
 			"Install Spotify")
 				DF ISP
-				;;
-			"Install DB Browser for SQLite")
-				DF ISB
 				;;
 			"Quit")
 				Q
