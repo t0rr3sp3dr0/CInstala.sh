@@ -334,16 +334,6 @@ EOF
 	LtL quartus.desktop
 	WMB "Quartus II Web Edition installed successfully!"
 }
-function IGPP6 {
-	CCC "Installing G++ 6...\n\n"
-	WGET "G++ 6" http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-6/g++-6_6.2.0-5ubuntu12_amd64.deb /tmp/g++.deb
-	DPKG "G++ 6" /tmp/g++.deb /tmp/g++
-	CP "G++ 6" /tmp/g++/usr/* $HOME/.local
-	RM "temporary files" /tmp/g++
-	printf "\nalias g++=g++-6\n" >> $HOME/.bashrc
-	source $HOME/.bashrc
-	CCC "G++ 6 installed successfully!\n\n"
-}
 function ITW {
 	CCC "Installing Tarski's World...\n\n"
 	mkdir -p /tmp/tw
@@ -631,10 +621,6 @@ do
 				;;
 			"Install Tarski's World")
 				DF ITW
-				;;
-			"Install G++ 6")
-				IGPP6
-				break
 				;;
 			"Install Go")
 				ITGPL
