@@ -458,6 +458,7 @@ function ISB {
 	CP "DB Browser for SQLite" /tmp/sqlitebrowser/deb/usr/* $HOME/.local
 	RM "temporary files" /tmp/sqlitebrowser
 	sqlitebrowser < /dev/null > /dev/null 2>&1 &
+	LtL sqlitebrowser.desktop
 	WMB "DB Browser for SQLite installed successfully!"
 }
 function CS {
