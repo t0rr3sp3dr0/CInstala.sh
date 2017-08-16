@@ -427,6 +427,7 @@ function ISP {
 	CP "Spotify (part 1/3)" /tmp/spotify/deb/usr/* $HOME/.local
 	CP "Spotify (part 2/3)" /tmp/spotify/deb/opt/* $HOME/.local/opt
 	CP "Spotify (part 3/3)" /tmp/spotify/deb/lib/* $HOME/.local/lib
+	ln -s $HOME/.local/MobileSim/MobileSim $HOME/.local/bin/MobileSim
 	sed "s/Icon=spotify-client/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt\/spotify\/spotify-client\/Icons\/spotify-linux-512.png/g" /tmp/spotify/deb/opt/spotify/spotify-client/spotify.desktop > $HOME/.local/share/applications/spotify.desktop
 	unlink $HOME/.local/bin/spotify
 	ln -s $HOME/.local/opt/spotify/spotify-client/spotify $HOME/.local/bin/spotify
@@ -460,6 +461,31 @@ function ISB {
 	sqlitebrowser < /dev/null > /dev/null 2>&1 &
 	LtL sqlitebrowser.desktop
 	WMB "DB Browser for SQLite installed successfully!"
+}
+function IPR {
+	CCC "Installing Pioneer Robots SDK!...\n\n"
+	mkdir -p /tmp/prsdk
+	DIR=$(pwd)
+	cd /tmp/prsdk
+	WGET "Pioneer Robots SDK (part 1/2)" http://robots.mobilerobots.com/ARIA/download/current/libaria_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria.deb
+	WGET "Pioneer Robots SDK (part 2/2)" http://robots.mobilerobots.com/MobileSim/download/current/mobilesim_0.7.5+ubuntu12_i386.deb /tmp/prsdk/mobilesim.deb
+	cd "$DIR"
+	DPKG "Pioneer Robots SDK (part 1/2)" /tmp/prsdk/libaria.deb /tmp/prsdk/deb
+	DPKG "Pioneer Robots SDK (part 2/2)" /tmp/prsdk/mobilesim.deb /tmp/prsdk/deb
+	CP "Pioneer Robots SDK (part 1/2)" /tmp/prsdk/deb/etc/* $HOME/.local/etc
+	CP "Pioneer Robots SDK (part 2/2)" /tmp/prsdk/deb/usr/local/* $HOME/.local
+	CP "Pioneer Robots SDK (part 2/2)" /tmp/prsdk/deb/usr/share/* $HOME/.local/share
+	ln -s $HOME/.local/Aria/lib/libAria.so $HOME/.local/lib/libAria.so
+	ln -s $HOME/.local/Aria/lib/libArNetworking.so $HOME/.local/lib/libArNetworking.so
+	ln -s $HOME/.local/MobileSim/MobileSim $HOME/.local/bin/MobileSim
+	sed "s/\/usr\/local/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/prsdk/deb/usr/share/applications/MobileSim.desktop > $HOME/.local/share/applications/MobileSim.desktop
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib
+	printf "\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\n" >> $HOME/.bashrc
+	RM "temporary files" /tmp/prsdk
+	MobileSim < /dev/null > /dev/null 2>&1 &
+	LtL MobileSim.desktop
+	WMB "Pioneer Robots SDK installed successfully!"
+
 }
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
@@ -560,8 +586,9 @@ function INIT {
 	fi
 	export PATH=$PATH:$HOME/.local/bin
 	export GEM_HOME=$HOME/.gem
-	export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
-	printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\n" >> $HOME/.bashrc
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
+	export LIBRARY_PATH=$LD_LIBRARY_PATH
+	printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
 	if [ -z "$(which pv 2>/dev/null)" ]
 	then
@@ -581,7 +608,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Install Pioneer Robots SDK" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -641,6 +668,10 @@ do
 				;;
 			"Install Spotify")
 				DF ISP
+				;;
+			"Install Pioneer Robots SDK")
+				IPR
+				break
 				;;
 			"Quit")
 				Q
