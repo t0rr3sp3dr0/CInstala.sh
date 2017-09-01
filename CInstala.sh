@@ -617,7 +617,7 @@ function INIT {
 		RM "temporary files" /tmp/pv*
 	fi
 	trap Q INT
-	resize -s 32 80 >/dev/null 2>&1
+	resize -s 28 80 >/dev/null 2>&1
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
