@@ -271,12 +271,6 @@ EOF
 	LtL jetbrains-studio.desktop
 	WMB "Android Studio installed successfully!"
 }
-function IV {
-	CCC "Installing VIm...\n\n"
-	bash <(curl https://raw.githubusercontent.com/vim-scripts/vim7-install.sh/master/vim7-install.sh)
-	WMB "VIm installed successfully!"
-	vim
-}
 function IST {
 	CCC "Installing Sublime Text...\n\n"
 	WGET "Sublime Text" https://download.sublimetext.com/sublime-text_build-3126_amd64.deb /tmp/subl.deb
@@ -631,7 +625,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Pioneer Robots SDK" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Pioneer Robots SDK" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -660,9 +654,6 @@ do
 				;;
 			"Install Sublime Text")
 				DF IST
-				;;
-			"Install VIm")
-				DF IV
 				;;
 			"Install Mars")
 				DF IM
