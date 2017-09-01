@@ -37,6 +37,7 @@ function DF {
 }
 function Q {
 	resize -s 24 80 >/dev/null 2>&1
+	source $HOME/.bashrc
 	tput clear
 	tput reset
 	exit
