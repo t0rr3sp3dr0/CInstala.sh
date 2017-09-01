@@ -628,7 +628,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Install Pioneer Robots SDK" "Quit")
+	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install VIm" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Pioneer Robots SDK" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -670,6 +670,10 @@ do
 			"Install Tarski's World")
 				DF ITW
 				;;
+			"Install Pioneer Robots SDK")
+				IPR
+				break
+				;;
 			"Install Go")
 				ITGPL
 				break
@@ -688,10 +692,6 @@ do
 				;;
 			"Install Spotify")
 				DF ISP
-				;;
-			"Install Pioneer Robots SDK")
-				IPR
-				break
 				;;
 			"Quit")
 				Q
