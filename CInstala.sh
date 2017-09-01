@@ -498,7 +498,9 @@ EOF
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib
 	export LIBRARY_PATH=$LD_LIBRARY_PATH
 	export MOBILESIM=$HOME/.local/MobileSim
-	printf "\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\nexport MOBILESIM=$HOME/.local/MobileSim\n" >> $HOME/.bashrc
+	export CPATH=$CPATH:$HOME/.local/Aria/include
+	export CLASSPATH=$CLASSPATH:$HOME/.local/Aria/java/Aria.jar
+	printf "\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\nexport MOBILESIM=$HOME/.local/MobileSim\nexport CPATH=$CPATH:$HOME/.local/Aria/include\nCLASSPATH=$CLASSPATH:$HOME/.local/Aria/java/Aria.jar\n" >> $HOME/.bashrc
 	RM "temporary files" /tmp/prsdk
 	MobileSim < /dev/null > /dev/null 2>&1 &
 	LtL MobileSim.desktop
