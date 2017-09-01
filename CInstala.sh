@@ -478,9 +478,23 @@ function IPR {
 	ln -s $HOME/.local/Aria/lib/libAria.so $HOME/.local/lib/libAria.so
 	ln -s $HOME/.local/Aria/lib/libArNetworking.so $HOME/.local/lib/libArNetworking.so
 	ln -s $HOME/.local/MobileSim/MobileSim $HOME/.local/bin/MobileSim
-	sed "s/\/usr\/local/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/prsdk/deb/usr/share/applications/MobileSim.desktop > $HOME/.local/share/applications/MobileSim.desktop
+	cat << EOF > $HOME/.local/share/applications/MobileSim.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Encoding=UTF-8
+Name=MobileSim
+Comment=Simulate MobileRobots/ActivMedia robots in their environment, for use with ARIA
+Icon=$HOME/.local/MobileSim/icon.png
+Path=$HOME/.local/bin
+Exec=bash -ic "$HOME/.local/MobileSim/MobileSim"
+Categories=Application;Science;
+X-Desktop-File-Install-Version=0.22
+EOF
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib
-	printf "\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\n" >> $HOME/.bashrc
+	export LIBRARY_PATH=$LD_LIBRARY_PATH
+	export MOBILESIM=$HOME/.local/MobileSim
+	printf "\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/Aria/lib\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\nexport MOBILESIM=$HOME/.local/MobileSim\n" >> $HOME/.bashrc
 	RM "temporary files" /tmp/prsdk
 	MobileSim < /dev/null > /dev/null 2>&1 &
 	LtL MobileSim.desktop
