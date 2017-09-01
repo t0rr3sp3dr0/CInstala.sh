@@ -11,7 +11,7 @@ function L {
   ██║      ██║ ██║╚██╗██║ ╚════██║    ██║    ██╔══██║ ██║      ██╔══██║
   ╚██████╗ ██║ ██║ ╚████║ ███████║    ██║    ██║  ██║ ███████╗ ██║  ██║
    ╚═════╝ ╚═╝ ╚═╝  ╚═══╝ ╚══════╝    ╚═╝    ╚═╝  ╚═╝ ╚══════╝ ╚═╝  ╚═╝
-                                              Developed by Pedro Tôrres
+											  Developed by Pedro Tôrres
 EOF
 }
 function DFI {
@@ -617,7 +617,7 @@ function INIT {
 		RM "temporary files" /tmp/pv*
 	fi
 	trap Q INT
-	resize -s 26 80 >/dev/null 2>&1
+	resize -s 24 80 >/dev/null 2>&1
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
@@ -625,7 +625,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "Generate SSH Key" "SDKMAN!" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install Pioneer Robots SDK" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install DB Browser for SQLite" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -636,12 +636,12 @@ do
 				SE
 				break
 				;;
-			"Generate SSH Key")
-				DF GSK
-				;;
 			"SDKMAN!")
 				CS
 				break
+				;;
+			"Generate SSH Key")
+				DF GSK
 				;;
 			"Install Android Studio")
 				DF IAS
@@ -664,22 +664,20 @@ do
 			"Install Tarski's World")
 				DF ITW
 				;;
+			"Install DB Browser for SQLite")
+				DF ISB
+				;;
 			"Install Pioneer Robots SDK")
-				IPR
-				break
+				DF IPR
 				;;
 			"Install Go")
-				ITGPL
-				break
+				DF ITGPL
 				;;
 			"Install Java SE Development Kit")
 				DF IJSDK
 				;;
 			"Install JavaFX Scene Builder")
 				DF IJSB
-				;;
-			"Install DB Browser for SQLite")
-				DF ISB
 				;;
 			"Install Skype")
 				DF ISK
