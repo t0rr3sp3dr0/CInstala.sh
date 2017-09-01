@@ -467,11 +467,15 @@ function IPR {
 	mkdir -p /tmp/prsdk
 	DIR=$(pwd)
 	cd /tmp/prsdk
-	WGET "Pioneer Robots SDK (part 1/2)" http://robots.mobilerobots.com/ARIA/download/current/libaria_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria.deb
-	WGET "Pioneer Robots SDK (part 2/2)" http://robots.mobilerobots.com/MobileSim/download/current/mobilesim_0.7.5+ubuntu12_i386.deb /tmp/prsdk/mobilesim.deb
+	WGET "Pioneer Robots SDK (part 1/4)" http://robots.mobilerobots.com/ARIA/download/current/libaria_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria.deb
+	WGET "Pioneer Robots SDK (part 2/4)" http://robots.mobilerobots.com/ARIA/download/current/libaria-java_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria-java.deb
+	WGET "Pioneer Robots SDK (part 3/4)" http://robots.mobilerobots.com/ARIA/download/current/libaria-python_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria-python.deb
+	WGET "Pioneer Robots SDK (part 4/4)" http://robots.mobilerobots.com/MobileSim/download/current/mobilesim_0.7.5+ubuntu12_i386.deb /tmp/prsdk/mobilesim.deb
 	cd "$DIR"
-	DPKG "Pioneer Robots SDK (part 1/2)" /tmp/prsdk/libaria.deb /tmp/prsdk/deb
-	DPKG "Pioneer Robots SDK (part 2/2)" /tmp/prsdk/mobilesim.deb /tmp/prsdk/deb
+	DPKG "Pioneer Robots SDK (part 1/4)" /tmp/prsdk/libaria.deb /tmp/prsdk/deb
+	DPKG "Pioneer Robots SDK (part 2/4)" /tmp/prsdk/libaria-java.deb /tmp/prsdk/deb
+	DPKG "Pioneer Robots SDK (part 3/4)" /tmp/prsdk/libaria-python.deb /tmp/prsdk/deb
+	DPKG "Pioneer Robots SDK (part 4/4)" /tmp/prsdk/mobilesim.deb /tmp/prsdk/deb
 	CP "Pioneer Robots SDK (part 1/2)" /tmp/prsdk/deb/etc/* $HOME/.local/etc
 	CP "Pioneer Robots SDK (part 2/2)" /tmp/prsdk/deb/usr/local/* $HOME/.local
 	CP "Pioneer Robots SDK (part 2/2)" /tmp/prsdk/deb/usr/share/* $HOME/.local/share
