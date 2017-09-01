@@ -36,6 +36,7 @@ function DF {
 	gnome-terminal -e "bash -ic '${CMD//\'/\'\"\'\"\'}'"
 }
 function Q {
+	resize -s 24 80 >/dev/null 2>&1
 	tput clear
 	tput reset
 	exit
@@ -624,6 +625,7 @@ function INIT {
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
+resize -s 32 80 >/dev/null 2>&1
 while (( 1 ))
 do
 	PS3='Please select an option: '
