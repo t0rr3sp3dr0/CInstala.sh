@@ -503,6 +503,33 @@ EOF
 	WMB "Pioneer Robots SDK installed successfully!"
 
 }
+function IEC {
+	CCC "Installing ERRCASE...\n\n"
+	WGET "ERRCASE" https://gist.githubusercontent.com/t0rr3sp3dr0/af2e4eafd721d365c7bb6db09919eff9/raw/eercase.zip /tmp/eercase.zip
+	UNZIP "ERRCASE" /tmp/eercase.zip $HOME/.local/opt
+	mv $HOME/.local/opt/eercase* $HOME/.local/opt/eercase
+	ln -s $HOME/.local/opt/eercase/eercase $HOME/.local/bin
+	cat << EOF > $HOME/.local/share/applications/enhanced_entity-relationship__eer__case.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=EERCASE - Enhanced Entity-Relationship (EER) CASE 
+Icon=enhanced_entity-relationship__eer__case.png
+Path=$HOME
+Exec=$HOME/.local/bin/eercase
+StartupNotify=false
+StartupWMClass=Enhanced Entity-Relationship (EER) CASE
+OnlyShowIn=Unity;
+X-UnityGenerated=true
+EOF
+	RM "temporary files" /tmp/eercase.zip
+	DIR=$(pwd)
+	eercase < /dev/null > /dev/null 2>&1 &
+	cd "$DIR"
+	LtL enhanced_entity-relationship__eer__case.desktop
+	WMB "ERRCASE installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -617,7 +644,7 @@ function INIT {
 		RM "temporary files" /tmp/pv*
 	fi
 	trap Q INT
-	resize -s 24 80 >/dev/null 2>&1
+	resize -s 25 80 >/dev/null 2>&1
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
@@ -625,7 +652,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -669,6 +696,9 @@ do
 				;;
 			"Install Pioneer Robots SDK")
 				DF IPR
+				;;
+			"Install EERCASE")
+				DF IEC
 				;;
 			"Install Go")
 				DF ITGPL
