@@ -525,6 +525,7 @@ X-UnityGenerated=true
 EOF
 	RM "temporary files" /tmp/eercase.zip
 	DIR=$(pwd)
+	cd $HOME
 	eercase < /dev/null > /dev/null 2>&1 &
 	cd "$DIR"
 	LtL enhanced_entity-relationship__eer__case.desktop
