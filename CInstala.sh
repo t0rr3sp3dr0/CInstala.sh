@@ -505,7 +505,7 @@ EOF
 }
 function IEC {
 	CCC "Installing ERRCASE...\n\n"
-	WGET "ERRCASE" https://gist.githubusercontent.com/t0rr3sp3dr0/af2e4eafd721d365c7bb6db09919eff9/raw/eercase.zip /tmp/eercase.zip
+	WGET "ERRCASE" https://gist.githubusercontent.com/t0rr3sp3dr0/6a8aee5e209af173d2908b073ecea720/raw/eercase.zip /tmp/eercase.zip
 	UNZIP "ERRCASE" /tmp/eercase.zip $HOME/.local/opt
 	mv $HOME/.local/opt/eercase* $HOME/.local/opt/eercase
 	ln -s $HOME/.local/opt/eercase/eercase $HOME/.local/bin
