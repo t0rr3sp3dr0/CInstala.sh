@@ -32,7 +32,7 @@ EOF
 function DF {
 	tput cuu1
 	tput el
-	CMD="$(declare -f L);$(declare -f DFI);$(declare -f LtL);$(declare -f DF);$(declare -f Q);$(declare -f NULL);trap NULL INT;$(declare -f CCC);$(declare -f IO);$(declare -f EL);$(declare -f WMB);$(declare -f WGET);$(declare -f TAR);$(declare -f CP);$(declare -f RM);$(declare -f UNZIP);$(declare -f DPKG);$(declare -f APTGET);$(declare -f $1);$1"
+	CMD="$(declare -f L);$(declare -f DFI);$(declare -f LtL);$(declare -f DF);$(declare -f Q);$(declare -f NULL);trap NULL INT;$(declare -f CCC);$(declare -f IO);$(declare -f EL);$(declare -f WMB);$(declare -f WGET);$(declare -f TGZ);$(declare -f TXZ);$(declare -f CP);$(declare -f RM);$(declare -f UNZIP);$(declare -f DPKG);$(declare -f APTGET);$(declare -f $1);$1"
 	gnome-terminal -e "bash -ic '${CMD//\'/\'\"\'\"\'}'"
 }
 function Q {
@@ -98,8 +98,11 @@ function WGET {
 		done < <(wget "$2" -O "$3" --header "$4" 2>&1)
 	} | whiptail --title "CInstala" --gauge "\nDownloading $1...\n " 0 0 0
 }
-function TAR {
+function TGZ {
 	( pv -n "$2" | tar -xzf - -C "$3" ) 2>&1 | whiptail --title "CInstala" --gauge "\nExtracting $1..." 0 0 0
+}
+function TXZ {
+	( pv -n "$2" | tar -xJf - -C "$3" ) 2>&1 | whiptail --title "CInstala" --gauge "\nExtracting $1..." 0 0 0
 }
 function CP {
 	( cp -fRv ${@:2} | pv -elnps $(find ${@:2:(( $# - 2 ))} | wc -l) ) 2>&1 | whiptail --title "CInstala" --gauge "\nCopying $1..." 0 0 0
@@ -206,7 +209,7 @@ function IJSDK {
 	CCC "Installing Java SE Development Kit...\n\n"
 	WGET "Java SE Development Kit" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz /tmp/jdk.tgz "Cookie: oraclelicense=accept-securebackup-cookie;"
 	RM "old versions of Java SE Development Kit" $HOME/.local/jvm/jdk*
-	TAR "Java SE Development Kit" /tmp/jdk.tgz $HOME/.local/jvm
+	TGZ "Java SE Development Kit" /tmp/jdk.tgz $HOME/.local/jvm
 	RM "temporary files" /tmp/jdk.tgz
 	export JDK_HOME=$HOME/.local/jvm/jdk*
 	export JAVA_HOME=$JDK_HOME
@@ -218,7 +221,7 @@ function IJSDK {
 function IJSB {
 	CCC "Installing JavaFX Scene Builder...\n\n"
 	WGET "JavaFX Scene Builder" http://download.oracle.com/otn-pub/java/javafx_scenebuilder/2.0-b20/javafx_scenebuilder-2_0-linux-x64.tar.gz /tmp/scenebuilder.tgz "Cookie: oraclelicense=accept-securebackup-cookie;"
-	TAR "JavaFX Scene Builder" /tmp/scenebuilder.tgz $HOME/.local/opt
+	TGZ "JavaFX Scene Builder" /tmp/scenebuilder.tgz $HOME/.local/opt
 	RM "temporary files" /tmp/scenebuilder.tgz
 	cd $HOME/.local/opt/JavaFXSceneBuilder*
 	DIR=$(pwd)
@@ -242,7 +245,7 @@ EOF
 function ITBA {
 	CCC "Installing JetBrains Toolbox...\n\n"
 	WGET "JetBrains Toolbox" "https://data.services.jetbrains.com/products/download?code=TBA&platform=linux" /tmp/tba.tgz
-	TAR "JetBrains Toolbox" /tmp/tba.tgz /tmp
+	TGZ "JetBrains Toolbox" /tmp/tba.tgz /tmp
 	CP "JetBrains Toolbox" /tmp/jetbrains-toolbox-*/jetbrains-toolbox $HOME/.local/bin
 	RM "temporary files" /tmp/tba.tgz /tmp/jetbrains-toolbox-*
 	jetbrains-toolbox < /dev/null > /dev/null 2>&1 &
@@ -334,7 +337,7 @@ function ITW {
 	CCC "Installing Tarski's World...\n\n"
 	mkdir -p /tmp/tw
 	curl 'https://ggweb.gradegrinder.net/downloader/TW$002fDedekind$002fTW-16_01-linux-x86_64-deb-installer.sh' -k | tail --lines=+161 > /tmp/tw/tw.tgz
-	TAR "Tarski's World (part 1/6)" /tmp/tw/tw.tgz /tmp/tw
+	TGZ "Tarski's World (part 1/6)" /tmp/tw/tw.tgz /tmp/tw
 	DPKG "Tarski's World (part 2/6)" /tmp/tw/op-Tarski-common-* /tmp/tw/deb
 	DPKG "Tarski's World (part 3/6)" /tmp/tw/op-Tarski-doc-* /tmp/tw/deb
 	DPKG "Tarski's World (part 4/6)" /tmp/tw/op-jre-* /tmp/tw/deb
@@ -435,7 +438,7 @@ function ISP {
 function ITGPL {
 	CCC "Installing The Go Programming Language...\n\n"
 	WGET "The Go Programming Language" https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz /tmp/go.tgz
-	TAR "The Go Programming Language" /tmp/go.tgz $HOME/.local
+	TGZ "The Go Programming Language" /tmp/go.tgz $HOME/.local
 	RM "temporary files" /tmp/go.tgz
 	printf '\nexport GOROOT=$HOME/.local/go\nexport PATH=$PATH:$GOROOT/bin\n' >> $HOME/.bashrc
 	source $HOME/.bashrc
@@ -530,6 +533,17 @@ EOF
 	cd "$DIR"
 	LtL enhanced_entity-relationship__eer__case.desktop
 	WMB "ERRCASE installed successfully!"
+}
+function INJ {
+	CCC "Installing Node.js...\n\n"
+	WGET "Node.js" https://nodejs.org/dist/v6.11.3/node-v6.11.3-linux-x64.tar.xz /tmp/node.txz
+	TXZ "Node.js" /tmp/node.txz /tmp
+	CP "Node.js (part 1/4)" /tmp/node*/bin $HOME/.local
+	CP "Node.js (part 2/4)" /tmp/node*/include $HOME/.local
+	CP "Node.js (part 3/4)" /tmp/node*/lib $HOME/.local
+	CP "Node.js (part 4/4)" /tmp/node*/share $HOME/.local
+	RM "temporary files" /tmp/node*
+	WMB "Node.js installed successfully!"
 }
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
@@ -653,7 +667,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -709,6 +723,9 @@ do
 				;;
 			"Install JavaFX Scene Builder")
 				DF IJSB
+				;;
+			"Install Node.js")
+				DF INJ
 				;;
 			"Install Skype")
 				DF ISK
