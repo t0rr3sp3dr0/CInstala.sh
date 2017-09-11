@@ -551,7 +551,7 @@ function IVSC {
 	WGET "Visual Studio Code" https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable /tmp/code.deb
 	DPKG "Visual Studio Code" /tmp/code.deb /tmp/code
 	CP "Visual Studio Code" /tmp/code/usr/* $HOME/.local
-	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/code/usr/share/applications/code.desktop > $HOME/.local/share/applications/code.desktop
+	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/code/usr/share/applications/code.desktop | sed "s/Icon=code/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/code\/resources\/app\/resources\/linux\/code.png/g" > $HOME/.local/share/applications/code.desktop
 	ln -s $HOME/.local/share/code/code $HOME/.local/bin
 	RM "temporary files" /tmp/code*
 	code < /dev/null > /dev/null 2>&1 &
