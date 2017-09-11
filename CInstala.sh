@@ -545,6 +545,19 @@ function INJ {
 	RM "temporary files" /tmp/node*
 	WMB "Node.js installed successfully!"
 }
+function IVSC {
+	CCC "Installing Visual Studio Code...\n\n"
+	mkdir -p /tmp/code
+	WGET "Visual Studio Code" https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable /tmp/code.deb
+	DPKG "Visual Studio Code" /tmp/code.deb /tmp/code
+	CP "Visual Studio Code" /tmp/code/usr/* $HOME/.local
+	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/code/usr/share/applications/code.desktop > $HOME/.local/share/applications/code.desktop
+	ln -s $HOME/.local/share/code/code $HOME/.local/bin
+	RM "temporary files" /tmp/code*
+	code < /dev/null > /dev/null 2>&1 &
+	LtL code.desktop
+	WMB "Visual Studio Code installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -659,7 +672,7 @@ function INIT {
 		RM "temporary files" /tmp/pv*
 	fi
 	trap Q INT
-	resize -s 25 80 >/dev/null 2>&1
+	resize -s 26 80 >/dev/null 2>&1
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
@@ -667,7 +680,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -696,6 +709,9 @@ do
 				;;
 			"Install Sublime Text")
 				DF IST
+				;;
+			"Install Visual Studio Code")
+				DF IVSC
 				;;
 			"Install Mars")
 				DF IM
