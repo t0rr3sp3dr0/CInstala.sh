@@ -558,6 +558,22 @@ function IVSC {
 	LtL code.desktop
 	WMB "Visual Studio Code installed successfully!"
 }
+function IGC {
+	CCC "Installing Google Chrome...\n\n"
+	mkdir -p /tmp/chrome
+	WGET "Google Chrome" https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb /tmp/chrome.deb
+	DPKG "Google Chrome" /tmp/chrome.deb /tmp/chrome
+	CP "Google Chrome (part 1/3)" /tmp/chrome/etc/* $HOME/.local/etc
+	CP "Google Chrome (part 2/3)" /tmp/chrome/opt/* $HOME/.local/opt
+	CP "Google Chrome (part 3/3)" /tmp/chrome/usr/* $HOME/.local
+	unlink $HOME/.local/bin/google-chrome-stable
+	ln -s $HOME/.local/opt/google/chrome/google-chrome $HOME/.local/bin/google-chrome-stable
+	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/chrome/usr/share/applications/google-chrome.desktop > $HOME/.local/share/applications/google-chrome.desktop
+	RM "temporary files" /tmp/chrome*
+	google-chrome-stable < /dev/null > /dev/null 2>&1 &
+	LtL google-chrome.desktop
+	WMB "Google Chrome installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -680,7 +696,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install Skype" "Install Spotify" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install Google Chrome" "Install Skype" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -742,6 +758,9 @@ do
 				;;
 			"Install Node.js")
 				DF INJ
+				;;
+			"Install Google Chrome")
+				DF IGC
 				;;
 			"Install Skype")
 				DF ISK
