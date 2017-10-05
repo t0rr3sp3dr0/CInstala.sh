@@ -358,15 +358,15 @@ function ITW {
 function ISL {
 	CCC "Installing Skype for Linux...\n\n"
 	mkdir -p /tmp/skype
-	WGET "Skype for Linux Beta" https://repo.skype.com/latest/skypeforlinux-64.deb /tmp/skype/skype.deb
-	DPKG "Skype for Linux Beta" /tmp/skype/skype.deb /tmp/skype/deb
-	CP "Skype for Linux Beta (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
-	CP "Skype for Linux Beta (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
+	WGET "Skype for Linux" https://repo.skype.com/latest/skypeforlinux-64.deb /tmp/skype/skype.deb
+	DPKG "Skype for Linux" /tmp/skype/skype.deb /tmp/skype/deb
+	CP "Skype for Linux (part 1/2)" /tmp/skype/deb/usr/* $HOME/.local
+	CP "Skype for Linux (part 2/2)" /tmp/skype/deb/opt/* $HOME/.local/opt
 	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/skype/deb/usr/share/applications/skypeforlinux.desktop > $HOME/.local/share/applications/skypeforlinux.desktop
 	RM "temporary files" /tmp/skype
 	skypeforlinux < /dev/null > /dev/null 2>&1 &
 	LtL skypeforlinux.desktop
-	WMB "Skype for Linux Beta installed successfully!"
+	WMB "Skype for Linux installed successfully!"
 }
 function IM {
 	CCC "Installing Mars...\n\n"
