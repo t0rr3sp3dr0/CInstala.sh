@@ -543,7 +543,7 @@ function INJ {
 	BASE_URL=https://nodejs.org/download/release/
 	LTS=$(curl -Ls $BASE_URL | grep latest- | grep -v '[.]x' | tail -n 1 | cut -d '"' -f 2)
 	DEB=$(curl -Ls $BASE_URL$LTS | grep 'linux-x64[.]tar[.]xz' | cut -d '"' -f 2)
-	WGET "Node.js" $BASE_URL$DEB /tmp/node.txz
+	WGET "Node.js" $BASE_URL$LTS$DEB /tmp/node.txz
 	TXZ "Node.js" /tmp/node.txz /tmp
 	CP "Node.js (part 1/4)" /tmp/node*/bin $HOME/.local
 	CP "Node.js (part 2/4)" /tmp/node*/include $HOME/.local
