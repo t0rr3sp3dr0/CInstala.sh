@@ -392,21 +392,13 @@ function ISP {
 	mkdir -p /tmp/spotify
 	BASE_URL=http://repository.spotify.com/
 	DEB=$(curl -Ls $BASE_URL\dists/stable/non-free/binary-amd64/Packages | grep '64[.]deb' | head -n 1 | cut -d ' ' -f 2)
-	WGET "Spotify (part 1/2)" $BASE_URL$DEB /tmp/spotify/spotify.deb
-	DIR=$(pwd)
-	cd /tmp/spotify
-	APTGET "Spotify (part 2/2)" libgcrypt11
-	cd "$DIR"
-	DPKG "Spotify (part 1/2)" /tmp/spotify/spotify.deb /tmp/spotify/deb
-	DPKG "Spotify (part 2/2)" /tmp/spotify/libgcrypt11_* /tmp/spotify/deb
-	CP "Spotify (part 1/3)" /tmp/spotify/deb/usr/* $HOME/.local
-	CP "Spotify (part 2/3)" /tmp/spotify/deb/opt/* $HOME/.local/opt
-	CP "Spotify (part 3/3)" /tmp/spotify/deb/lib/* $HOME/.local/lib
-	ln -s $HOME/.local/MobileSim/MobileSim $HOME/.local/bin/MobileSim
-	sed "s/Icon=spotify-client/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt\/spotify\/spotify-client\/Icons\/spotify-linux-512.png/g" /tmp/spotify/deb/opt/spotify/spotify-client/spotify.desktop > $HOME/.local/share/applications/spotify.desktop
-	unlink $HOME/.local/bin/spotify
-	ln -s $HOME/.local/opt/spotify/spotify-client/spotify $HOME/.local/bin/spotify
-	RM "temporary files" /tmp/spotify
+	WGET "Spotify" $BASE_URL$DEB /tmp/spotify.deb
+	DPKG "Spotify" /tmp/spotify.deb /tmp/spotify
+	CP "Spotify (part 1/3)" /tmp/spotify/usr/* $HOME/.local
+	CP "Spotify (part 2/3)" /tmp/spotify/opt/* $HOME/.local/opt
+	CP "Spotify (part 3/3)" /tmp/spotify/lib/* $HOME/.local/lib
+	sed "s/Icon=spotify-client/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/spotify\/icons\/spotify-linux-512.png/g" /tmp/spotify/share/spotify/spotify.desktop > $HOME/.local/share/applications/spotify.desktop
+	RM "temporary files" /tmp/spotify*
 	spotify < /dev/null > /dev/null 2>&1 &
 	LtL spotify.desktop
 	WMB "Spotify installed successfully!"
