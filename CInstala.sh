@@ -684,6 +684,16 @@ function INIT {
 	export LIBRARY_PATH=$LD_LIBRARY_PATH
 	printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
+	if [ -z "$(which curl 2>/dev/null)" ]
+	then
+		DIR=$(pwd)
+		cd /tmp
+		APTGET "curl" curl
+		cd "$DIR"
+		DPKG "curl" /tmp/curl* /tmp/curl
+		CP "pv" /tmp/curl/usr/* $HOME/.local
+		RM "temporary files" /tmp/curl*
+	fi
 	if [ -z "$(which pv 2>/dev/null)" ]
 	then
 		DIR=$(pwd)
