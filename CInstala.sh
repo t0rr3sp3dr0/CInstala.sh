@@ -276,7 +276,7 @@ EOF
 }
 function IST {
 	CCC "Installing Sublime Text...\n\n"
-	WGET "Sublime Text" https://download.sublimetext.com/sublime-text_build-3126_amd64.deb /tmp/subl.deb
+	WGET "Sublime Text" https://download.sublimetext.com/sublime-text_build-3143_amd64.deb /tmp/subl.deb
 	DPKG "Sublime Text" /tmp/subl.deb /tmp/subl
 	CP "Sublime Text (part 1/2)" /tmp/subl/opt/* $HOME/.local/opt
 	CP "Sublime Text (part 2/2)" /tmp/subl/usr/* $HOME/.local
