@@ -536,7 +536,10 @@ EOF
 }
 function INJ {
 	CCC "Installing Node.js...\n\n"
-	WGET "Node.js" https://nodejs.org/dist/v6.11.3/node-v6.11.3-linux-x64.tar.xz /tmp/node.txz
+	BASE_URL=https://nodejs.org/download/release/
+	LTS=$(curl -Ls $BASE_URL | grep latest- | grep -v '[.]x' | tail -n 1 | cut -d '"' -f 2)
+	DEB=$(curl -Ls $BASE_URL$LTS | grep 'linux-x64[.]tar[.]xz' | cut -d '"' -f 2)
+	WGET "Node.js" $DEB /tmp/node.txz
 	TXZ "Node.js" /tmp/node.txz /tmp
 	CP "Node.js (part 1/4)" /tmp/node*/bin $HOME/.local
 	CP "Node.js (part 2/4)" /tmp/node*/include $HOME/.local
