@@ -642,11 +642,11 @@ function INIT {
 			ln -s $HOME/.local/lib/x86_64-linux-gnu $HOME/.local/lib64
 		fi
 	fi
-	export PATH=$PATH:$HOME/.local/bin
-	export GEM_HOME=$HOME/.gem
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64
-	export LIBRARY_PATH=$LD_LIBRARY_PATH
-	printf "\nexport PATH=\$PATH:$HOME/.local/bin\nexport GEM_HOME=$HOME/.gem\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64\nexport LIBRARY_PATH=$LD_LIBRARY_PATH\n" >> $HOME/.bashrc
+	export PATH=$HOME/.local/bin:$PATH
+	export GEM_HOME=$HOME/.gem:$GEM_HOME
+	export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64:$LD_LIBRARY_PATH
+	export LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBRARY_PATH
+	printf "\nexport PATH=$HOME/.local/bin:\$PATH\nexport GEM_HOME=$HOME/.gem:\$GEM_HOME\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64:\$LD_LIBRARY_PATH\nexport LIBRARY_PATH=$LD_LIBRARY_PATH:\$LIBRARY_PATH\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
 	if [ -z "$(which curl 2>/dev/null)" ]
 	then
