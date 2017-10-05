@@ -418,7 +418,9 @@ EOF
 function ISP {
 	CCC "Installing Spotify...\n\n"
 	mkdir -p /tmp/spotify
-	WGET "Spotify (part 1/2)" http://repository.spotify.com/pool/non-free/s/spotify/spotify-client-0.9.17_0.9.17.8.gd06432d.31-1_amd64.deb /tmp/spotify/spotify.deb
+	BASE_URL=http://repository.spotify.com/
+	DEB=$(curl -Ls $BASE_URL\dists/stable/non-free/binary-amd64/Packages | grep '64[.]deb' | head -n 1 | cut -d ' ' -f 2)
+	WGET "Spotify (part 1/2)" $BASE_URL$DEB /tmp/spotify/spotify.deb
 	DIR=$(pwd)
 	cd /tmp/spotify
 	APTGET "Spotify (part 2/2)" libgcrypt11
