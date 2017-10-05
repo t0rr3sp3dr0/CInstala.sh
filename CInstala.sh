@@ -397,7 +397,7 @@ function ISP {
 	CP "Spotify (part 1/3)" /tmp/spotify/usr/* $HOME/.local
 	CP "Spotify (part 2/3)" /tmp/spotify/opt/* $HOME/.local/opt
 	CP "Spotify (part 3/3)" /tmp/spotify/lib/* $HOME/.local/lib
-	sed "s/Icon=spotify-client/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/spotify\/icons\/spotify-linux-512.png/g" /tmp/spotify/share/spotify/spotify.desktop > $HOME/.local/share/applications/spotify.desktop
+	sed "s/Icon=spotify-client/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/share\/spotify\/icons\/spotify-linux-512.png/g" /tmp/spotify/usr/share/spotify/spotify.desktop > $HOME/.local/share/applications/spotify.desktop
 	RM "temporary files" /tmp/spotify*
 	spotify < /dev/null > /dev/null 2>&1 &
 	LtL spotify.desktop
