@@ -289,7 +289,7 @@ function IST {
 }
 function IA {
 	CCC "Installing Atom...\n\n"
-	WGET "Atom" https://atom-installer.github.com/v1.10.2/atom-amd64.deb /tmp/atom.deb
+	WGET "Atom" `curl -Ls https://api.github.com/repos/atom/atom/releases/latest | grep browser_download_url | grep '64[.]deb' | head -n 1 | cut -d '"' -f 4` /tmp/atom.deb
 	dpkg -x /tmp/atom.deb /tmp/atom
 	CP "Atom" /tmp/atom/usr/* $HOME/.local
 	sed "s/\$USR_DIRECTORY/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/atom/usr/bin/atom > $HOME/.local/bin/atom
