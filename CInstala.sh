@@ -545,6 +545,11 @@ function IGC {
 	LtL google-chrome.desktop
 	WMB "Google Chrome installed successfully!"
 }
+function IFF {
+	CCC "Installing Fast-Forward Planning System...\n\n"
+	WGET "Fast-Forward Planning System" https://gist.github.com/t0rr3sp3dr0/6081b00ce4ba87e7dd0ad7fb46a5c58b/raw/ff $HOME/.local/bin/ff
+	WMB "Fast-Forward Planning System installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
