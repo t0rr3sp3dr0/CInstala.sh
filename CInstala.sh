@@ -539,7 +539,7 @@ function IGC {
 	CP "Google Chrome (part 3/3)" /tmp/chrome/usr/* $HOME/.local
 	unlink $HOME/.local/bin/google-chrome-stable
 	ln -s $HOME/.local/opt/google/chrome/google-chrome $HOME/.local/bin/google-chrome-stable
-	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/chrome/usr/share/applications/google-chrome.desktop > $HOME/.local/share/applications/google-chrome.desktop
+	sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" /tmp/chrome/usr/share/applications/google-chrome.desktop | sed "s/Icon=google-chrome/Icon=$(echo $HOME | sed -e 's/\//\\\//g')\/.local\/opt\/google\/chrome\/product_logo_256.png/g" > $HOME/.local/share/applications/google-chrome.desktop
 	RM "temporary files" /tmp/chrome*
 	google-chrome-stable < /dev/null > /dev/null 2>&1 &
 	LtL google-chrome.desktop
