@@ -550,6 +550,14 @@ function IFF {
 	WGET "Fast-Forward Planning System" https://gist.github.com/t0rr3sp3dr0/6081b00ce4ba87e7dd0ad7fb46a5c58b/raw/ff $HOME/.local/bin/ff
 	WMB "Fast-Forward Planning System installed successfully!"
 }
+function IMDCS {
+	CCC "Installing MongoDB Community Server...\n\n"
+	WGET "MongoDB Community Server" https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-latest.tgz /tmp/mongodb.tgz
+	TGZ "MongoDB Community Server" /tmp/mongodb.tgz /tmp
+	CP "MongoDB Community Server" /tmp/mongodb*/bin $HOME/.local
+	RM "temporary files" /tmp/mongodb*
+	WMB "MongoDB Community Server installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -682,7 +690,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -744,6 +752,9 @@ do
 				;;
 			"Install Node.js")
 				DF INJ
+				;;
+			"Install MongoDB Community Server")
+				DF IMDCS
 				;;
 			"Install Google Chrome")
 				DF IGC
