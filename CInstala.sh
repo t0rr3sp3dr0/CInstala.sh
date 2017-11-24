@@ -558,6 +558,29 @@ function IMDCS {
 	RM "temporary files" /tmp/mongodb*
 	WMB "MongoDB Community Server installed successfully!"
 }
+function IW {
+	CCC "Installing Weka...\n\n"
+	WGET "Weka" https://downloads.sourceforge.net/project/weka/weka-3-8/3.8.1/weka-3-8-1.zip /tmp/weka.zip
+	UNZIP "Weka" /tmp/weka.zip $HOME/.local/opt
+	mv $HOME/.local/opt/weka* $HOME/.local/opt/weka
+	java -jar $HOME/.local/opt/weka/weka.jar < /dev/null > /dev/null 2>&1 &
+	cat << EOF > $HOME/.local/share/applications/weka-gui-guichooser.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Weka GUI Chooser
+Icon=$HOME/.local/opt/weka/weka.ico
+Path=$HOME/.local/opt/weka
+Exec=java -jar $HOME/.local/opt/weka/weka.jar
+StartupNotify=false
+StartupWMClass=weka-gui-GUIChooser
+OnlyShowIn=Unity;
+X-UnityGenerated=true
+EOF
+	LtL weka-gui-guichooser.desktop
+	WMB "Weka installed successfully!"
+}
 function CS {
 	CCC "Installing SDKMAN!...\n\n"
 	if [ -d "$SDKMAN_DIR" ]; then
@@ -682,7 +705,7 @@ function INIT {
 		RM "temporary files" /tmp/pv*
 	fi
 	trap Q INT
-	resize -s 27 80 >/dev/null 2>&1
+	resize -s 28 80 >/dev/null 2>&1
 }
 INIT
 CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
@@ -690,7 +713,7 @@ while (( 1 ))
 do
 	PS3='Please select an option: '
 	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Fork me on GitHub" "Quit")
+	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Weka" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Fork me on GitHub" "Quit")
 	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 		CSE="Setup Environment"
 	fi
@@ -737,6 +760,9 @@ do
 				;;
 			"Install Pioneer Robots SDK")
 				DF IPR
+				;;
+			"Install Weka")
+				DF IW
 				;;
 			"Install EERCASE")
 				DF IEC
