@@ -105,7 +105,7 @@ function TXZ {
 	( pv -n "$2" | tar -xJf - -C "$3" ) 2>&1 | whiptail --title "CInstala" --gauge "\nExtracting $1..." 0 0 0
 }
 function CP {
-	( cp -fRv ${@:2} | pv -elnps $(find ${@:2:(( $# - 2 ))} | wc -l) ) 2>&1 | whiptail --title "CInstala" --gauge "\nCopying $1..." 0 0 0
+	( cp -fHLRv ${@:2} | pv -elnps $(find ${@:2:(( $# - 2 ))} | wc -l) ) 2>&1 | whiptail --title "CInstala" --gauge "\nCopying $1..." 0 0 0
 }
 function RM {
 	( rm -fRv ${@:2} | pv -elnps $(find ${@:2} | wc -l) ) 2>&1 | whiptail --title "CInstala" --gauge "\nRemoving $1..." 0 0 0
@@ -682,7 +682,7 @@ function INIT {
 	export GEM_HOME=$HOME/.gem:$GEM_HOME
 	export LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64:$LD_LIBRARY_PATH
 	export LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBRARY_PATH
-	printf "\nexport PATH=$HOME/.local/bin:\$PATH\nexport GEM_HOME=$HOME/.gem:\$GEM_HOME\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64:\$LD_LIBRARY_PATH\nexport LIBRARY_PATH=$LD_LIBRARY_PATH:\$LIBRARY_PATH\n" >> $HOME/.bashrc
+	printf "\nexport PATH=$HOME/.local/bin:\$PATH\nexport GEM_HOME=$HOME/.gem:\$GEM_HOME\nexport LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local/lib32:$HOME/.local/lib64:\$LD_LIBRARY_PATH\nexport LIBRARY_PATH=$LD_LIBRARY_PATH:\$LIBRARY_PATH\nalias cinstala='bash <(wget -qO- cin.ufpe.br/~phts)'\n" >> $HOME/.bashrc
 	source $HOME/.bashrc
 	if [ -z "$(which curl 2>/dev/null)" ]
 	then
@@ -707,101 +707,155 @@ function INIT {
 	trap Q INT
 	resize -s 28 80 >/dev/null 2>&1
 }
-INIT
-CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
-while (( 1 ))
-do
-	PS3='Please select an option: '
-	CSE='#'
-	options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Weka" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Fork me on GitHub" "Quit")
-	if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
-		CSE="Setup Environment"
-	fi
-	select opt in "${options[@]}"
+if [[ $# -eq 0 ]]
+then
+	INIT
+	CCC "Hi, $(getent passwd $USER | cut -d ':' -f 5 | cut -d ',' -f 1 | cut -d ' ' -f 1)! It's $(date)\n\n"
+	while (( 1 ))
 	do
-		case $opt in
-			$CSE)
-				SE
-				break
-				;;
-			"SDKMAN!")
-				CS
-				break
-				;;
-			"Generate SSH Key")
-				DF GSK
-				;;
-			"Install Android Studio")
-				DF IAS
-				;;
-			"Install JetBrains Toolbox")
-				DF ITBA
-				;;
-			"Install Atom")
-				DF IA
-				;;
-			"Install Sublime Text")
-				DF IST
-				;;
-			"Install Visual Studio Code")
-				DF IVSC
-				;;
-			"Install Mars")
-				DF IM
-				;;
-			"Install Quartus II Web Edition")
-				DF IQIWE
-				;;
-			"Install Tarski's World")
-				DF ITW
-				;;
-			"Install DB Browser for SQLite")
-				DF ISB
-				;;
-			"Install Pioneer Robots SDK")
-				DF IPR
-				;;
-			"Install Weka")
-				DF IW
-				;;
-			"Install EERCASE")
-				DF IEC
-				;;
-			"Install Go")
-				DF ITGPL
-				;;
-			"Install Java SE Development Kit")
-				DF IJSDK
-				;;
-			"Install JavaFX Scene Builder")
-				DF IJSB
-				;;
-			"Install Node.js")
-				DF INJ
-				;;
-			"Install MongoDB Community Server")
-				DF IMDCS
-				;;
-			"Install Google Chrome")
-				DF IGC
-				;;
-			"Install Skype for Linux")
-				DF ISL
-				;;
-			"Install Spotify")
-				DF ISP
-				;;
-			"Fork me on GitHub")
-				browse https://gist.github.com/t0rr3sp3dr0/af2e4eafd721d365c7bb6db09919eff9
-				tput cuu1
-				tput el
-				;;
-			"Quit")
-				Q
-				;;
-			*)
-				IO
-				;;
-		esac
+		PS3='Please select an option: '
+		CSE='#'
+		options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Weka" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Fork me on GitHub" "Quit")
+		if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
+			CSE="Setup Environment"
+		fi
+		select opt in "${options[@]}"
+		do
+			case $opt in
+				$CSE)
+					SE
+					break
+					;;
+				"SDKMAN!")
+					CS
+					break
+					;;
+				"Generate SSH Key")
+					DF GSK
+					;;
+				"Install Android Studio")
+					DF IAS
+					;;
+				"Install JetBrains Toolbox")
+					DF ITBA
+					;;
+				"Install Atom")
+					DF IA
+					;;
+				"Install Sublime Text")
+					DF IST
+					;;
+				"Install Visual Studio Code")
+					DF IVSC
+					;;
+				"Install Mars")
+					DF IM
+					;;
+				"Install Quartus II Web Edition")
+					DF IQIWE
+					;;
+				"Install Tarski's World")
+					DF ITW
+					;;
+				"Install DB Browser for SQLite")
+					DF ISB
+					;;
+				"Install Pioneer Robots SDK")
+					DF IPR
+					;;
+				"Install Weka")
+					DF IW
+					;;
+				"Install EERCASE")
+					DF IEC
+					;;
+				"Install Go")
+					DF ITGPL
+					;;
+				"Install Java SE Development Kit")
+					DF IJSDK
+					;;
+				"Install JavaFX Scene Builder")
+					DF IJSB
+					;;
+				"Install Node.js")
+					DF INJ
+					;;
+				"Install MongoDB Community Server")
+					DF IMDCS
+					;;
+				"Install Google Chrome")
+					DF IGC
+					;;
+				"Install Skype for Linux")
+					DF ISL
+					;;
+				"Install Spotify")
+					DF ISP
+					;;
+				"Fork me on GitHub")
+					browse https://gist.github.com/t0rr3sp3dr0/af2e4eafd721d365c7bb6db09919eff9
+					tput cuu1
+					tput el
+					;;
+				"Quit")
+					Q
+					;;
+				*)
+					IO
+					;;
+			esac
+		done
 	done
-done
+else
+	for ARG in "$@"
+	do
+		DIR=$(pwd)
+		TMP=$(mktemp -d)
+
+		if [[ -f $ARG ]]
+		then
+			cp $ARG $TMP
+		fi
+
+		cd $TMP
+
+		if [[ ! -f $ARG ]]
+		then
+			APTGET $ARG $ARG
+		fi
+
+		read -r -a DEPS <<< `dpkg -I $ARG | grep Depends | sed -e 's/Depends//g' | sed -e 's/(\(.*\))//g' | sed -e 's/[^0-9a-zA-Z,]//g' | sed -e 's/,/ /g'`
+		for (( I = 0; I < ${#DEPS[@]}; ++I ))
+		do
+			dpkg -l ${DEPS[$I]} < /dev/null > /dev/null 2>&1
+			if [[ $? -ne 0 ]]
+			then
+				APTGET "${DEPS[$I]} (part $(( I + 1 ))/${#DEPS[@]})" ${DEPS[$I]}
+			fi
+		done
+
+		FILES=( *.deb )
+		for (( I = 0; I < ${#DEPS[@]}; ++I )) 
+		do
+			FILE=${FILES[$I]}
+			DPKG "${FILE%%_*} (part $(( I + 1 ))/${#FILES[@]})" $FILE deb
+		done
+
+		for FILE in deb/usr/share/applications/*.desktop deb/share/applications/*.desktop
+		do
+			sed "s/\/usr/$(echo $HOME | sed -e 's/\//\\\//g')\/.local/g" $FILE > $FILE.
+			mv $FILE. $FILE
+			chmod +x $FILE
+		done
+
+		CP "" deb/usr/* $HOME/.local
+		RM "" deb/usr
+
+		CP "" deb/* $HOME/.local
+
+		cd $DIR
+
+		echo $TMP
+	done
+fi
