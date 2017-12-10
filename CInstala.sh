@@ -513,6 +513,35 @@ function INJ {
 	CP "Node.js (part 2/4)" /tmp/node*/include $HOME/.local
 	CP "Node.js (part 3/4)" /tmp/node*/lib $HOME/.local
 	CP "Node.js (part 4/4)" /tmp/node*/share $HOME/.local
+
+	npm -v < /dev/null > /dev/null 2>&1
+	if [[ $? -ne 0 ]]
+	then
+		function PN {
+			CCC "Patching npm...\n\n"
+			if (whiptail --yesno "$(L)" 0 0 --fb --title "npm is not working properly! Would you like me to patch it?")
+			then
+				RM "old versions of npm" $HOME/.local/lib/node_modules/npm
+				WGET "npm" `curl -Ls https://api.github.com/repos/npm/npm/releases/latest | grep tarball_url | cut -d '"' -f 4` /tmp/npm.tgz
+				TGZ "npm" /tmp/npm.tgz /tmp
+				DIR=$(pwd)
+				cd /tmp/npm-*
+				make install
+				cd $DIR
+				RM "temporary files" /tmp/npm*
+
+				npm -v < /dev/null > /dev/null 2>&1
+				if [[ $? -eq 0 ]]
+				then
+					WMB "npm patched successfully!"
+				else
+					WMB "npm patch failed!"
+				fi
+			fi
+		}
+		DF PN
+	fi
+
 	RM "temporary files" /tmp/node*
 	WMB "Node.js installed successfully!"
 }
@@ -715,7 +744,7 @@ then
 	do
 		PS3='Please select an option: '
 		CSE='#'
-		options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Weka" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Fork me on GitHub" "Quit")
+		options=("Setup Environment" "SDKMAN!" "Generate SSH Key" "Install Android Studio" "Install JetBrains Toolbox" "Install Atom" "Install Sublime Text" "Install Visual Studio Code" "Install Mars" "Install Quartus II Web Edition" "Install Tarski's World" "Install DB Browser for SQLite" "Install Pioneer Robots SDK" "Install Weka" "Install EERCASE" "Install Go" "Install Java SE Development Kit" "Install JavaFX Scene Builder" "Install Node.js" "Install MongoDB Community Server" "Install Google Chrome" "Install Skype for Linux" "Install Spotify" "Fork me on GitHub" "Quit (^C)")
 		if [ "$(dnsdomainname 2>&1)" == "windows.cin.ufpe.br" ]; then
 			CSE="Setup Environment"
 		fi
@@ -798,7 +827,7 @@ then
 					tput cuu1
 					tput el
 					;;
-				"Quit")
+				"Quit (^C)")
 					Q
 					;;
 				*)
