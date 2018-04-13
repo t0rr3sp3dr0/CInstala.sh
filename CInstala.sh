@@ -437,7 +437,7 @@ function IPR {
 	WGET "Pioneer Robots SDK (part 1/4)" http://robots.mobilerobots.com/ARIA/download/current/libaria_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria.deb
 	WGET "Pioneer Robots SDK (part 2/4)" http://robots.mobilerobots.com/ARIA/download/current/libaria-java_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria-java.deb
 	WGET "Pioneer Robots SDK (part 3/4)" http://robots.mobilerobots.com/ARIA/download/current/libaria-python_2.9.1+ubuntu16_amd64.deb /tmp/prsdk/libaria-python.deb
-	WGET "Pioneer Robots SDK (part 4/4)" http://robots.mobilerobots.com/MobileSim/download/current/mobilesim_0.7.5+ubuntu12_i386.deb /tmp/prsdk/mobilesim.deb
+	WGET "Pioneer Robots SDK (part 4/4)" http://robots.mobilerobots.com/MobileSim/download/current/mobilesim_0.9.8+ubuntu16_amd64.deb /tmp/prsdk/mobilesim.deb
 	cd "$DIR"
 	DPKG "Pioneer Robots SDK (part 1/4)" /tmp/prsdk/libaria.deb /tmp/prsdk/deb
 	DPKG "Pioneer Robots SDK (part 2/4)" /tmp/prsdk/libaria-java.deb /tmp/prsdk/deb
