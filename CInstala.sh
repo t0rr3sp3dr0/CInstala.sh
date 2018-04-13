@@ -405,7 +405,7 @@ function ISP {
 }
 function ITGPL {
 	CCC "Installing The Go Programming Language...\n\n"
-	WGET "The Go Programming Language" https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz /tmp/go.tgz
+	WGET "The Go Programming Language" https://storage.googleapis.com/golang/go1.10.1.linux-amd64.tar.gz /tmp/go.tgz
 	TGZ "The Go Programming Language" /tmp/go.tgz $HOME/.local
 	RM "temporary files" /tmp/go.tgz
 	printf '\nexport GOROOT=$HOME/.local/go\nexport PATH=$PATH:$GOROOT/bin\n' >> $HOME/.bashrc
